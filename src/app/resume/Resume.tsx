@@ -39,6 +39,8 @@ export type WorkExperience = {
 export type Projects = {
   name: string;
   description: string;
+  year: string;
+  details: string[];
   technologies: string[];
 };
 
