@@ -12,6 +12,7 @@ const providers: Provider[] = [
         id: "test",
         name: "Test User",
         email: "test@example.com",
+        refreshtoken: "demo token",
       };
     },
   }),
