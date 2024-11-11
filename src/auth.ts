@@ -2,11 +2,28 @@ import NextAuth from "next-auth";
 // import GitHub from "next-auth/providers/github"
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
+import axios from "axios";
 
+const BASE_URL_API_GATEWAY = "http://localhost:8443";
+const serverLoginUrl = `${BASE_URL_API_GATEWAY}/login`;
 const providers: Provider[] = [
   Credentials({
     credentials: { password: { label: "Password", type: "password" } },
-    authorize(c) {
+    authorize: async (c) => {
+      // validate fields here
+
+      console.log("configuration", c);
+
+      // const response = await axios.post(
+      //   serverLoginUrl,
+      //   { email: c.email, password: c.password },
+      //   {
+      //     withCredentials: true,
+      //   }
+      // );
+
+      // console.log({ response });
+
       if (c.password !== "123") return null;
       return {
         id: "test",
@@ -39,6 +56,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     authorized: async ({ auth }) => {
       // Logged in users are authenticated, otherwise redirect to login page
       return !!auth;
+    },
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      session.accessToken = token.accessToken;
+      return session;
     },
   },
 });
