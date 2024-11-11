@@ -14,23 +14,24 @@ const providers: Provider[] = [
 
       console.log("configuration", c);
 
-      // const response = await axios.post(
-      //   serverLoginUrl,
-      //   { email: c.email, password: c.password },
-      //   {
-      //     withCredentials: true,
-      //   }
-      // );
+      const response = await axios.post(
+        serverLoginUrl,
+        { email: c.email, password: c.password },
+        {
+          withCredentials: true,
+        }
+      );
 
-      // console.log({ response });
+      console.log({ response });
 
-      if (c.password !== "123") return null;
-      return {
-        id: "test",
-        name: "Test User",
-        email: "test@example.com",
-        refreshtoken: "demo token",
-      };
+      return response;
+      // if (c.password !== "123") return null;
+      // return {
+      //   id: "test",
+      //   name: "Test User",
+      //   email: "test@example.com",
+      //   refreshtoken: "demo token",
+      // };
     },
   }),
   // GitHub, Add other OAuth providers
