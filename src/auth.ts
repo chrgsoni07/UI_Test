@@ -24,7 +24,8 @@ const providers: Provider[] = [
 
       console.log("axios response", response.data);
 
-      return response.data;
+      return { ...response.data, authToken: response.headers["authorization"] };
+
       // if (c.password !== "123") return null;
       // return {
       //   id: "test",
