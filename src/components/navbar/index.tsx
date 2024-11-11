@@ -40,6 +40,14 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  function handelSignIn(): void {
+    console.log("Handel sign in");
+  }
+
+  function handelSignOut(): void {
+    console.log("Handel sign out");
+  }
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -127,12 +135,32 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
+
+          <Box
+            sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 2 }}
+          >
+            <Button
+              key="signin"
+              onClick={() => handelSignIn()}
+              sx={{ my: 2, color: "white" }}
+            >
+              Sign In
+            </Button>
+
+            <Button
+              key="signOut"
+              onClick={() => handelSignOut()}
+              sx={{ my: 2, color: "white" }}
+            >
+              Sign Out
+            </Button>
+
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
