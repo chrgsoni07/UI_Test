@@ -8,11 +8,26 @@ const BASE_URL_API_GATEWAY = "http://localhost:8443";
 const serverLoginUrl = `${BASE_URL_API_GATEWAY}/login`;
 const providers: Provider[] = [
   Credentials({
-    credentials: { password: { label: "Password", type: "password" } },
+    credentials: {
+      email: { label: "Email" },
+      password: { label: "Password", type: "password" },
+    },
+
     authorize: async (c) => {
       // validate fields here
 
       console.log("configuration", c);
+
+      if (process.env.RETURN_MOCK === "true") {
+        return {
+          accessToken: "mock-auth-token",
+          refreshToken: "someRefreshToken",
+          firstName: "Mock",
+          lastName: "Kumar",
+          email: "mock@email.com",
+          userRoleType: "DUMMY",
+        };
+      }
 
       const response = await axios.post(
         serverLoginUrl,
@@ -22,17 +37,10 @@ const providers: Provider[] = [
         }
       );
 
-      console.log("axios response", response.data);
-
-      return { ...response.data, authToken: response.headers["authorization"] };
-
-      // if (c.password !== "123") return null;
-      // return {
-      //   id: "test",
-      //   name: "Test User",
-      //   email: "test@example.com",
-      //   refreshtoken: "demo token",
-      // };
+      return {
+        ...response.data,
+        accessToken: response.headers["authorization"],
+      };
     },
   }),
   // GitHub, Add other OAuth providers
