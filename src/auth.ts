@@ -22,9 +22,9 @@ const providers: Provider[] = [
         }
       );
 
-      console.log({ response });
+      console.log("axios response", response.data);
 
-      return response;
+      return response.data;
       // if (c.password !== "123") return null;
       // return {
       //   id: "test",
