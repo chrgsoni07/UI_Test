@@ -12,6 +12,7 @@ export type Resume = {
   skillsCategory?: SkillsCategory;
   jobTitle: string;
   projects: Projects[];
+  certifications: string[];
   workExperience: WorkExperience[];
   suggestions: Suggestion[];
   estimatedATSScore: number;

@@ -4,7 +4,7 @@ import { useState, type ChangeEvent, type FC, type FormEvent } from "react";
 import { Box, Button, CircularProgress, Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { extractDataFromFile, saveResume } from "@/service/api";
-import EditablePreview from "./EditablePreview";
+import EditablePreview from "@/app/resume/EditablePreview";
 import { type Resume } from "./Resume";
 import toast from "react-hot-toast";
 
@@ -29,7 +29,7 @@ const Page: FC = () => {
 
   const { data: savedResume, mutate: postSave } = useMutation({
     mutationFn: (rData: Resume): Promise<Resume> => {
-      return saveResume(rData, "JWT_TOKEN");
+      return saveResume(rData);
     },
     onSuccess(data) {
       toast.success("Resume saved successfully !");

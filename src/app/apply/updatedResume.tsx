@@ -18,13 +18,12 @@ import {
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { useLocation, useNavigate } from "react-router-dom";
 import {
   assessResumeFit,
-  getSavedResumeByUserId,
+  getAllResumeOfUser,
   saveJobSpecificResume,
   saveResume,
-} from "../service/api";
+} from "@/service/api";
 import { type Resume } from "../resume/Resume";
 import EditablePreview from "../resume/EditablePreview";
 import {
@@ -36,8 +35,6 @@ const UpdatedResume: FC = () => {
   const [updatedResume, setUpdatedResume] = useState<Resume>();
   const [resumeEvalResult, setResumeEvalResult] = useState<ResumeEvalResult>();
   const [openAccordion, setOpenAccordion] = useState(0);
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const { data: savedResume, mutate: postSave } = useMutation({
     mutationFn: (rData: Resume): Promise<Resume> => {
@@ -46,7 +43,7 @@ const UpdatedResume: FC = () => {
     onSuccess(data) {
       toast.success("updated resume saved successfully !");
       if (data.id) {
-        navigate("/dashboard/template", { state: { id: data.id } });
+        //navigate to the template page
       } else {
         console.error("Saved resume ID is undefined");
       }
@@ -62,7 +59,7 @@ const UpdatedResume: FC = () => {
     data: allResume,
   } = useQuery({
     queryKey: ["getSavedResume"],
-    queryFn: () => getSavedResumeByUserId(),
+    queryFn: () => getAllResumeOfUser(),
     refetchOnWindowFocus: false,
   });
 
@@ -79,7 +76,14 @@ const UpdatedResume: FC = () => {
   };
 
   const handleSelect = async (row: Resume) => {
-    const jobDetail = location.state.jobDetail;
+    const jobDetail = {
+      jobUrl: "",
+      jobTitle: "JAva developer",
+      jobDescription: "complete job description comming through form",
+    };
+
+    //Get the jobDetails by form
+    //    const jobDetail = location.state.jobDetail;
 
     toast.success("Resume got selected please wait");
 

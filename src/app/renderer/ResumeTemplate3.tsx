@@ -1,12 +1,21 @@
-import React from 'react';
-import { Document, Font, Image, Page, PDFViewer, StyleSheet, Text, View } from '@react-pdf/renderer';
+import React from "react";
+import {
+  Document,
+  Font,
+  Image,
+  Page,
+  PDFViewer,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
 
-import { type Resume } from '../resume/Resume';
-import List, { Item } from './List';
+import { type Resume } from "../resume/Resume";
+import List, { Item } from "./List";
 
 // Ensure Lato font is loaded for consistency
 Font.register({
-  family: 'Lato',
+  family: "Lato",
   src: `https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wWw.ttf`,
 });
 
@@ -44,6 +53,17 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                       <Item key={idx}>{resp}</Item>
                     ))}
                   </List>
+                  {/* Experience Section achievements */}
+                  {exp.achievements?.length > 0 && (
+                    <>
+                      <Text style={styles.jobTitle}>Achievements</Text>
+                      <List>
+                        {exp.achievements.map((achi, index) => (
+                          <Item key={index}>{achi}</Item>
+                        ))}
+                      </List>
+                    </>
+                  )}
                 </View>
               ))}
             </View>
@@ -99,7 +119,6 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                 </Text>
               </View>
             </View>
-
             {/* Education Section */}
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Education</Text>
@@ -108,22 +127,53 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                   <Text style={styles.education}>{edu.degree}</Text>
                   <Text style={styles.education}>{edu.university}</Text>
                   <Text style={styles.education}>
-                    <Image src={{ uri: '/assets/Icons/map-pin.png', method: 'GET', headers: { 'Cache-Control': 'no-cache' }, body: '' }} />
+                    <Image
+                      src={{
+                        uri: "/assets/Icons/map-pin.png",
+                        method: "GET",
+                        headers: { "Cache-Control": "no-cache" },
+                        body: "",
+                      }}
+                    />
                     {edu.location}
                   </Text>
                   <Text style={styles.education}>
-                    <Image src={{ uri: '/assets/Icons/calendar-dots.png', method: 'GET', headers: { 'Cache-Control': 'no-cache' }, body: '' }} />
+                    <Image
+                      src={{
+                        uri: "/assets/Icons/calendar-dots.png",
+                        method: "GET",
+                        headers: { "Cache-Control": "no-cache" },
+                        body: "",
+                      }}
+                    />
                     {edu.duration}
                   </Text>
                 </View>
               ))}
             </View>
-
             {/* Skills Section */}
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Skills</Text>
-              <Text style={styles.skills}>{resume.skills?.join(', ')}</Text>
+              <Text style={styles.skills}>{resume.skills?.join(", ")}</Text>
             </View>
+            {/* Certifications Section */}
+            {resume.certifications && resume.certifications.length > 0 && (
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Certifications</Text>
+
+                {resume.certifications.length > 6 ? (
+                  <Text style={styles.skills}>
+                    {resume.certifications.join(", ")}
+                  </Text> // Join certifications with commas
+                ) : (
+                  <List>
+                    {resume.certifications.map((cert, index) => (
+                      <Item key={index}>{cert}</Item> // List item for each certification
+                    ))}
+                  </List>
+                )}
+              </View>
+            )}{" "}
           </View>
         </View>
       </Page>
@@ -134,49 +184,49 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
 const styles = StyleSheet.create({
   page: {
     padding: 20,
-    fontFamily: 'Lato',
+    fontFamily: "Lato",
   },
   header: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 20,
   },
   name: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   jobTitleHeader: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   jobTitle: {
     fontSize: 12,
-    color: '#555',
+    color: "#555",
     marginBottom: 10,
   },
   contact: {
     fontSize: 10, // Smaller font size for contact details
     lineHeight: 1.5,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   contactText: {
     marginLeft: 5, // Space between icon and text
-    flexWrap: 'wrap', // Allow text to wrap
-    maxWidth: '90%', // Limit width of text
+    flexWrap: "wrap", // Allow text to wrap
+    maxWidth: "90%", // Limit width of text
   },
   content: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   leftColumn: {
-    width: '70%',
+    width: "70%",
     paddingRight: 15,
   },
   rightColumn: {
-    width: '30%',
+    width: "30%",
     paddingLeft: 15,
-    borderLeft: '1px solid #3f51b5',
+    borderLeft: "1px solid #3f51b5",
     flexShrink: 0, // Prevent shrinking if the content overflows
   },
   section: {
@@ -184,25 +234,25 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 13,
-    fontWeight: 'bold',
-    borderBottom: '1px solid #3f51b5',
+    fontWeight: "bold",
+    borderBottom: "1px solid #3f51b5",
     paddingBottom: 5,
     marginBottom: 10,
   },
   text: {
     fontSize: 10, // Smaller font size for all details
     lineHeight: 1.5, // Adjust line height
-    textAlign: 'left', // Left alignment for better readability
+    textAlign: "left", // Left alignment for better readability
     marginBottom: 10, // Add margin for spacing
   },
   job: {
     marginBottom: 15,
     paddingBottom: 10,
-    borderBottom: '1px solid #E0E0E0',
+    borderBottom: "1px solid #E0E0E0",
   },
   jobDates: {
     fontSize: 10, // Consistent smaller font size
-    color: '#888',
+    color: "#888",
     marginBottom: 5,
   },
   educationContainer: {
@@ -210,11 +260,11 @@ const styles = StyleSheet.create({
   },
   education: {
     fontSize: 10, // Consistent smaller font size
-    textAlign: 'left', // Change to left for better readability
+    textAlign: "left", // Change to left for better readability
   },
   skills: {
     fontSize: 10, // Consistent smaller font size
-    textAlign: 'left', // Change to left for better readability
+    textAlign: "left", // Change to left for better readability
   },
 });
 

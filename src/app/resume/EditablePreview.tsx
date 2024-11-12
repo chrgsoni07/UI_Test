@@ -11,9 +11,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-//import { MuiChipsInput } from 'mui-chips-input';
-
-import { type Resume, type Suggestion } from "./Resume";
+import { MuiChipsInput } from "mui-chips-input";
+import { Projects, type Resume, type Suggestion } from "./Resume";
 
 type PropTypes = {
   resumeData: Resume;
@@ -86,8 +85,22 @@ const EditablePreview: React.FC<PropTypes> = ({
     setResumeData({ ...resumeData, workExperience: copyWorkExperience });
   };
 
+  const handelProjectsDetails = (
+    newValue: string,
+    prjIndex: number,
+    detailIndex: number
+  ) => {
+    const copyProjects = [...resumeData.projects];
+    copyProjects[prjIndex].details[detailIndex] = newValue;
+    setResumeData({ ...resumeData, projects: copyProjects });
+  };
+
   const handelSkillChange = (e: any) => {
     setResumeData({ ...resumeData, skills: e });
+  };
+
+  const handelCertificationChange = (e: any) => {
+    setResumeData({ ...resumeData, certifications: e });
   };
 
   function removeResponsibility(expIndex: number, respIndex: number): void {
@@ -119,6 +132,33 @@ const EditablePreview: React.FC<PropTypes> = ({
     );
   }
 
+  function addProjectDetail(prjIndex: number): void {
+    if (!resumeData.projects[prjIndex].details) {
+      resumeData.projects[prjIndex].details = []; //
+      return;
+    }
+    handelProjectsDetails(
+      "",
+      prjIndex,
+      resumeData.projects[prjIndex].details.length
+    );
+  }
+
+  const addProject = () => {
+    const newProject: Projects = {
+      name: "",
+      year: "",
+      description: "",
+      details: [],
+      technologies: [],
+    };
+
+    const updatedResumeData = { ...resumeData };
+    if (updatedResumeData.projects) updatedResumeData.projects.push(newProject);
+    else updatedResumeData.projects = [newProject];
+    setResumeData(updatedResumeData);
+  };
+
   function removeAchivements(index: number, achIndex: number): void {
     const filterdAch = resumeData.workExperience[index].achievements.filter(
       (_, i) => i !== achIndex
@@ -127,6 +167,16 @@ const EditablePreview: React.FC<PropTypes> = ({
     updateResumeData.workExperience[index].achievements = filterdAch;
     setResumeData(updateResumeData);
   }
+
+  function removeProjectDetails(index: number, detailIndex: number): void {
+    const filterdDetails = resumeData.projects[index].details.filter(
+      (_, i) => i !== detailIndex
+    );
+    const updateResumeData = { ...resumeData };
+    updateResumeData.projects[index].details = filterdDetails;
+    setResumeData(updateResumeData);
+  }
+
   const isMatchingSuggestion = (responsibility: string) => {
     return suggestionArray.find(
       (suggestion) => suggestion.originalText === responsibility
@@ -196,21 +246,21 @@ const EditablePreview: React.FC<PropTypes> = ({
             margin="normal"
           />
         </Grid>
-
-        <Grid item xs={12} sm={3}>
-          <TextField
-            id="github"
-            label="GitHub Profile"
-            value={resumeData.github}
-            InputLabelProps={{ shrink: true }}
-            onChange={(e) =>
-              setResumeData({ ...resumeData, github: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          />
-        </Grid>
-
+        {resumeData.github && (
+          <Grid item xs={12} sm={3}>
+            <TextField
+              id="github"
+              label="GitHub Profile"
+              value={resumeData.github}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) =>
+                setResumeData({ ...resumeData, github: e.target.value })
+              }
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+        )}
         <Grid item xs={12} sm={3}>
           <TextField
             id="phone"
@@ -258,7 +308,7 @@ const EditablePreview: React.FC<PropTypes> = ({
         </Grid>
       </Grid>
 
-      {/* <Grid container spacing={1}>
+      <Grid container spacing={1}>
         <Grid item xs={12}>
           {resumeData.skills ? (
             <MuiChipsInput
@@ -271,20 +321,36 @@ const EditablePreview: React.FC<PropTypes> = ({
           ) : (
             <>
               {resumeData.skillsCategory &&
-                Object.entries(resumeData.skillsCategory).map(([category, skillList]) => (
-                  <MuiChipsInput
-                    key={category}
-                    value={skillList}
-                    onChange={handelSkillChange}
-                    label={category}
-                    margin="normal"
-                    fullWidth // Ensure it takes full width
-                  />
-                ))}
+                Object.entries(resumeData.skillsCategory).map(
+                  ([category, skillList]) => (
+                    <MuiChipsInput
+                      key={category}
+                      value={skillList}
+                      onChange={handelSkillChange}
+                      label={category}
+                      margin="normal"
+                      fullWidth // Ensure it takes full width
+                    />
+                  )
+                )}
             </>
           )}
         </Grid>
-      </Grid> */}
+      </Grid>
+
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          {resumeData.certifications ? (
+            <MuiChipsInput
+              value={resumeData.certifications} // Should use certifications here
+              onChange={handelCertificationChange}
+              label="Certifications"
+              margin="normal"
+              fullWidth
+            />
+          ) : null}{" "}
+        </Grid>
+      </Grid>
 
       <Grid container spacing={1}>
         <Grid item xs={12}>
@@ -583,6 +649,138 @@ const EditablePreview: React.FC<PropTypes> = ({
           </div>
         ))}
       </div>
+
+      {/* Projects Section */}
+      <Grid container spacing={1} alignItems="center">
+        <Grid item>
+          <Typography
+            style={{ color: "#635BFF" }}
+            variant="subtitle1"
+            gutterBottom
+          >
+            Projects
+          </Typography>
+        </Grid>
+        <Grid item>
+          <IconButton
+            onClick={() => addProject()}
+            aria-label="add"
+            color="primary"
+          >
+            +
+          </IconButton>
+        </Grid>
+
+        {resumeData.projects &&
+          resumeData.projects.length > 0 &&
+          resumeData.projects.map((project, index) => (
+            <Grid container spacing={1} item xs={12} key={index}>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  id={`projectName${index + 1}`}
+                  label="Project Name"
+                  value={project.name}
+                  InputLabelProps={{ shrink: true }}
+                  margin="normal"
+                  onChange={(e) => {
+                    const updatedProjects = [...resumeData.projects];
+                    updatedProjects[index].name = e.target.value;
+                    setResumeData({ ...resumeData, projects: updatedProjects });
+                  }}
+                  fullWidth
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  id={`projectYear${index + 1}`}
+                  label="Project Year"
+                  value={project.year}
+                  InputLabelProps={{ shrink: true }}
+                  margin="normal"
+                  onChange={(e) => {
+                    const updatedProjects = [...resumeData.projects];
+                    updatedProjects[index].year = e.target.value;
+                    setResumeData({ ...resumeData, projects: updatedProjects });
+                  }}
+                  fullWidth
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  id={`projectDescription${index + 1}`}
+                  label="Description"
+                  value={project.description}
+                  InputLabelProps={{ shrink: true }}
+                  margin="normal"
+                  multiline
+                  minRows={2}
+                  maxRows={4}
+                  onChange={(e) => {
+                    const updatedProjects = [...resumeData.projects];
+                    updatedProjects[index].description = e.target.value;
+                    setResumeData({ ...resumeData, projects: updatedProjects });
+                  }}
+                  fullWidth
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Grid container alignItems="center" spacing={1}>
+                  <Grid item>
+                    <Typography
+                      style={{ color: "#635BFF" }}
+                      variant="subtitle1"
+                      gutterBottom
+                    >
+                      Details
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <IconButton
+                      onClick={() => addProjectDetail(index)}
+                      aria-label="add"
+                      color="primary"
+                    >
+                      +
+                    </IconButton>
+                  </Grid>
+                </Grid>
+
+                {project.details && project.details.length > 0 && (
+                  <div>
+                    {project.details.map((prj, prjIndex) => (
+                      <Grid
+                        container
+                        alignItems="center"
+                        key={prjIndex}
+                        spacing={1}
+                      >
+                        <Grid item xs>
+                          <StyledTextareaAutosize
+                            value={prj}
+                            style={{ width: "100%", resize: "vertical" }}
+                          />
+                        </Grid>
+                        <Grid item>
+                          <IconButton
+                            onClick={() =>
+                              removeProjectDetails(index, prjIndex)
+                            }
+                            aria-label="delete"
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Grid>
+                      </Grid>
+                    ))}
+                  </div>
+                )}
+              </Grid>
+            </Grid>
+          ))}
+      </Grid>
     </Grid>
   );
 };
