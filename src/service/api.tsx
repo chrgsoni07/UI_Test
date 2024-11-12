@@ -2,60 +2,51 @@ import { headers } from "next/headers";
 import axios from "axios";
 import { type Resume } from "@/app/resume/Resume";
 import { axiosWithAuth } from "@/app/api/auth/[...nextauth]/axiosWithAuth";
+import { type JobDetail } from "@/app/apply/JobDetail";
 
-const BASE_URL = "http://localhost:8443/api/0.1";
-const BASE_URL_RESUME = `${BASE_URL}/resume`;
-const BASE_URL_JOB_DETAIL = `${BASE_URL}/job`;
-const BASE_URL_FILE = `${BASE_URL}/files`;
-
-const USER_ID = "uid112233";
-
-const apiClient = axios.create({
-  baseURL: "http://localhost:8089/api/0.1/resume",
-  headers: {
-    "Content-type": "application/json",
-  },
-});
+const BASE_URL_API_GATEWAY = "http://localhost:8443";
+const BASE_URL_RESUME = `${BASE_URL_API_GATEWAY}/api/0.1/resume/`;
+const BASE_URL_JOB_DETAIL = `${BASE_URL_API_GATEWAY}/api/0.1/job/`;
+const BASE_URL_FILE = `${BASE_URL_API_GATEWAY}/api/0.1/files/`;
 
 export const getResumeById = async (id: string) => {
-  const fetchDataURL = `${BASE_URL_RESUME}/${id}`;
-
-  const response = await axios.get(fetchDataURL);
+  const response = await (await axiosWithAuth()).get(BASE_URL_RESUME);
 
   return response.data;
 };
 
-export const getSavedResumeByUserId = async () => {
-  const fatchAllResume = `${BASE_URL_RESUME}/user/${USER_ID}`;
-
-  const response = await axios.get(fatchAllResume);
+export const getAllResumeOfUser = async () => {
+  const response = await (await axiosWithAuth()).get(`${BASE_URL_RESUME}all`);
 
   return response.data;
 };
 
-// export const assessResumeFit = async ({
-//   jobDetail,
-//   resumeId,
-// }: {
-//   jobDetail: JobDetail;
-//   resumeId: string;
-// }) => {
-//   const saveDataURL = `${BASE_URL_RESUME}/assess-fit/${resumeId}`;
-
-//   const response = await axios.post(saveDataURL, jobDetail, {
-//     headers: { "Content-Type": "application/json" },
-//   });
-
-//   return response.data;
-// };
-
-export const getJobDetailsFromURL = async (url: string) => {
-  // Construct the URL with query parameters
-  const fetchDataURL = `${BASE_URL_JOB_DETAIL}/details?url=${url}`;
-
-  const response = await axios.get(fetchDataURL);
+export const updateResumeByResumeId = async (id: string) => {
+  const response = await (await axiosWithAuth()).put(BASE_URL_RESUME, id);
 
   return response.data;
+};
+
+export const deleteResumeByResumeId = async (id: string) => {
+  const response = await (await axiosWithAuth()).delete(BASE_URL_RESUME);
+
+  return response;
+};
+
+export const saveResume = async (data: Resume) => {
+  const saveDataURL = `${BASE_URL_RESUME}`;
+
+  const response = await (await axiosWithAuth()).post(saveDataURL, data);
+
+  return response.data;
+};
+
+export const getJobDetailsFromUrl = async (url: string) => {
+  const response = await (
+    await axiosWithAuth()
+  ).get(`${BASE_URL_JOB_DETAIL}details?url=${url}`);
+
+  return response;
 };
 
 export const extractDataFromFile = async (formData: FormData) => {
@@ -66,20 +57,24 @@ export const extractDataFromFile = async (formData: FormData) => {
   return (await response).data;
 };
 
-export const saveResume = async (data: Resume, token: string) => {
-  const saveDataURL = `${BASE_URL_RESUME}`;
+export const saveJobSpecificResume = async (data: Resume) => {
+  const saveDataURL = `${BASE_URL_RESUME}/job-specific}`;
 
   const response = await (await axiosWithAuth()).post(saveDataURL, data);
 
   return response.data;
 };
 
-export const saveJobSpecificResume = async (data: Resume) => {
-  const saveDataURL = `${BASE_URL_RESUME}/job-specific/${USER_ID}`;
-
-  const response = await axios.post(saveDataURL, data, {
-    headers: { "Content-Type": "application/json" },
-  });
+export const assessResumeFit = async ({
+  jobDetail,
+  resumeId,
+}: {
+  jobDetail: JobDetail;
+  resumeId: string;
+}) => {
+  const response = await (
+    await axiosWithAuth()
+  ).post(`${BASE_URL_JOB_DETAIL}/assess-fit/${resumeId}`, jobDetail);
 
   return response.data;
 };
