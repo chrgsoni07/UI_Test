@@ -1,8 +1,9 @@
 import { headers } from "next/headers";
 import axios from "axios";
 import { type Resume } from "@/app/resume/Resume";
+import { axiosWithAuth } from "@/app/api/auth/[...nextauth]/axiosWithAuth";
 
-const BASE_URL = "http://localhost:8089/api/0.1";
+const BASE_URL = "http://localhost:8443/api/0.1";
 const BASE_URL_RESUME = `${BASE_URL}/resume`;
 const BASE_URL_JOB_DETAIL = `${BASE_URL}/job`;
 const BASE_URL_FILE = `${BASE_URL}/files`;
@@ -59,23 +60,16 @@ export const getJobDetailsFromURL = async (url: string) => {
 
 export const extractDataFromFile = async (formData: FormData) => {
   const extractDataURL = `${BASE_URL_FILE}/extract`;
-  const response = axios.post(extractDataURL, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+
+  const response = await (await axiosWithAuth()).post(extractDataURL, formData);
+
   return (await response).data;
 };
 
 export const saveResume = async (data: Resume, token: string) => {
   const saveDataURL = `${BASE_URL_RESUME}`;
 
-  const response = await axios.post(saveDataURL, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await (await axiosWithAuth()).post(saveDataURL, data);
 
   return response.data;
 };

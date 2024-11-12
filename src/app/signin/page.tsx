@@ -29,11 +29,16 @@ export default async function SignInPage(props: {
       >
         <label htmlFor="email">
           Email
-          <input name="email" id="email" />
+          <input name="email" id="email" value="john.dow@example.com" />
         </label>
         <label htmlFor="password">
           Password
-          <input name="password" id="password" type="password" />
+          <input
+            name="password"
+            id="password"
+            type="password"
+            value={"SecurePassword12345"}
+          />
         </label>
         <input type="submit" value="Sign In" />
       </form>

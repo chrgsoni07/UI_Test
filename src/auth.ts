@@ -36,7 +36,7 @@ const providers: Provider[] = [
           withCredentials: true,
         }
       );
-
+      console.log("authorization header", response.headers["authorization"]);
       return {
         ...response.data,
         accessToken: response.headers["authorization"],
@@ -68,10 +68,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return !!auth;
     },
     async jwt({ token, user }) {
+      console.log({ token });
+      console.log({ user });
       return { ...token, ...user };
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
+      console.log("auth.ts", session);
       return session;
     },
   },
