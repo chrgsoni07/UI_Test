@@ -11,7 +11,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { MuiChipsInput } from "mui-chips-input";
 import { Projects, type Resume, type Suggestion } from "./Resume";
 
 type PropTypes = {
@@ -310,37 +309,15 @@ const EditablePreview: React.FC<PropTypes> = ({
 
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          {resumeData.skills ? (
-            <MuiChipsInput
-              value={resumeData.skills}
-              onChange={handelSkillChange}
-              label="Skills"
-              margin="normal"
-              fullWidth // Ensure it takes full width
-            />
-          ) : (
-            <>
-              {resumeData.skillsCategory &&
-                Object.entries(resumeData.skillsCategory).map(
-                  ([category, skillList]) => (
-                    <MuiChipsInput
-                      key={category}
-                      value={skillList}
-                      onChange={handelSkillChange}
-                      label={category}
-                      margin="normal"
-                      fullWidth // Ensure it takes full width
-                    />
-                  )
-                )}
-            </>
-          )}
+          {resumeData.skills?.map((skill) => (
+            <Chip label={skill} onDelete={handelSkillChange} />
+          ))}
         </Grid>
       </Grid>
 
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          {resumeData.certifications ? (
+          {/* {resumeData.certifications ? (
             <MuiChipsInput
               value={resumeData.certifications} // Should use certifications here
               onChange={handelCertificationChange}
@@ -348,7 +325,7 @@ const EditablePreview: React.FC<PropTypes> = ({
               margin="normal"
               fullWidth
             />
-          ) : null}{" "}
+          ) : null}{" "}*/}
         </Grid>
       </Grid>
 

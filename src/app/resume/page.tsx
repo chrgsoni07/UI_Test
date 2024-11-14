@@ -7,6 +7,7 @@ import { extractDataFromFile, saveResume } from "@/service/api";
 import EditablePreview from "@/app/resume/EditablePreview";
 import { type Resume } from "./Resume";
 import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 const Page: FC = () => {
   const [selectedFile, setSelectedFile] = useState<File>();
@@ -34,6 +35,7 @@ const Page: FC = () => {
     onSuccess(data) {
       toast.success("Resume saved successfully !");
       if (data.id) {
+        redirect("/template");
         //navigate to /template page
         // navigate("/dashboard/template", { state: { id: data.id } });
       } else {

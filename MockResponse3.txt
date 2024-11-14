@@ -1,0 +1,152 @@
+http://localhost:8443/api/0.1/resume/assess-fit/{resumeId}
+
+Request 
+{
+  "jobUrl": "",
+  "jobTitle": "Senior Product Manager",
+  "jobDescription": "We are seeking a highly skilled and experienced Senior Product Manager to lead the development and strategy of innovative products. The ideal candidate will drive product vision, prioritize features, and collaborate cross-functionally with engineering, marketing, and design teams to deliver high-quality solutions. You will be responsible for defining product roadmaps, gathering and analyzing customer feedback, and ensuring the successful launch and continuous improvement of products. Strong leadership, strategic thinking, and excellent communication skills are essential for success in this role."
+}
+
+Response => 
+
+{
+  "resumeEvalResult": {
+    "jobTitle": "Senior Product Manager",
+    "domainRelevance": "Relevant",
+    "ats_score": 57,
+    "feedback": "The resume demonstrates relevant experience in product management, specifically in managing product launches and collaborating with cross-functional teams. However, it appears to lack some of the senior-level strategic and leadership skills required for a Senior Product Manager role. Additionally, specific experience in defining product strategy and roadmap at a senior level is not evident.",
+    "suggestedImprovements": [
+      {
+        "originalText": "Aided product manager with the inventory management of 3 e-commerce products, creating a 67% work efficiency increase",
+        "suggestedText": "Assisted product manager in managing the inventory of 3 e-commerce products, resulting in a 67% increase in work efficiency."
+      },
+      {
+        "originalText": "Mentored the 21-person customer service team on best practices to ensure customer satisfaction, resulting in a 36% uptick in 5-star reviews",
+        "suggestedText": "Coached a 21-person customer service team on best practices, leading to a 36% increase in 5-star customer reviews."
+      },
+      {
+        "originalText": "Orchestrated deep dives into 11 product defects to obtain laser-focused user insights, creating solutions for 8 defects",
+        "suggestedText": "Conducted in-depth analyses of 11 product defects to gather precise user insights, resolving 8 defects."
+      },
+      {
+        "originalText": "Spearheaded quantitative market analysis for 6 existing products",
+        "suggestedText": "Led quantitative market analysis for 6 existing products to drive strategic decision-making."
+      },
+      {
+        "originalText": "Partnered with the sales team to develop a pricing strategy to increase sales by 21%",
+        "suggestedText": "Collaborated with the sales team to formulate a pricing strategy, achieving a 21% increase in sales."
+      },
+      {
+        "originalText": "Chaired the training of 43 staff members in Agile methodology usage, improving the company's response to change by 62%",
+        "suggestedText": "Facilitated Agile methodology training for 43 staff members, enhancing the company's adaptability by 62%."
+      }
+    ],
+    "additionalSkills": [
+      "Define and execute product strategy",
+      "Leadership experience in product management",
+      "Experience with product roadmaps",
+      "5+ years of experience in product management",
+      "Strategic thinking capabilities",
+      "Proven track record of successful product launches"
+    ]
+  },
+  "resume": {
+    "id": "6735e5ff4b868554266e3f54",
+    "userId": "6735daec6962c10c15702870",
+    "name": "Francesca Abruzzese",
+    "email": "Frances@email.com",
+    "phone": "(123) 456-7890",
+    "location": "Visalia, CA",
+    "careerObjective": "Customer-centric upcoming graduate with exceptional organizational skills looking to start a thriving Product Manager career at BTC Power.",
+    "education": [
+      {
+        "degree": "B.S.",
+        "field": "Communications",
+        "university": "California State University, Fresno",
+        "duration": "September 2018 - current",
+        "location": "Fresno, CA"
+      }
+    ],
+    "linkedIn": "https://linkedin.com/",
+    "github": "https://github.com/",
+    "skills": [
+      "Agile Methodology",
+      "Market Analysis",
+      "Project Management",
+      "User Story Management",
+      "Organization",
+      "Define and execute product strategy",
+      "Leadership experience in product management",
+      "Experience with product roadmaps",
+      "5+ years of experience in product management",
+      "Strategic thinking capabilities",
+      "Proven track record of successful product launches"
+    ],
+    "jobTitle": "Associate Product Manager",
+    "projects": [
+      {
+        "name": "Campus Newspaper Subscription App",
+        "year": "Not specified",
+        "description": "Created a subscription app for campus newspapers.",
+        "details": [
+          "Piloted 2 weekly automated crypto market reports, sending findings to senior editors",
+          "Developed methods to beat campus and local competition, increasing subscriptions by 304%",
+          "Supervised UI/UX team to optimize user satisfaction by 46%",
+          "Created solutions after analyzing user feedback, solving 92% of user complaints",
+          "Guided the journalism team in creating new content, increasing reader satisfaction by 79%"
+        ],
+        "technologies": []
+      }
+    ],
+    "certifications": [],
+    "workExperience": [
+      {
+        "company": "Peeple Inc.",
+        "jobPosition": "Associate Product Manager in Training",
+        "duration": "October 2021 - current",
+        "location": "Fresno, CA",
+        "responsibilities": [
+          "Aided product manager with the inventory management of 3 e-commerce products, creating a 67% work efficiency increase",
+          "Mentored the 21-person customer service team on best practices to ensure customer satisfaction, resulting in a 36% uptick in 5-star reviews",
+          "Orchestrated deep dives into 11 product defects to obtain laser-focused user insights, creating solutions for 8 defects",
+          "Spearheaded quantitative market analysis for 6 existing products",
+          "Partnered with the sales team to develop a pricing strategy to increase sales by 21%",
+          "Chaired the training of 43 staff members in Agile methodology usage, improving the company's response to change by 62%"
+        ],
+        "achievements": []
+      }
+    ],
+    "suggestions": [
+      {
+        "originalText": "Aided product manager with the inventory management of 3 e-commerce products, creating a 67% work efficiency increase",
+        "suggestedText": "Assisted product manager in managing the inventory of 3 e-commerce products, resulting in a 67% increase in work efficiency."
+      },
+      {
+        "originalText": "Mentored the 21-person customer service team on best practices to ensure customer satisfaction, resulting in a 36% uptick in 5-star reviews",
+        "suggestedText": "Coached a 21-person customer service team on best practices, leading to a 36% increase in 5-star customer reviews."
+      },
+      {
+        "originalText": "Orchestrated deep dives into 11 product defects to obtain laser-focused user insights, creating solutions for 8 defects",
+        "suggestedText": "Conducted in-depth analyses of 11 product defects to gather precise user insights, resolving 8 defects."
+      },
+      {
+        "originalText": "Spearheaded quantitative market analysis for 6 existing products",
+        "suggestedText": "Led quantitative market analysis for 6 existing products to drive strategic decision-making."
+      },
+      {
+        "originalText": "Partnered with the sales team to develop a pricing strategy to increase sales by 21%",
+        "suggestedText": "Collaborated with the sales team to formulate a pricing strategy, achieving a 21% increase in sales."
+      },
+      {
+        "originalText": "Chaired the training of 43 staff members in Agile methodology usage, improving the company's response to change by 62%",
+        "suggestedText": "Facilitated Agile methodology training for 43 staff members, enhancing the company's adaptability by 62%."
+      }
+    ],
+    "estimatedATSScore": null,
+    "metadata": {
+      "baseResumeId": null,
+      "isActive": true,
+      "createdAt": "2024-11-14T17:28:55.189"
+    }
+  }
+}

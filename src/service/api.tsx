@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-import axios from "axios";
 import { type Resume } from "@/app/resume/Resume";
 import { axiosWithAuth } from "@/app/api/auth/[...nextauth]/axiosWithAuth";
 import { type JobDetail } from "@/app/apply/JobDetail";
@@ -50,7 +48,7 @@ export const getJobDetailsFromUrl = async (url: string) => {
 };
 
 export const extractDataFromFile = async (formData: FormData) => {
-  const extractDataURL = `${BASE_URL_FILE}/extract`;
+  const extractDataURL = `${BASE_URL_FILE}extract`;
 
   const response = await (await axiosWithAuth()).post(extractDataURL, formData);
 
