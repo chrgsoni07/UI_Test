@@ -1,4 +1,3 @@
-// TemplateSelectionPage.tsx
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -19,9 +18,9 @@ import { type Resume } from "../resume/Resume";
 import { getResumeById } from "@/service/api";
 
 const templates = [
-  { id: 1, image: "../../components/renderer/img/template1.jpg" },
-  { id: 2, image: "../../components/renderer/img/template2.jpg" },
-  { id: 3, image: "../../components/renderer/img/template3.jpg" },
+  { id: 1, image: "../img/template1.jpg" },
+  { id: 2, image: "../img/template2.jpg" },
+  { id: 3, image: "../img/template3.jpg" },
 ];
 
 // Ensure Lato font is loaded for consistency
@@ -33,10 +32,8 @@ Font.register({
 const TemplateSelectionPage: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
-  // const location = useLocation();
   const [templateType, setTemplateType] = useState(0);
 
-  //Hardcode resume ID
   const resumeID = "6735dba4547af307b91f8192";
 
   const {
@@ -51,14 +48,7 @@ const TemplateSelectionPage: React.FC = () => {
   });
 
   const handleSelect = async (templateId: number) => {
-    console.log("show the resume in template format ", templateId);
-
-    //if (!location.state.id) {
-    //   navigate("/dashboard/resume");
-    // }
-
     setTemplateType(templateId);
-
     if (!data) {
       try {
         await getResumeByIDRQ();
@@ -132,15 +122,12 @@ const TemplateRenderer: React.FC<TemplateRendererProps> = ({
   if (templateType === 1) {
     return <ResumeTemplate1 resume={resumeData} orientation="portrait" />;
   }
-
   if (templateType === 2) {
     return <ResumeTemplate2 resume={resumeData} />;
   }
-
   if (templateType === 3) {
     return <ResumeTemplate3 resume={resumeData} />;
   }
-
   return <div>Please select template to preview resume...</div>;
 };
 

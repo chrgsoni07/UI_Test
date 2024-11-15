@@ -93,7 +93,7 @@ const ExperienceEntry: React.FC<ExperienceEntryProps> = ({
           <Text style={styles.title}>
             <Image
               src={{
-                uri: "/assets/Icons/map-pin.png",
+                uri: "/img/Icons/map-pin.png",
                 method: "GET",
                 headers: { "Cache-Control": "no-cache" },
                 body: "",
@@ -106,7 +106,7 @@ const ExperienceEntry: React.FC<ExperienceEntryProps> = ({
           <Text style={styles.date}>
             <Image
               src={{
-                uri: "/assets/Icons/calendar-dots.png",
+                uri: "/img/Icons/calendar-dots.png",
                 method: "GET",
                 headers: { "Cache-Control": "no-cache" },
                 body: "",

@@ -32,26 +32,26 @@ const ResumeTemplate2 = ({ resume }: { resume: Resume }) => (
             <Text style={styles.contact}>{resume.email}</Text>
 
             <Text style={styles.contact}>
-              {/* <Image
+              <Image
                 src={{
-                  uri: "/assets/Icons/phone.png",
+                  uri: "/img/Icons/phone.png",
                   method: "GET",
                   headers: { "Cache-Control": "no-cache" },
                   body: "",
                 }}
-              /> */}
+              />
               {resume.phone}
             </Text>
 
             <Text style={styles.contact}>
-              {/* <Image
+              <Image
                 src={{
-                  uri: "/assets/Icons/map-pin.png",
+                  uri: "/img/Icons/map-pin.png",
                   method: "GET",
                   headers: { "Cache-Control": "no-cache" },
                   body: "",
                 }}
-              /> */}
+              />
               {resume.location}
             </Text>
 
