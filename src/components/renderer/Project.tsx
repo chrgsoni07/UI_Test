@@ -1,36 +1,36 @@
-import React from 'react';
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import React from "react";
+import { StyleSheet, Text, View } from "@react-pdf/renderer";
 
-import { type Projects } from '../resume/Resume';
-import List, { Item } from './List';
-import Title from './Title';
+import { type Projects } from "../../app/resume/Resume";
+import List, { Item } from "./List";
+import Title from "./Title";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingTop: 10,
     paddingLeft: 5,
-    '@media max-width: 400': {
+    "@media max-width: 400": {
       paddingTop: 10,
       paddingLeft: 0,
     },
   },
   entryContainer: {
     marginBottom: 10,
-    textAlign: 'justify',
+    textAlign: "justify",
   },
   date: {
     fontSize: 11,
-    fontFamily: 'Lato Italic',
+    fontFamily: "Lato Italic",
   },
   detailLeftColumn: {
-    flexDirection: 'column',
+    flexDirection: "column",
     marginLeft: 10,
     marginRight: 10,
   },
   detailRightColumn: {
-    flexDirection: 'column',
+    flexDirection: "column",
     flexGrow: 9,
   },
   bulletPoint: {
@@ -38,33 +38,33 @@ const styles = StyleSheet.create({
   },
   details: {
     fontSize: 10,
-    fontFamily: 'Lato',
+    fontFamily: "Lato",
   },
   headerContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 10,
   },
   leftColumn: {
-    flexDirection: 'column',
+    flexDirection: "column",
     flexGrow: 9,
   },
   rightColumn: {
-    flexDirection: 'column',
+    flexDirection: "column",
     flexGrow: 1,
-    alignItems: 'flex-end',
-    justifySelf: 'flex-end',
+    alignItems: "flex-end",
+    justifySelf: "flex-end",
   },
   title: {
     fontSize: 11,
-    color: 'black',
-    textDecoration: 'none',
-    fontFamily: 'Lato Bold',
+    color: "black",
+    textDecoration: "none",
+    fontFamily: "Lato Bold",
   },
   projectContainer: {
     flex: 1,
     paddingTop: 10,
     paddingLeft: 5,
-    '@media max-width: 400': {
+    "@media max-width: 400": {
       paddingTop: 10,
       paddingLeft: 0,
     },
@@ -72,21 +72,21 @@ const styles = StyleSheet.create({
   projectTitle: {
     fontSize: 18,
     marginBottom: 5,
-    fontFamily: 'Lato Bold',
+    fontFamily: "Lato Bold",
   },
   project: {
     marginBottom: 10,
   },
   projectName: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   projectDescription: {
     fontSize: 12,
   },
   projectTech: {
     fontSize: 12,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
 });
 
@@ -95,7 +95,11 @@ interface ProjectDataProps {
   description: string;
   technologies: string[];
 }
-const ProjectEntry: React.FC<ProjectDataProps> = ({ name, description, technologies }) => {
+const ProjectEntry: React.FC<ProjectDataProps> = ({
+  name,
+  description,
+  technologies,
+}) => {
   const title = name;
   return (
     <View style={styles.entryContainer}>
@@ -122,7 +126,12 @@ const Project = ({ project }: { project?: Projects[] }) => {
     <View style={styles.container}>
       <Title>Project</Title>
       {project.map(({ name, description, technologies }) => (
-        <ProjectEntry name={name} description={description} technologies={technologies} key={name} />
+        <ProjectEntry
+          name={name}
+          description={description}
+          technologies={technologies}
+          key={name}
+        />
       ))}
     </View>
   );

@@ -10,7 +10,7 @@ import {
   View,
 } from "@react-pdf/renderer";
 
-import { type Resume } from "../resume/Resume";
+import { type Resume } from "../../app/resume/Resume";
 import List, { Item } from "./List";
 
 // Ensure Lato font is loaded for consistency

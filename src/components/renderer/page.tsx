@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import { PDFViewer } from "@react-pdf/renderer";
 
 import App from ".";
-import { Resume } from "../resume/Resume";
+import { Resume } from "../../app/resume/Resume";
 
 const Page: FC = () => {
   const [resumeData, setResumeData] = React.useState<Resume | undefined>();

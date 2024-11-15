@@ -1,11 +1,11 @@
 // src/Resume.tsx
-import React from 'react';
-import { Document } from '@react-pdf/renderer';
+import React from "react";
+import { Document } from "@react-pdf/renderer";
 
-import { type Resume } from '../resume/Resume';
-import ResumeTemplate1 from './ResumeTempate1';
-import ResumeTemplate2 from './ResumeTemplate2';
-import ResumeTemplateTest from './ResumeTemplate3';
+import { type Resume } from "../../app/resume/Resume";
+import ResumeTemplate1 from "./ResumeTempate1";
+import ResumeTemplate2 from "./ResumeTemplate2";
+import ResumeTemplateTest from "./ResumeTemplate3";
 
 // App component
 const App = ({ resumeData }: { resumeData: Resume }) => {
@@ -24,5 +24,5 @@ const App = ({ resumeData }: { resumeData: Resume }) => {
       <ResumeTemplateTest resume={resumeData} />
     </Document>
   );
-}
+};
 export default App;

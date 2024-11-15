@@ -12,16 +12,16 @@ import {
 import { Font } from "@react-pdf/renderer";
 import { useQuery } from "@tanstack/react-query";
 
-import ResumeTemplate1 from "../renderer/ResumeTempate1";
-import ResumeTemplate2 from "../renderer/ResumeTemplate2";
-import ResumeTemplate3 from "../renderer/ResumeTemplate3";
+import ResumeTemplate1 from "../../components/renderer/ResumeTempate1";
+import ResumeTemplate2 from "../../components/renderer/ResumeTemplate2";
+import ResumeTemplate3 from "../../components/renderer/ResumeTemplate3";
 import { type Resume } from "../resume/Resume";
 import { getResumeById } from "@/service/api";
 
 const templates = [
-  { id: 1, image: "/assets/template1.jpg" },
-  { id: 2, image: "/assets/template2.jpg" },
-  { id: 3, image: "/assets/template3.jpg" },
+  { id: 1, image: "../../components/renderer/img/template1.jpg" },
+  { id: 2, image: "../../components/renderer/img/template2.jpg" },
+  { id: 3, image: "../../components/renderer/img/template3.jpg" },
 ];
 
 // Ensure Lato font is loaded for consistency
@@ -35,16 +35,9 @@ const TemplateSelectionPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState("");
   // const location = useLocation();
   const [templateType, setTemplateType] = useState(0);
-  // const navigate = useNavigate();
-  // const resumeID = location.state?.id;
-  //Hardcode resume ID
-  const resumeID = "6707fbd1cb200b6b9a936aa2";
 
-  useEffect(() => {
-    if (resumeID === null || resumeID === undefined) {
-      //   navigate("/dashboard/resume");
-    }
-  }, [resumeID, navigate]);
+  //Hardcode resume ID
+  const resumeID = "6735dba4547af307b91f8192";
 
   const {
     isLoading,

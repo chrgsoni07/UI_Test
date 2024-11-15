@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar";
 import "./globals.css";
 import React from "react";
 import Providers from "./providers";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
           <Navbar />
+          <Toaster />
           {children}
         </Providers>
       </body>

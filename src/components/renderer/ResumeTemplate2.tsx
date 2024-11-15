@@ -11,7 +11,7 @@ import {
   View,
 } from "@react-pdf/renderer";
 
-import { type Resume } from "../resume/Resume";
+import { type Resume } from "../../app/resume/Resume";
 import List, { Item } from "./List";
 
 // Ensure Lato font is loaded for consistency
@@ -29,39 +29,29 @@ const ResumeTemplate2 = ({ resume }: { resume: Resume }) => (
           <Text style={styles.name}>{resume.name}</Text>
           <Text style={styles.jobTitleHeader}>{resume.jobTitle}</Text>
           <View style={styles.contactRow}>
-            <Text style={styles.contact}>
-              <Image
-                src={{
-                  uri: "/assets/Icons/envelope.png",
-                  method: "GET",
-                  headers: { "Cache-Control": "no-cache" },
-                  body: "",
-                }}
-              />
-              {resume.email}
-            </Text>
+            <Text style={styles.contact}>{resume.email}</Text>
 
             <Text style={styles.contact}>
-              <Image
+              {/* <Image
                 src={{
                   uri: "/assets/Icons/phone.png",
                   method: "GET",
                   headers: { "Cache-Control": "no-cache" },
                   body: "",
                 }}
-              />
+              /> */}
               {resume.phone}
             </Text>
 
             <Text style={styles.contact}>
-              <Image
+              {/* <Image
                 src={{
                   uri: "/assets/Icons/map-pin.png",
                   method: "GET",
                   headers: { "Cache-Control": "no-cache" },
                   body: "",
                 }}
-              />
+              /> */}
               {resume.location}
             </Text>
 

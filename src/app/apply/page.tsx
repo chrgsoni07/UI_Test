@@ -3,7 +3,7 @@
 import { type FC } from "react";
 import Stack from "@mui/material/Stack";
 import { Toaster } from "react-hot-toast";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+// import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import JobForm from "./JobForm";
 import UpdatedResume from "./updatedResume";
@@ -13,7 +13,7 @@ const Page: FC = () => {
   return (
     <Stack spacing={3}>
       <Toaster />
-      <Router>
+      {/* <Router>
         <Routes>
           <Route path="/dashboard/apply" element={<JobForm />} />
           <Route
@@ -25,7 +25,8 @@ const Page: FC = () => {
             element={<TemplateSelectionPage />}
           />
         </Routes>
-      </Router>
+      </Router> */}
+      <JobForm />
     </Stack>
   );
 };

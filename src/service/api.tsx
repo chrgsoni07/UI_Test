@@ -8,7 +8,7 @@ const BASE_URL_JOB_DETAIL = `${BASE_URL_API_GATEWAY}/api/0.1/job/`;
 const BASE_URL_FILE = `${BASE_URL_API_GATEWAY}/api/0.1/files/`;
 
 export const getResumeById = async (id: string) => {
-  const response = await (await axiosWithAuth()).get(BASE_URL_RESUME);
+  const response = await (await axiosWithAuth()).get(`${BASE_URL_RESUME}${id}`);
 
   return response.data;
 };
@@ -44,7 +44,7 @@ export const getJobDetailsFromUrl = async (url: string) => {
     await axiosWithAuth()
   ).get(`${BASE_URL_JOB_DETAIL}details?url=${url}`);
 
-  return response;
+  return response.data;
 };
 
 export const extractDataFromFile = async (formData: FormData) => {

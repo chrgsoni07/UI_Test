@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, type ChangeEvent, type FC, type FormEvent } from "react";
+import {
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type FC,
+  type FormEvent,
+} from "react";
 import { Box, Button, CircularProgress, Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { extractDataFromFile, saveResume } from "@/service/api";
@@ -34,18 +40,17 @@ const Page: FC = () => {
     },
     onSuccess(data) {
       toast.success("Resume saved successfully !");
-      if (data.id) {
-        redirect("/template");
-        //navigate to /template page
-        // navigate("/dashboard/template", { state: { id: data.id } });
-      } else {
-        console.error("Saved resume ID is undefined");
-      }
     },
     onError(error) {
       toast.error(error.message);
     },
   });
+
+  useEffect(() => {
+    if (savedResume?.id) {
+      redirect("/template");
+    }
+  }, [savedResume]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {

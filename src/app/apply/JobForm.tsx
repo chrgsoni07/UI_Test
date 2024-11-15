@@ -7,10 +7,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 import { type JobDetail } from "./JobDetail";
-import { getJobDetailsFromURL } from "@/service/api";
+import { getJobDetailsFromUrl } from "@/service/api";
 
 interface RowData {
   id: number;
@@ -24,7 +23,6 @@ const JobForm = () => {
     jobTitle: "",
     jobUrl: "",
   });
-  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({
     jobTitle: "",
@@ -32,14 +30,14 @@ const JobForm = () => {
   });
 
   const handleFetch = async () => {
-    const jobDetailResponse = await getJobDetailsFromURL(jobDetail.jobUrl);
+    const jobDetailResponse = await getJobDetailsFromUrl(jobDetail.jobUrl);
 
     console.log("job details comming from backend  ", jobDetailResponse);
 
     setJobDetail({
       ...jobDetail,
-      jobTitle: jobDetailResponse.jobTitle,
-      jobDescription: jobDetailResponse.jobDescription,
+      jobTitle: jobDetailResponse?.jobTitle,
+      jobDescription: jobDetailResponse?.jobDescription,
     });
   };
 
@@ -65,9 +63,9 @@ const JobForm = () => {
     setErrors(newErrors);
     if (hasErrors) return;
 
-    navigate("/dashboard/apply/update-resume", {
-      state: { jobDetail: jobDetail },
-    });
+    // navigate("/dashboard/apply/update-resume", {
+    //   state: { jobDetail: jobDetail },
+    // });
   };
 
   return (

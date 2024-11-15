@@ -9,7 +9,7 @@ import {
   type PageProps,
 } from "@react-pdf/renderer";
 
-import { type Resume } from "../resume/Resume";
+import { type Resume } from "../../app/resume/Resume";
 import CareerObjective from "./CareerObjective";
 import Education from "./Education";
 import Experience from "./Experience";
