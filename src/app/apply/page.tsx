@@ -7,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 
 import JobForm from "./JobForm";
 import UpdatedResume from "./updatedResume";
-import TemplateSelectionPage from "../template/TemplateSelectionPage";
+import TemplateSelectionPage from "../template/[resumeId]/TemplateSelectionPage";
 
 const Page: FC = () => {
   return (

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -11,10 +12,10 @@ import {
 import { Font } from "@react-pdf/renderer";
 import { useQuery } from "@tanstack/react-query";
 
-import ResumeTemplate1 from "../../components/renderer/ResumeTempate1";
-import ResumeTemplate2 from "../../components/renderer/ResumeTemplate2";
-import ResumeTemplate3 from "../../components/renderer/ResumeTemplate3";
-import { type Resume } from "../resume/Resume";
+import ResumeTemplate1 from "../../../components/renderer/ResumeTempate1";
+import ResumeTemplate2 from "../../../components/renderer/ResumeTemplate2";
+import ResumeTemplate3 from "../../../components/renderer/ResumeTemplate3";
+import { type Resume } from "../../resume/Resume";
 import { getResumeById } from "@/service/api";
 
 const templates = [
@@ -29,21 +30,29 @@ Font.register({
   src: `https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wWw.ttf`,
 });
 
-const TemplateSelectionPage: React.FC = () => {
+interface TemplateSelectionPageProps {
+  resumeId: string;
+}
+
+const TemplateSelectionPage: React.FC<TemplateSelectionPageProps> = ({
+  resumeId,
+}) => {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [templateType, setTemplateType] = useState(0);
 
-  const resumeID = "6735dba4547af307b91f8192";
+  if (!resumeId) {
+    return <p>Loading...</p>;
+  }
 
   const {
     isLoading,
     error,
     data,
-    refetch: getResumeByIDRQ,
+    refetch: getById,
   } = useQuery({
-    queryKey: ["oneResume", resumeID],
-    queryFn: () => getResumeById(resumeID),
+    queryKey: ["oneResume", resumeId],
+    queryFn: () => getResumeById(resumeId),
     enabled: false,
   });
 
@@ -51,7 +60,7 @@ const TemplateSelectionPage: React.FC = () => {
     setTemplateType(templateId);
     if (!data) {
       try {
-        await getResumeByIDRQ();
+        await getById();
       } catch (error) {
         console.log(error);
       }

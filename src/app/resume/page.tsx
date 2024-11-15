@@ -48,7 +48,7 @@ const Page: FC = () => {
 
   useEffect(() => {
     if (savedResume?.id) {
-      redirect("/template");
+      redirect(`/template/${savedResume.id}`);
     }
   }, [savedResume]);
 
