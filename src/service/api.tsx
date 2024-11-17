@@ -1,6 +1,8 @@
 import { type Resume } from "@/app/resume/Resume";
 import { axiosWithAuth } from "@/app/api/auth/[...nextauth]/axiosWithAuth";
 import { type JobDetail } from "@/app/apply/JobDetail";
+import extractDataMock from "@/mock/extractDataMock.json";
+import resumeByIdMock from "@/mock/resumeByIdMock.json";
 
 const BASE_URL_API_GATEWAY = "http://localhost:8443";
 const BASE_URL_RESUME = `${BASE_URL_API_GATEWAY}/api/0.1/resume/`;
@@ -32,6 +34,10 @@ export const deleteResumeByResumeId = async (id: string) => {
 };
 
 export const saveResume = async (data: Resume) => {
+  if (process.env.RETURN_MOCK === "true") {
+    return resumeByIdMock;
+  }
+
   const saveDataURL = `${BASE_URL_RESUME}`;
 
   const response = await (await axiosWithAuth()).post(saveDataURL, data);
@@ -48,8 +54,10 @@ export const getJobDetailsFromUrl = async (url: string) => {
 };
 
 export const extractDataFromFile = async (formData: FormData) => {
+  if (process.env.RETURN_MOCK === "true") {
+    return extractDataMock;
+  }
   const extractDataURL = `${BASE_URL_FILE}extract`;
-
   const response = await (await axiosWithAuth()).post(extractDataURL, formData);
 
   return (await response).data;

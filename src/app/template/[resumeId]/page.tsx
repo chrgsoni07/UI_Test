@@ -1,6 +1,6 @@
 import TemplateSelectionPage from "./TemplateSelectionPage";
 
-export default function ({
+export default function Page({
   params,
 }: {
   params: { resumeId: string };
