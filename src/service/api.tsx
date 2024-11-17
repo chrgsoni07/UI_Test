@@ -3,6 +3,7 @@ import { axiosWithAuth } from "@/app/api/auth/[...nextauth]/axiosWithAuth";
 import { type JobDetail } from "@/app/apply/JobDetail";
 import extractDataMock from "@/mock/extractDataMock.json";
 import resumeByIdMock from "@/mock/resumeByIdMock.json";
+import jobDetailsMock from "@/mock/jobDetailsMock.json";
 
 const BASE_URL_API_GATEWAY = "http://localhost:8443";
 const BASE_URL_RESUME = `${BASE_URL_API_GATEWAY}/api/0.1/resume/`;
@@ -49,6 +50,9 @@ export const saveResume = async (data: Resume) => {
 };
 
 export const getJobDetailsFromUrl = async (url: string) => {
+  if (process.env.RETURN_MOCK === "true") {
+    return jobDetailsMock;
+  }
   const response = await (
     await axiosWithAuth()
   ).get(`${BASE_URL_JOB_DETAIL}details?url=${url}`);
@@ -63,7 +67,7 @@ export const extractDataFromFile = async (formData: FormData) => {
   const extractDataURL = `${BASE_URL_FILE}extract`;
   const response = await (await axiosWithAuth()).post(extractDataURL, formData);
 
-  return (await response).data;
+  return response.data;
 };
 
 export const saveJobSpecificResume = async (data: Resume) => {

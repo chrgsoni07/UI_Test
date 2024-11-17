@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
+  Button,
   Chip,
   Divider,
   Grid,
@@ -11,21 +12,49 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import toast from "react-hot-toast";
 import { Projects, type Resume, type Suggestion } from "./Resume";
+import { useMutation } from "@tanstack/react-query";
+import { saveResume } from "@/service/api";
+import { redirect } from "next/navigation";
 
 type PropTypes = {
   resumeData: Resume;
-  setResumeData: (data: Resume) => void;
 };
 
 const EditablePreview: React.FC<PropTypes> = ({
-  resumeData,
-  setResumeData,
+  resumeData: resumeDataProp,
 }) => {
+  const [resumeData, setResumeData] = useState<Resume>(resumeDataProp);
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Suggestion>();
   const [anchorEl, setAnchorEl] = useState<HTMLElement>();
   const suggestionArray = resumeData.suggestions;
 
+  const { data: savedResume, mutate: postSave } = useMutation({
+    mutationFn: (rData: Resume): Promise<Resume> => {
+      return saveResume(rData);
+    },
+    onSuccess(data) {
+      toast.success("Resume saved successfully !");
+    },
+    onError(error) {
+      toast.error(error.message);
+    },
+  });
+
+  useEffect(() => {
+    if (savedResume?.id) {
+      redirect(`/template/${savedResume.id}`);
+    }
+  }, [savedResume]);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!resumeData) return;
+
+    postSave(resumeData);
+  };
   const handleApplySuggestion = () => {
     if (!(hoveredSuggestion && resumeData.workExperience)) {
       return;
@@ -183,141 +212,149 @@ const EditablePreview: React.FC<PropTypes> = ({
   };
 
   return (
-    <Grid item xs={12}>
-      <Typography style={{ color: "#635BFF" }} variant="subtitle1" gutterBottom>
-        Details
-      </Typography>
+    <form onSubmit={handleSubmit} style={{ marginLeft: 20 }}>
+      <Grid item xs={12}>
+        <Typography
+          style={{ color: "#635BFF" }}
+          variant="subtitle1"
+          gutterBottom
+        >
+          Details
+        </Typography>
 
-      <Grid container spacing={1}>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            id="name"
-            label="Name"
-            value={resumeData.name}
-            InputLabelProps={{ shrink: true }}
-            onChange={(e) =>
-              setResumeData({ ...resumeData, name: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={4}>
-          <TextField
-            id="email"
-            label="Email"
-            value={resumeData.email}
-            InputLabelProps={{ shrink: true }}
-            type="email"
-            onChange={(e) =>
-              setResumeData({ ...resumeData, email: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={4}>
-          <TextField
-            id="jobTitle"
-            label="Job Title"
-            value={resumeData.jobTitle}
-            InputLabelProps={{ shrink: true }}
-            onChange={(e) =>
-              setResumeData({ ...resumeData, jobTitle: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={3}>
-          <TextField
-            id="linkedin"
-            label="LinkedIn Profile"
-            value={resumeData.linkedIn}
-            InputLabelProps={{ shrink: true }}
-            onChange={(e) =>
-              setResumeData({ ...resumeData, linkedIn: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          />
-        </Grid>
-        {resumeData.github && (
-          <Grid item xs={12} sm={3}>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={4}>
             <TextField
-              id="github"
-              label="GitHub Profile"
-              value={resumeData.github}
+              id="name"
+              label="Name"
+              value={resumeData.name}
               InputLabelProps={{ shrink: true }}
               onChange={(e) =>
-                setResumeData({ ...resumeData, github: e.target.value })
+                setResumeData({ ...resumeData, name: e.target.value })
               }
               fullWidth
               margin="normal"
             />
           </Grid>
-        )}
-        <Grid item xs={12} sm={3}>
-          <TextField
-            id="phone"
-            label="Phone"
-            value={resumeData.phone}
-            InputLabelProps={{ shrink: true }}
-            onChange={(e) =>
-              setResumeData({ ...resumeData, phone: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          />
+
+          <Grid item xs={12} sm={4}>
+            <TextField
+              id="email"
+              label="Email"
+              value={resumeData.email}
+              InputLabelProps={{ shrink: true }}
+              type="email"
+              onChange={(e) =>
+                setResumeData({ ...resumeData, email: e.target.value })
+              }
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <TextField
+              id="jobTitle"
+              label="Job Title"
+              value={resumeData.jobTitle}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) =>
+                setResumeData({ ...resumeData, jobTitle: e.target.value })
+              }
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <TextField
+              id="linkedin"
+              label="LinkedIn Profile"
+              value={resumeData.linkedIn}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) =>
+                setResumeData({ ...resumeData, linkedIn: e.target.value })
+              }
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+          {resumeData.github && (
+            <Grid item xs={12} sm={3}>
+              <TextField
+                id="github"
+                label="GitHub Profile"
+                value={resumeData.github}
+                InputLabelProps={{ shrink: true }}
+                onChange={(e) =>
+                  setResumeData({ ...resumeData, github: e.target.value })
+                }
+                fullWidth
+                margin="normal"
+              />
+            </Grid>
+          )}
+          <Grid item xs={12} sm={3}>
+            <TextField
+              id="phone"
+              label="Phone"
+              value={resumeData.phone}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) =>
+                setResumeData({ ...resumeData, phone: e.target.value })
+              }
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <TextField
+              id="location"
+              label="Location/Place"
+              value={resumeData.location}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) =>
+                setResumeData({ ...resumeData, location: e.target.value })
+              }
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
         </Grid>
 
-        <Grid item xs={12} sm={3}>
-          <TextField
-            id="location"
-            label="Location/Place"
-            value={resumeData.location}
-            InputLabelProps={{ shrink: true }}
-            onChange={(e) =>
-              setResumeData({ ...resumeData, location: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          />
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              id="careerObjective"
+              label="Carrer Objective"
+              value={resumeData.careerObjective}
+              InputLabelProps={{ shrink: true }}
+              multiline
+              rows={4}
+              fullWidth
+              onChange={(e) =>
+                setResumeData({
+                  ...resumeData,
+                  careerObjective: e.target.value,
+                })
+              }
+              margin="normal"
+            />
+          </Grid>
         </Grid>
-      </Grid>
 
-      <Grid container spacing={1}>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            id="careerObjective"
-            label="Carrer Objective"
-            value={resumeData.careerObjective}
-            InputLabelProps={{ shrink: true }}
-            multiline
-            rows={4}
-            fullWidth
-            onChange={(e) =>
-              setResumeData({ ...resumeData, careerObjective: e.target.value })
-            }
-            margin="normal"
-          />
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            {resumeData.skills?.map((skill) => (
+              <Chip label={skill} key={skill} onDelete={handelSkillChange} />
+            ))}
+          </Grid>
         </Grid>
-      </Grid>
 
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          {resumeData.skills?.map((skill) => (
-            <Chip label={skill} onDelete={handelSkillChange} />
-          ))}
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          {/* {resumeData.certifications ? (
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            {/* {resumeData.certifications ? (
             <MuiChipsInput
               value={resumeData.certifications} // Should use certifications here
               onChange={handelCertificationChange}
@@ -326,132 +363,35 @@ const EditablePreview: React.FC<PropTypes> = ({
               fullWidth
             />
           ) : null}{" "}*/}
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <Typography
-            style={{ color: "#635BFF" }}
-            variant="subtitle1"
-            gutterBottom
-          >
-            Education
-          </Typography>
-        </Grid>
-
-        {resumeData.education.map((edu, index) => (
-          <Grid container spacing={1} item xs={12} key={edu.degree}>
-            <Grid item xs={12} sm={3}>
-              <TextField
-                id={`degree${index + 1}`}
-                label="Degree"
-                value={edu.degree}
-                InputLabelProps={{ shrink: true }}
-                margin="normal"
-                onChange={(e) =>
-                  handelWorkExperienceChange(
-                    index,
-                    "degree",
-                    e.target.value,
-                    "education"
-                  )
-                }
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={3}>
-              <TextField
-                id={`university${index + 1}`}
-                label="University"
-                value={edu.university}
-                InputLabelProps={{ shrink: true }}
-                margin="normal"
-                onChange={(e) =>
-                  handelWorkExperienceChange(
-                    index,
-                    "university",
-                    e.target.value,
-                    "education"
-                  )
-                }
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={3}>
-              <TextField
-                id={`duration${index + 1}`}
-                label="Duration"
-                value={edu.duration}
-                InputLabelProps={{ shrink: true }}
-                margin="normal"
-                onChange={(e) =>
-                  handelWorkExperienceChange(
-                    index,
-                    "duration",
-                    e.target.value,
-                    "education"
-                  )
-                }
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={3}>
-              <TextField
-                id={`location${index + 1}`}
-                label="Location"
-                value={edu.location}
-                InputLabelProps={{ shrink: true }}
-                margin="normal"
-                onChange={(e) =>
-                  handelWorkExperienceChange(
-                    index,
-                    "location",
-                    e.target.value,
-                    "education"
-                  )
-                }
-                fullWidth
-              />
-            </Grid>
           </Grid>
-        ))}
-      </Grid>
+        </Grid>
 
-      <div>
-        <Typography
-          style={{ color: "#635BFF" }}
-          variant="subtitle1"
-          gutterBottom
-        >
-          Work Experience
-        </Typography>
-        {resumeData.workExperience.map((exp, index) => (
-          <div key={index} className="experience">
-            <Divider>
-              <Chip
-                label={`${exp.company} | ${exp.jobPosition}`}
-                size="small"
-              />
-            </Divider>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Typography
+              style={{ color: "#635BFF" }}
+              variant="subtitle1"
+              gutterBottom
+            >
+              Education
+            </Typography>
+          </Grid>
 
-            <Grid container spacing={1}>
+          {resumeData.education.map((edu, index) => (
+            <Grid container spacing={1} item xs={12} key={edu.degree}>
               <Grid item xs={12} sm={3}>
                 <TextField
-                  id={`jobPosition${index + 1}`}
-                  label="Job Position"
-                  value={exp.jobPosition}
+                  id={`degree${index + 1}`}
+                  label="Degree"
+                  value={edu.degree}
                   InputLabelProps={{ shrink: true }}
                   margin="normal"
                   onChange={(e) =>
                     handelWorkExperienceChange(
                       index,
-                      "jobPosition",
+                      "degree",
                       e.target.value,
-                      "workExperience"
+                      "education"
                     )
                   }
                   fullWidth
@@ -460,36 +400,17 @@ const EditablePreview: React.FC<PropTypes> = ({
 
               <Grid item xs={12} sm={3}>
                 <TextField
-                  id={`company${index + 1}`}
-                  label="Company"
-                  value={exp.company}
+                  id={`university${index + 1}`}
+                  label="University"
+                  value={edu.university}
                   InputLabelProps={{ shrink: true }}
                   margin="normal"
                   onChange={(e) =>
                     handelWorkExperienceChange(
                       index,
-                      "company",
+                      "university",
                       e.target.value,
-                      "workExperience"
-                    )
-                  }
-                  fullWidth
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={3}>
-                <TextField
-                  id={`location${index + 1}`}
-                  label="Location"
-                  value={exp.location}
-                  InputLabelProps={{ shrink: true }}
-                  margin="normal"
-                  onChange={(e) =>
-                    handelWorkExperienceChange(
-                      index,
-                      "location",
-                      e.target.value,
-                      "workExperience"
+                      "education"
                     )
                   }
                   fullWidth
@@ -500,7 +421,7 @@ const EditablePreview: React.FC<PropTypes> = ({
                 <TextField
                   id={`duration${index + 1}`}
                   label="Duration"
-                  value={exp.duration}
+                  value={edu.duration}
                   InputLabelProps={{ shrink: true }}
                   margin="normal"
                   onChange={(e) =>
@@ -508,257 +429,393 @@ const EditablePreview: React.FC<PropTypes> = ({
                       index,
                       "duration",
                       e.target.value,
-                      "workExperience"
+                      "education"
+                    )
+                  }
+                  fullWidth
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={3}>
+                <TextField
+                  id={`location${index + 1}`}
+                  label="Location"
+                  value={edu.location}
+                  InputLabelProps={{ shrink: true }}
+                  margin="normal"
+                  onChange={(e) =>
+                    handelWorkExperienceChange(
+                      index,
+                      "location",
+                      e.target.value,
+                      "education"
                     )
                   }
                   fullWidth
                 />
               </Grid>
             </Grid>
+          ))}
+        </Grid>
 
-            <Grid container alignItems="center" spacing={1}>
-              <Grid item>
-                <Typography
-                  style={{ color: "#635BFF" }}
-                  variant="subtitle1"
-                  gutterBottom
-                >
-                  Responsibilities
-                </Typography>
-              </Grid>
-              <Grid item>
-                <IconButton
-                  onClick={() => addResponsibility(index)}
-                  aria-label="add"
-                  color="primary"
-                >
-                  +
-                </IconButton>
-              </Grid>
-            </Grid>
-
-            {exp.responsibilities.map((resp, respIndex) => (
-              <Grid container alignItems="center" key={respIndex}>
-                <Grid item xs>
-                  <StyledTextareaAutosize
-                    value={resp}
-                    onChange={(e) =>
-                      handelWorkExOnResponsiblity(
-                        e.target.value,
-                        index,
-                        respIndex
-                      )
-                    }
-                    onMouseEnter={(e) => handleResponsibilityHover(resp, e)}
-                    customColor={isMatchingSuggestion(resp) ? "orange" : ""}
-                  />
-                </Grid>
-                <Grid item>
-                  <IconButton
-                    onClick={() => removeResponsibility(index, respIndex)}
-                    aria-label="delete"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            ))}
-
-            <Popover
-              open={Boolean(hoveredSuggestion)}
-              anchorEl={anchorEl}
-              onClose={() => setHoveredSuggestion(undefined)}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-            >
-              <PopoverContent onClick={handleApplySuggestion}>
-                <Typography variant="caption" display="block" gutterBottom>
-                  {hoveredSuggestion?.suggestedText}
-                </Typography>
-              </PopoverContent>
-            </Popover>
-
-            <Grid container alignItems="center" spacing={1}>
-              <Grid item>
-                <Typography
-                  style={{ color: "#635BFF" }}
-                  variant="subtitle1"
-                  gutterBottom
-                >
-                  Achievements
-                </Typography>
-              </Grid>
-              <Grid item>
-                <IconButton
-                  onClick={() => addAchievements(index)}
-                  aria-label="add"
-                  color="primary"
-                >
-                  +
-                </IconButton>
-              </Grid>
-            </Grid>
-            {exp.achievements && exp.achievements.length > 0 && (
-              <div>
-                {exp.achievements.map((ach, achIndex) => (
-                  <Grid container alignItems="center" key={achIndex}>
-                    <Grid item xs>
-                      <StyledTextareaAutosize value={ach} />
-                    </Grid>
-                    <Grid item>
-                      <IconButton
-                        onClick={() => removeAchivements(index, achIndex)}
-                        aria-label="delete"
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Projects Section */}
-      <Grid container spacing={1} alignItems="center">
-        <Grid item>
+        <div>
           <Typography
             style={{ color: "#635BFF" }}
             variant="subtitle1"
             gutterBottom
           >
-            Projects
+            Work Experience
           </Typography>
-        </Grid>
-        <Grid item>
-          <IconButton
-            onClick={() => addProject()}
-            aria-label="add"
-            color="primary"
-          >
-            +
-          </IconButton>
-        </Grid>
-
-        {resumeData.projects &&
-          resumeData.projects.length > 0 &&
-          resumeData.projects.map((project, index) => (
-            <Grid container spacing={1} item xs={12} key={index}>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  id={`projectName${index + 1}`}
-                  label="Project Name"
-                  value={project.name}
-                  InputLabelProps={{ shrink: true }}
-                  margin="normal"
-                  onChange={(e) => {
-                    const updatedProjects = [...resumeData.projects];
-                    updatedProjects[index].name = e.target.value;
-                    setResumeData({ ...resumeData, projects: updatedProjects });
-                  }}
-                  fullWidth
+          {resumeData.workExperience.map((exp, index) => (
+            <div key={index} className="experience">
+              <Divider>
+                <Chip
+                  label={`${exp.company} | ${exp.jobPosition}`}
+                  size="small"
                 />
+              </Divider>
+
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    id={`jobPosition${index + 1}`}
+                    label="Job Position"
+                    value={exp.jobPosition}
+                    InputLabelProps={{ shrink: true }}
+                    margin="normal"
+                    onChange={(e) =>
+                      handelWorkExperienceChange(
+                        index,
+                        "jobPosition",
+                        e.target.value,
+                        "workExperience"
+                      )
+                    }
+                    fullWidth
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    id={`company${index + 1}`}
+                    label="Company"
+                    value={exp.company}
+                    InputLabelProps={{ shrink: true }}
+                    margin="normal"
+                    onChange={(e) =>
+                      handelWorkExperienceChange(
+                        index,
+                        "company",
+                        e.target.value,
+                        "workExperience"
+                      )
+                    }
+                    fullWidth
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    id={`location${index + 1}`}
+                    label="Location"
+                    value={exp.location}
+                    InputLabelProps={{ shrink: true }}
+                    margin="normal"
+                    onChange={(e) =>
+                      handelWorkExperienceChange(
+                        index,
+                        "location",
+                        e.target.value,
+                        "workExperience"
+                      )
+                    }
+                    fullWidth
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    id={`duration${index + 1}`}
+                    label="Duration"
+                    value={exp.duration}
+                    InputLabelProps={{ shrink: true }}
+                    margin="normal"
+                    onChange={(e) =>
+                      handelWorkExperienceChange(
+                        index,
+                        "duration",
+                        e.target.value,
+                        "workExperience"
+                      )
+                    }
+                    fullWidth
+                  />
+                </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  id={`projectYear${index + 1}`}
-                  label="Project Year"
-                  value={project.year}
-                  InputLabelProps={{ shrink: true }}
-                  margin="normal"
-                  onChange={(e) => {
-                    const updatedProjects = [...resumeData.projects];
-                    updatedProjects[index].year = e.target.value;
-                    setResumeData({ ...resumeData, projects: updatedProjects });
-                  }}
-                  fullWidth
-                />
+              <Grid container alignItems="center" spacing={1}>
+                <Grid item>
+                  <Typography
+                    style={{ color: "#635BFF" }}
+                    variant="subtitle1"
+                    gutterBottom
+                  >
+                    Responsibilities
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    onClick={() => addResponsibility(index)}
+                    aria-label="add"
+                    color="primary"
+                  >
+                    +
+                  </IconButton>
+                </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  id={`projectDescription${index + 1}`}
-                  label="Description"
-                  value={project.description}
-                  InputLabelProps={{ shrink: true }}
-                  margin="normal"
-                  multiline
-                  minRows={2}
-                  maxRows={4}
-                  onChange={(e) => {
-                    const updatedProjects = [...resumeData.projects];
-                    updatedProjects[index].description = e.target.value;
-                    setResumeData({ ...resumeData, projects: updatedProjects });
-                  }}
-                  fullWidth
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Grid container alignItems="center" spacing={1}>
-                  <Grid item>
-                    <Typography
-                      style={{ color: "#635BFF" }}
-                      variant="subtitle1"
-                      gutterBottom
-                    >
-                      Details
-                    </Typography>
+              {exp.responsibilities.map((resp, respIndex) => (
+                <Grid container alignItems="center" key={respIndex}>
+                  <Grid item xs>
+                    <StyledTextareaAutosize
+                      value={resp}
+                      onChange={(e) =>
+                        handelWorkExOnResponsiblity(
+                          e.target.value,
+                          index,
+                          respIndex
+                        )
+                      }
+                      onMouseEnter={(e) => handleResponsibilityHover(resp, e)}
+                      customColor={isMatchingSuggestion(resp) ? "orange" : ""}
+                    />
                   </Grid>
                   <Grid item>
                     <IconButton
-                      onClick={() => addProjectDetail(index)}
-                      aria-label="add"
-                      color="primary"
+                      onClick={() => removeResponsibility(index, respIndex)}
+                      aria-label="delete"
                     >
-                      +
+                      <DeleteIcon />
                     </IconButton>
                   </Grid>
                 </Grid>
+              ))}
 
-                {project.details && project.details.length > 0 && (
-                  <div>
-                    {project.details.map((prj, prjIndex) => (
-                      <Grid
-                        container
-                        alignItems="center"
-                        key={prjIndex}
-                        spacing={1}
-                      >
-                        <Grid item xs>
-                          <StyledTextareaAutosize
-                            value={prj}
-                            style={{ width: "100%", resize: "vertical" }}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <IconButton
-                            onClick={() =>
-                              removeProjectDetails(index, prjIndex)
-                            }
-                            aria-label="delete"
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Grid>
-                      </Grid>
-                    ))}
-                  </div>
-                )}
+              <Popover
+                open={Boolean(hoveredSuggestion)}
+                anchorEl={anchorEl}
+                onClose={() => setHoveredSuggestion(undefined)}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                <PopoverContent onClick={handleApplySuggestion}>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    {hoveredSuggestion?.suggestedText}
+                  </Typography>
+                </PopoverContent>
+              </Popover>
+
+              <Grid container alignItems="center" spacing={1}>
+                <Grid item>
+                  <Typography
+                    style={{ color: "#635BFF" }}
+                    variant="subtitle1"
+                    gutterBottom
+                  >
+                    Achievements
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    onClick={() => addAchievements(index)}
+                    aria-label="add"
+                    color="primary"
+                  >
+                    +
+                  </IconButton>
+                </Grid>
               </Grid>
-            </Grid>
+              {exp.achievements && exp.achievements.length > 0 && (
+                <div>
+                  {exp.achievements.map((ach, achIndex) => (
+                    <Grid container alignItems="center" key={achIndex}>
+                      <Grid item xs>
+                        <StyledTextareaAutosize value={ach} />
+                      </Grid>
+                      <Grid item>
+                        <IconButton
+                          onClick={() => removeAchivements(index, achIndex)}
+                          aria-label="delete"
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
+        </div>
+
+        {/* Projects Section */}
+        <Grid container spacing={1} alignItems="center">
+          <Grid item>
+            <Typography
+              style={{ color: "#635BFF" }}
+              variant="subtitle1"
+              gutterBottom
+            >
+              Projects
+            </Typography>
+          </Grid>
+          <Grid item>
+            <IconButton
+              onClick={() => addProject()}
+              aria-label="add"
+              color="primary"
+            >
+              +
+            </IconButton>
+          </Grid>
+
+          {resumeData.projects &&
+            resumeData.projects.length > 0 &&
+            resumeData.projects.map((project, index) => (
+              <Grid container spacing={1} item xs={12} key={index}>
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    id={`projectName${index + 1}`}
+                    label="Project Name"
+                    value={project.name}
+                    InputLabelProps={{ shrink: true }}
+                    margin="normal"
+                    onChange={(e) => {
+                      const updatedProjects = [...resumeData.projects];
+                      updatedProjects[index].name = e.target.value;
+                      setResumeData({
+                        ...resumeData,
+                        projects: updatedProjects,
+                      });
+                    }}
+                    fullWidth
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    id={`projectYear${index + 1}`}
+                    label="Project Year"
+                    value={project.year}
+                    InputLabelProps={{ shrink: true }}
+                    margin="normal"
+                    onChange={(e) => {
+                      const updatedProjects = [...resumeData.projects];
+                      updatedProjects[index].year = e.target.value;
+                      setResumeData({
+                        ...resumeData,
+                        projects: updatedProjects,
+                      });
+                    }}
+                    fullWidth
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    id={`projectDescription${index + 1}`}
+                    label="Description"
+                    value={project.description}
+                    InputLabelProps={{ shrink: true }}
+                    margin="normal"
+                    multiline
+                    minRows={2}
+                    maxRows={4}
+                    onChange={(e) => {
+                      const updatedProjects = [...resumeData.projects];
+                      updatedProjects[index].description = e.target.value;
+                      setResumeData({
+                        ...resumeData,
+                        projects: updatedProjects,
+                      });
+                    }}
+                    fullWidth
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Grid container alignItems="center" spacing={1}>
+                    <Grid item>
+                      <Typography
+                        style={{ color: "#635BFF" }}
+                        variant="subtitle1"
+                        gutterBottom
+                      >
+                        Details
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <IconButton
+                        onClick={() => addProjectDetail(index)}
+                        aria-label="add"
+                        color="primary"
+                      >
+                        +
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+
+                  {project.details && project.details.length > 0 && (
+                    <div>
+                      {project.details.map((prj, prjIndex) => (
+                        <Grid
+                          container
+                          alignItems="center"
+                          key={prjIndex}
+                          spacing={1}
+                        >
+                          <Grid item xs>
+                            <StyledTextareaAutosize
+                              value={prj}
+                              style={{ width: "100%", resize: "vertical" }}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <IconButton
+                              onClick={() =>
+                                removeProjectDetails(index, prjIndex)
+                              }
+                              aria-label="delete"
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Grid>
+                        </Grid>
+                      ))}
+                    </div>
+                  )}
+                </Grid>
+              </Grid>
+            ))}
+        </Grid>
       </Grid>
-    </Grid>
+      <Grid item xs={12}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={!resumeData}
+        >
+          Save
+        </Button>
+      </Grid>
+    </form>
   );
 };
 

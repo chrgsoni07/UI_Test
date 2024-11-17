@@ -1,26 +1,16 @@
 "use client";
 
-import {
-  useEffect,
-  useState,
-  type ChangeEvent,
-  type FC,
-  type FormEvent,
-} from "react";
-import { Box, Button, CircularProgress, Grid, TextField } from "@mui/material";
+import { type ChangeEvent, type FC } from "react";
+import { Box, Button, CircularProgress, Grid } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { extractDataFromFile, saveResume } from "@/service/api";
+import { extractDataFromFile } from "@/service/api";
 import EditablePreview from "@/app/resume/EditablePreview";
 import { type Resume } from "./Resume";
 import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
 
 const Page: FC = () => {
-  const [selectedFile, setSelectedFile] = useState<File>();
-  const [resumeData, setResumeData] = useState<Resume>();
-
   const {
-    data: responseData,
+    data: resumeData,
     mutate: postCall,
     error: postError,
     isPending,
@@ -29,36 +19,17 @@ const Page: FC = () => {
       return extractDataFromFile(rData);
     },
     onSuccess(data) {
-      //   toast.success('Resume uploaded successfully');
-      setResumeData(data);
+      toast.success("Resume uploaded successfully");
     },
   });
 
-  const { data: savedResume, mutate: postSave } = useMutation({
-    mutationFn: (rData: Resume): Promise<Resume> => {
-      return saveResume(rData);
-    },
-    onSuccess(data) {
-      toast.success("Resume saved successfully !");
-    },
-    onError(error) {
-      toast.error(error.message);
-    },
-  });
-
-  useEffect(() => {
-    if (savedResume?.id) {
-      redirect(`/template/${savedResume.id}`);
+  const handleUpload = async (
+    e: ChangeEvent<HTMLInputElement>
+  ): Promise<void> => {
+    if (!e.target.files) {
+      return;
     }
-  }, [savedResume]);
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
-    }
-  };
-
-  const handleUpload = async (): Promise<void> => {
+    const selectedFile = e.target.files[0];
     if (!selectedFile) return;
 
     const formData = new FormData();
@@ -68,16 +39,8 @@ const Page: FC = () => {
     postCall(formData);
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!resumeData) return;
-
-    postSave(resumeData);
-  };
-
   return (
-    <Box position="relative" display="flex">
+    <Box display="flex">
       {isPending && (
         <Box
           position="absolute"
@@ -88,74 +51,30 @@ const Page: FC = () => {
           <CircularProgress />
         </Box>
       )}
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} container alignItems="center">
+
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={12} container alignItems="center">
+          <Button
+            component="label"
+            variant="contained"
+            disabled={isPending}
+            startIcon={
+              isPending ? <CircularProgress size={24} color="inherit" /> : null
+            }
+            sx={{ textTransform: "none" }}
+          >
+            {isPending ? "Uploading..." : "Upload"}
             <input
               id="file-upload"
               type="file"
-              onChange={handleFileChange}
-              style={{ display: "none" }}
+              onChange={handleUpload}
+              hidden
             />
-            <label htmlFor="file-upload">
-              <TextField
-                variant="outlined"
-                fullWidth
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Button
-                        variant="contained"
-                        component="span"
-                        color="primary"
-                      >
-                        Browse
-                      </Button>
-                    </Box>
-                  ),
-                }}
-                value={selectedFile ? selectedFile.name : ""}
-                placeholder="No file selected"
-                sx={{ marginRight: 2 }}
-              />
-            </label>
-
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleUpload}
-              disabled={!selectedFile || isPending}
-              startIcon={
-                isPending ? (
-                  <CircularProgress size={24} color="inherit" />
-                ) : null
-              }
-              sx={{ textTransform: "none" }}
-            >
-              {isPending ? "Uploading..." : "Upload"}
-            </Button>
-          </Grid>
-
-          {resumeData && (
-            <EditablePreview
-              resumeData={resumeData}
-              setResumeData={setResumeData}
-            />
-          )}
-
-          <Grid item xs={12}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={!resumeData}
-            >
-              Save
-            </Button>
-          </Grid>
+          </Button>
         </Grid>
-      </form>
+
+        {resumeData && <EditablePreview resumeData={resumeData} />}
+      </Grid>
     </Box>
   );
 };
