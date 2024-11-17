@@ -10,6 +10,9 @@ const BASE_URL_JOB_DETAIL = `${BASE_URL_API_GATEWAY}/api/0.1/job/`;
 const BASE_URL_FILE = `${BASE_URL_API_GATEWAY}/api/0.1/files/`;
 
 export const getResumeById = async (id: string) => {
+  if (process.env.RETURN_MOCK === "true") {
+    return resumeByIdMock;
+  }
   const response = await (await axiosWithAuth()).get(`${BASE_URL_RESUME}${id}`);
 
   return response.data;
