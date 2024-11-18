@@ -13,9 +13,11 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import SignInButton from "./SignInButton";
+import { signOut, useSession } from "next-auth/react";
 
 const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -40,13 +42,34 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  function handelSignIn(): void {
-    console.log("Handel sign in");
-  }
-
-  function handelSignOut(): void {
-    console.log("Handel sign out");
-  }
+  const session = useSession();
+  const settings = {
+    Profile: (
+      <MenuItem onClick={handleCloseUserMenu}>
+        <Typography sx={{ textAlign: "center" }}>Profile</Typography>
+      </MenuItem>
+    ),
+    Account: (
+      <MenuItem onClick={handleCloseUserMenu}>
+        <Typography sx={{ textAlign: "center" }}>Account</Typography>
+      </MenuItem>
+    ),
+    Dashboard: (
+      <MenuItem onClick={handleCloseUserMenu}>
+        <Typography sx={{ textAlign: "center" }}>Dashboard</Typography>
+      </MenuItem>
+    ),
+    Logout: session.status === "authenticated" && (
+      <MenuItem
+        onClick={() => {
+          signOut();
+          handleCloseUserMenu();
+        }}
+      >
+        <Typography sx={{ textAlign: "center" }}>Logout</Typography>
+      </MenuItem>
+    ),
+  };
 
   return (
     <AppBar position="static">
@@ -139,21 +162,7 @@ function ResponsiveAppBar() {
           <Box
             sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 2 }}
           >
-            <Button
-              key="signin"
-              onClick={() => handelSignIn()}
-              sx={{ my: 2, color: "white" }}
-            >
-              Sign In
-            </Button>
-
-            <Button
-              key="signOut"
-              onClick={() => handelSignOut()}
-              sx={{ my: 2, color: "white" }}
-            >
-              Sign Out
-            </Button>
+            <SignInButton />
 
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -177,12 +186,8 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
+              {Object.entries(settings).map(([key, component]) => (
+                <React.Fragment key={key}>{component}</React.Fragment>
               ))}
             </Menu>
           </Box>

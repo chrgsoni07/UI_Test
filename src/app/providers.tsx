@@ -1,5 +1,8 @@
 // In Next.js, this file would be called: app/providers.tsx
 "use client";
+import theme from "@/theme";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 // Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
 import {
@@ -48,6 +51,14 @@ export default function Providers({
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <AppRouterCacheProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </ThemeProvider>
+    </AppRouterCacheProvider>
   );
 }
