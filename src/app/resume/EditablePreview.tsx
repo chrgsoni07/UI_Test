@@ -11,6 +11,7 @@ import {
   TextareaAutosize,
   TextField,
   Typography,
+  Autocomplete,
 } from "@mui/material";
 import toast from "react-hot-toast";
 import { Projects, type Resume, type Suggestion } from "./Resume";
@@ -123,12 +124,35 @@ const EditablePreview: React.FC<PropTypes> = ({
     setResumeData({ ...resumeData, projects: copyProjects });
   };
 
-  const handelSkillChange = (e: any) => {
-    setResumeData({ ...resumeData, skills: e });
+  const handleSkillChange = (newValue: string[]) => {
+    setResumeData({ ...resumeData, skills: newValue });
+  };
+
+  const handleSkillDelete = (deletedSkill: string) => {
+    if (!resumeData.skills) {
+      console.log("handleSkillDelte");
+      return;
+    }
+
+    const updatedSkills = resumeData.skills.filter(
+      (skill) => skill !== deletedSkill
+    );
+    setResumeData({ ...resumeData, skills: updatedSkills });
   };
 
   const handelCertificationChange = (e: any) => {
     setResumeData({ ...resumeData, certifications: e });
+  };
+
+  const handleCertificationDel = (deletedCert: string) => {
+    if (!resumeData.certifications) {
+      return;
+    }
+
+    const updatateCert = resumeData.certifications.filter(
+      (cert) => cert !== deletedCert
+    );
+    setResumeData({ ...resumeData, certifications: updatateCert });
   };
 
   function removeResponsibility(expIndex: number, respIndex: number): void {
@@ -346,23 +370,55 @@ const EditablePreview: React.FC<PropTypes> = ({
 
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            {resumeData.skills?.map((skill) => (
-              <Chip label={skill} key={skill} onDelete={handelSkillChange} />
-            ))}
+            <Autocomplete
+              multiple
+              freeSolo
+              options={[]}
+              value={resumeData.skills}
+              onChange={(event, newValue) => handleSkillChange(newValue)}
+              clearIcon={false}
+              renderTags={(value, props) =>
+                value.map((option, index) => (
+                  <Chip
+                    label={option}
+                    clickable
+                    key={index}
+                    {...props}
+                    onDelete={() => handleSkillDelete(option)}
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField {...params} label="Skills" margin="normal" />
+              )}
+            />
           </Grid>
         </Grid>
 
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            {/* {resumeData.certifications ? (
-            <MuiChipsInput
-              value={resumeData.certifications} // Should use certifications here
-              onChange={handelCertificationChange}
-              label="Certifications"
-              margin="normal"
-              fullWidth
+            <Autocomplete
+              multiple
+              freeSolo
+              options={[]}
+              value={resumeData.certifications}
+              onChange={(newValue) => handelCertificationChange(newValue)}
+              clearIcon={false}
+              renderTags={(value, props) =>
+                value.map((option, index) => (
+                  <Chip
+                    label={option}
+                    clickable
+                    key={index}
+                    {...props}
+                    onDelete={() => handelCertificationChange(option)}
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField {...params} label="Certifications" margin="normal" />
+              )}
             />
-          ) : null}{" "}*/}
           </Grid>
         </Grid>
 

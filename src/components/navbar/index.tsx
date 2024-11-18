@@ -15,8 +15,12 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SignInButton from "./SignInButton";
 import { signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-const pages = ["Products", "Pricing", "Blog"];
+//const pages = ["Products", "Pricing", "Blog"];
+
+const pages = ["Resume", "Apply", "Blog"];
+
 // const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
@@ -34,8 +38,16 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleCloseNavMenu = (param: string) => {
+    // setAnchorElNav(null);
+    console.log("Handle close menu", param);
+    if (param === "Resume") {
+      redirect("/resume");
+    }
+
+    if (param === "Apply") {
+      redirect("/apply");
+    }
   };
 
   const handleCloseUserMenu = () => {
@@ -122,7 +134,7 @@ function ResponsiveAppBar() {
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
                   <Typography sx={{ textAlign: "center" }}>{page}</Typography>
                 </MenuItem>
               ))}
@@ -151,7 +163,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleCloseNavMenu(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
