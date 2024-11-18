@@ -187,7 +187,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {Object.entries(settings).map(([key, component]) => (
-                <React.Fragment key={key}>{component}</React.Fragment>
+                <span key={key}>{component}</span>
               ))}
             </Menu>
           </Box>
