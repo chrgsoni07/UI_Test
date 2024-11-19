@@ -5,7 +5,7 @@ import { Document } from "@react-pdf/renderer";
 import { type Resume } from "../../app/resume/Resume";
 import ResumeTemplate1 from "./ResumeTempate1";
 import ResumeTemplate2 from "./ResumeTemplate2";
-import ResumeTemplateTest from "./ResumeTemplate3";
+import ResumeTemplate3 from "./ResumeTemplate3";
 
 // App component
 const App = ({ resumeData }: { resumeData: Resume }) => {
@@ -21,7 +21,7 @@ const App = ({ resumeData }: { resumeData: Resume }) => {
       <ResumePDF size={[380, 1250]} />*/}
       <ResumeTemplate1 size="A4" resume={resumeData} />
       <ResumeTemplate2 resume={resumeData} />
-      <ResumeTemplateTest resume={resumeData} />
+      <ResumeTemplate3 resume={resumeData} />
     </Document>
   );
 };

@@ -1,12 +1,12 @@
 // src/Skills.tsx
-import React from 'react';
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import React from "react";
+import { StyleSheet, Text, View } from "@react-pdf/renderer";
 
-import List, { Item } from './List';
-import Title from './Title';
+import List, { Item } from "./List";
+import Title from "./Title";
 
 const Certifications = ({ certifications }: { certifications?: string[] }) => {
-  if (!certifications) {
+  if (!certifications?.length) {
     return <p />;
   }
   return (

@@ -243,7 +243,7 @@ const EditablePreview: React.FC<PropTypes> = ({
           variant="subtitle1"
           gutterBottom
         >
-          Details
+          Basic Details
         </Typography>
 
         <Grid container spacing={1}>
@@ -395,32 +395,46 @@ const EditablePreview: React.FC<PropTypes> = ({
           </Grid>
         </Grid>
 
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <Autocomplete
-              multiple
-              freeSolo
-              options={[]}
-              value={resumeData.certifications}
-              onChange={(newValue) => handelCertificationChange(newValue)}
-              clearIcon={false}
-              renderTags={(value, props) =>
-                value.map((option, index) => (
-                  <Chip
-                    label={option}
-                    clickable
-                    key={index}
-                    {...props}
-                    onDelete={() => handelCertificationChange(option)}
+        {resumeData.certifications && resumeData.certifications.length > 0 && (
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Typography
+                style={{ color: "#635BFF" }}
+                variant="subtitle1"
+                gutterBottom
+              >
+                Certifications
+              </Typography>
+
+              <Autocomplete
+                multiple
+                freeSolo
+                options={[]}
+                value={resumeData.certifications}
+                onChange={(newValue) => handelCertificationChange(newValue)}
+                clearIcon={false}
+                renderTags={(value, props) =>
+                  value.map((option, index) => (
+                    <Chip
+                      label={option}
+                      clickable
+                      key={index}
+                      {...props}
+                      onDelete={() => handelCertificationChange(option)}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Certifications"
+                    margin="normal"
                   />
-                ))
-              }
-              renderInput={(params) => (
-                <TextField {...params} label="Certifications" margin="normal" />
-              )}
-            />
+                )}
+              />
+            </Grid>
           </Grid>
-        </Grid>
+        )}
 
         <Grid container spacing={1}>
           <Grid item xs={12}>
