@@ -12,6 +12,7 @@ import {
   TextField,
   Typography,
   Autocomplete,
+  Tooltip,
 } from "@mui/material";
 import toast from "react-hot-toast";
 import { Projects, type Resume, type Suggestion } from "./Resume";
@@ -79,6 +80,7 @@ const EditablePreview: React.FC<PropTypes> = ({
     const suggestion = suggestionArray.find(
       (suggestion) => suggestion.originalText === originalText
     );
+
     setHoveredSuggestion(suggestion);
     setAnchorEl(event.currentTarget);
   };
@@ -646,19 +648,44 @@ const EditablePreview: React.FC<PropTypes> = ({
 
               {exp.responsibilities.map((resp, respIndex) => (
                 <Grid container alignItems="center" key={respIndex}>
-                  <Grid item xs>
-                    <StyledTextareaAutosize
-                      value={resp}
-                      onChange={(e) =>
-                        handelWorkExOnResponsiblity(
-                          e.target.value,
-                          index,
-                          respIndex
+                  <Grid
+                    item
+                    xs
+                    onMouseLeave={() => {
+                      setAnchorEl(undefined);
+                    }}
+                  >
+                    <Tooltip
+                      title={
+                        hoveredSuggestion && (
+                          <PopoverContent onClick={handleApplySuggestion}>
+                            <Typography
+                              variant="caption"
+                              display="block"
+                              gutterBottom
+                            >
+                              {hoveredSuggestion?.suggestedText}
+                            </Typography>
+                          </PopoverContent>
                         )
                       }
-                      onMouseEnter={(e) => handleResponsibilityHover(resp, e)}
-                      customColor={isMatchingSuggestion(resp) ? "orange" : ""}
-                    />
+                    >
+                      <StyledTextareaAutosize
+                        value={resp}
+                        onChange={(e) =>
+                          handelWorkExOnResponsiblity(
+                            e.target.value,
+                            index,
+                            respIndex
+                          )
+                        }
+                        onMouseEnter={(e) => {
+                          console.log("entering", e.target);
+                          handleResponsibilityHover(resp, e);
+                        }}
+                        customColor={isMatchingSuggestion(resp) ? "orange" : ""}
+                      />
+                    </Tooltip>
                   </Grid>
                   <Grid item>
                     <IconButton
@@ -671,10 +698,10 @@ const EditablePreview: React.FC<PropTypes> = ({
                 </Grid>
               ))}
 
-              <Popover
-                open={Boolean(hoveredSuggestion)}
+              {/* <Popover
+                open={Boolean(anchorEl)}
                 anchorEl={anchorEl}
-                onClose={() => setHoveredSuggestion(undefined)}
+                onClose={() => setAnchorEl(undefined)}
                 anchorOrigin={{
                   vertical: "bottom",
                   horizontal: "left",
@@ -683,13 +710,22 @@ const EditablePreview: React.FC<PropTypes> = ({
                   vertical: "top",
                   horizontal: "left",
                 }}
+                // pass these props to the popover component
+                // disableAutoFocus={true}
+                // disableEnforceFocus={true}
+                // disablePortal
+                disableAutoFocus
+                disableEnforceFocus
+                disablePortal
+                disableRestoreFocus
+                hideBackdrop
               >
                 <PopoverContent onClick={handleApplySuggestion}>
                   <Typography variant="caption" display="block" gutterBottom>
                     {hoveredSuggestion?.suggestedText}
                   </Typography>
                 </PopoverContent>
-              </Popover>
+              </Popover> */}
 
               <Grid container alignItems="center" spacing={1}>
                 <Grid item>
@@ -906,7 +942,7 @@ const StyledTextareaAutosize = styled(TextareaAutosize)<{
 `;
 
 const PopoverContent = styled("div")({
-  padding: "8px",
+  margin: "20px",
 });
 
 export default EditablePreview;
