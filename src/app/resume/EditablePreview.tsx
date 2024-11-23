@@ -50,13 +50,14 @@ const EditablePreview: React.FC<PropTypes> = ({
     }
   }, [savedResume]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
+    // event.preventDefault();
 
     if (!resumeData) return;
 
     postSave(resumeData);
   };
+
   const handleApplySuggestion = () => {
     if (!(hoveredSuggestion && resumeData.workExperience)) {
       return;
@@ -238,7 +239,7 @@ const EditablePreview: React.FC<PropTypes> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginLeft: 20 }}>
+    <div style={{ marginLeft: 20 }}>
       <Grid item xs={12}>
         <Typography
           style={{ color: "#635BFF" }}
@@ -916,11 +917,12 @@ const EditablePreview: React.FC<PropTypes> = ({
           variant="contained"
           color="primary"
           disabled={!resumeData}
+          onClick={handleSubmit}
         >
           Save
         </Button>
       </Grid>
-    </form>
+    </div>
   );
 };
 
