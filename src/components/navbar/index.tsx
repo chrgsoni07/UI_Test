@@ -15,15 +15,13 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SignInButton from "./SignInButton";
 import { signOut, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-//const pages = ["Products", "Pricing", "Blog"];
-
-const pages = ["Resume", "Apply", "Blog"];
-
-// const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ["Resume", "Apply"];
 
 function ResponsiveAppBar() {
+  const router = useRouter();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -42,11 +40,11 @@ function ResponsiveAppBar() {
     // setAnchorElNav(null);
     console.log("Handle close menu", param);
     if (param === "Resume") {
-      redirect("/resume");
+      router.push("/resume");
     }
 
     if (param === "Apply") {
-      redirect("/apply");
+      router.push("/apply");
     }
   };
 
