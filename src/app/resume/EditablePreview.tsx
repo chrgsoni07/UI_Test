@@ -680,7 +680,6 @@ const EditablePreview: React.FC<PropTypes> = ({
                           )
                         }
                         onMouseEnter={(e) => {
-                          console.log("entering", e.target);
                           handleResponsibilityHover(resp, e);
                         }}
                         customColor={isMatchingSuggestion(resp) ? "orange" : ""}

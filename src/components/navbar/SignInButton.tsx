@@ -9,8 +9,6 @@ import React from "react";
 const SignInButton = () => {
   const session = useSession();
 
-  console.log({ session });
-
   if (session.status === "authenticated") {
     return null;
   }

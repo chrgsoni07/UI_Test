@@ -20,8 +20,6 @@ export const axiosWithAuth = async () => {
     session = await getSession();
   }
 
-  console.log("session", session);
-
   if (session) {
     instance.defaults.headers[
       "Authorization"
