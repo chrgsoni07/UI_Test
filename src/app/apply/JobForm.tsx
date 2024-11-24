@@ -10,7 +10,7 @@ import {
 
 import { type JobDetail } from "./JobDetail";
 import { getJobDetailsFromUrl } from "@/service/api";
-
+import { redirect, useRouter } from "next/navigation";
 interface RowData {
   id: number;
   jobTitle: string;
@@ -18,6 +18,8 @@ interface RowData {
 }
 
 const JobForm = () => {
+  const router = useRouter();
+
   const [jobDetail, setJobDetail] = useState<JobDetail>({
     jobDescription: "",
     jobTitle: "",
@@ -63,9 +65,10 @@ const JobForm = () => {
     setErrors(newErrors);
     if (hasErrors) return;
 
-    // navigate("/dashboard/apply/update-resume", {
-    //   state: { jobDetail: jobDetail },
-    // });
+    sessionStorage.setItem("jobTitle", jobDetail.jobTitle);
+    sessionStorage.setItem("jobDescription", jobDetail.jobDescription);
+    //navigate from here
+    router.push("/result");
   };
 
   return (
