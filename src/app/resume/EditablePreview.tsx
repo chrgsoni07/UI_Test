@@ -13,6 +13,8 @@ import {
   Typography,
   Autocomplete,
   Tooltip,
+  TooltipProps,
+  tooltipClasses,
 } from "@mui/material";
 import toast from "react-hot-toast";
 import { Projects, type Resume, type Suggestion } from "./Resume";
@@ -656,18 +658,16 @@ const EditablePreview: React.FC<PropTypes> = ({
                       setAnchorEl(undefined);
                     }}
                   >
-                    <Tooltip
+                    <NoMaxWidthTooltip
                       title={
                         hoveredSuggestion && (
-                          <PopoverContent onClick={handleApplySuggestion}>
-                            <Typography
-                              variant="caption"
-                              display="block"
-                              gutterBottom
-                            >
-                              {hoveredSuggestion?.suggestedText}
-                            </Typography>
-                          </PopoverContent>
+                          <Typography
+                            variant="caption"
+                            display="block"
+                            gutterBottom
+                          >
+                            {hoveredSuggestion?.suggestedText}
+                          </Typography>
                         )
                       }
                     >
@@ -685,7 +685,7 @@ const EditablePreview: React.FC<PropTypes> = ({
                         }}
                         customColor={isMatchingSuggestion(resp) ? "orange" : ""}
                       />
-                    </Tooltip>
+                    </NoMaxWidthTooltip>
                   </Grid>
                   <Grid item>
                     <IconButton
@@ -942,8 +942,12 @@ const StyledTextareaAutosize = styled(TextareaAutosize)<{
   line-height: 1.4375em;
 `;
 
-const PopoverContent = styled("div")({
-  margin: "20px",
+const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: "none",
+  },
 });
 
 export default EditablePreview;
