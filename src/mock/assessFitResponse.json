@@ -1,0 +1,100 @@
+{
+  "resumeEvalResult": {
+    "jobTitle": null,
+    "domainRelevance": "fit",
+    "ats_score": 70,
+    "feedback": "The resume demonstrates a strong alignment with the job description for the role of Java Developer/Lead. The candidate has extensive experience in Java development, microservices using Spring Boot, and mentoring junior developers. They also have experience with code reviews, best practices, and coding standards. However, some additional skills and experiences could further improve the fit.",
+    "suggestedImprovements": [
+      {
+        "originalText": "Migrated all 50+ modules from Maven to Gradle, reducing the build time for CI and automation by 50+%",
+        "suggestedText": "Migrated all 50+ modules from Maven to Gradle, reducing the build time for CI and automation by 50+%. Implemented coding standards and best practices during the migration process."
+      },
+      {
+        "originalText": "Helped team in enforcing and maintaining 95% code coverage and better coding practices",
+        "suggestedText": "Helped the team in enforcing and maintaining 95% code coverage and better coding practices. Conducted regular code reviews and mentoring sessions for junior developers."
+      },
+      {
+        "originalText": "Guided the team in breaking down the monolithic application of 7 modules to 50+ robust, scalable and maintainable microservice modules using Spring Boot, RESTful APIs and Consul",
+        "suggestedText": "Guided the team in breaking down the monolithic application of 7 modules to 50+ robust, scalable, and maintainable microservice modules using Spring Boot, RESTful APIs, and Consul. Collaborated with cross-functional teams to define technical specifications and ensure alignment with business requirements."
+      }
+    ],
+    "additionalSkills": ["Architecture discussions", "Technology roadmaps"]
+  },
+  "resume": {
+    "id": null,
+    "userId": null,
+    "name": "Chirag Soni",
+    "email": "chrgsoni@gmail.com",
+    "phone": "9926692091",
+    "location": "Neemuch",
+    "careerObjective": " Software engineer with a proven ability to efficiently solve problems  and collaborate with teams to deliver high-quality creative solutions in a timely manner. As a dedicated lifelong learner, I worked through 1,000+ hours of an associate’s in computer science degree  wherein I learned JavaScript, Node.js, Java, and C/C++. Seeking to add value, grow my skillset, and participate in meaningful work with Cognizant.",
+    "education": [
+      {
+        "degree": " A.S",
+        "university": "Bellevue collage",
+        "duration": "September 2019 - June 2021",
+        "location": "Bellevue, WA"
+      }
+    ],
+    "linkedIn": "https://in.linkedin.com/",
+    "github": "https://github.com/",
+    "skills": ["Angular", "React", "JAVA", "Spring Boot", "MongoDB"],
+    "jobTitle": "Software engineer",
+    "projects": null,
+    "certifications": null,
+    "workExperience": [
+      {
+        "company": "UiPath",
+        "jobPosition": "Software Engineer Intern",
+        "duration": "2020-present",
+        "location": "Bellevue, WA",
+        "responsibilities": [
+          "Developed and pushed production-ready code by ramping on the assigned codebase, product area, and/or system.",
+          "Completed tasks with less than 5 iterations.",
+          "Identified problem statements, outlined optimal solutions and accounted for tradeoffs and edge cases.",
+          "Communicated across 20+ stakeholders.",
+          "Performed hardware/software troubleshooting and testing on 300+ applications",
+          "Gained exposure on collaborating with a team of 8 engineers, from sprint planning to shipping code",
+          " Received daily mentoring from 2 senior developers, and participated in weekly stand-up"
+        ],
+        "achievements": ["Achievements 1", "Achievements 2", "Achievements 3"]
+      },
+      {
+        "company": "Red Robin",
+        "jobPosition": "Server, Hostess, Front of House",
+        "duration": "2016-2020",
+        "location": "Bellevue, WA",
+        "responsibilities": [
+          "Maintained a positive attitude and calm demeanor in all tasks and environments.",
+          "Answered questions on 60+ menu items, including recommendations and beer pairings",
+          "Handled 97% of transactions, tip-outs, and refund disputes without involving management."
+        ],
+        "achievements": ["Achievements 1", "Achievements 2", "Achievements 3"]
+      }
+    ],
+    "suggestions": [
+      {
+        "originalText": "Utilize Apache Camel for microservices to streamline system functionalities and application integration",
+        "suggestedText": "Utilized Apache Camel for microservices to streamline system functionalities and application integration"
+      },
+      {
+        "originalText": "Maintained a positive attitude and calm demeanor in all tasks and environments.",
+        "suggestedText": "Consistently upheld a positive outlook and composed demeanor across various tasks and settings."
+      },
+      {
+        "originalText": "Answered questions on 60+ menu items, including recommendations and beer pairings",
+        "suggestedText": "Provided detailed information on over 60 menu items, offering recommendations and beer pairing suggestions"
+      },
+      {
+        "originalText": "Handled 97% of transactions, tip-outs, and refund disputes without involving management.",
+        "suggestedText": "Managed 97% of transactions, tip distributions, and refunds independently, minimizing the need for managerial intervention."
+      },
+      {
+        "originalText": "Developed and pushed production-ready code by ramping on the assigned codebase, product area, and/or system.",
+        "suggestedText": "Contributed to the development and deployment of production-ready code by quickly familiarizing myself with the assigned codebase, product area, and/or system."
+      }
+    ],
+    "estimatedATSScore": null,
+    "metadata": null
+  }
+}

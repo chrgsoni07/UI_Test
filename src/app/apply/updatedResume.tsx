@@ -1,4 +1,4 @@
-import React, { useState, type FC, type FormEvent } from "react";
+import React, { useEffect, useState, type FC, type FormEvent } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Accordion,
@@ -30,11 +30,33 @@ import {
   ResumeEvalResult,
   SuggestedImprovement,
 } from "../resume/ResumeEvalResult";
+import { JobDetail } from "./JobDetail";
 
-const UpdatedResume: FC = () => {
+type PropTypes = {
+  passedData: JobDetail;
+};
+
+const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
   const [updatedResume, setUpdatedResume] = useState<Resume>();
   const [resumeEvalResult, setResumeEvalResult] = useState<ResumeEvalResult>();
   const [openAccordion, setOpenAccordion] = useState(0);
+  const [jobDetail, setJobDetail] = useState<JobDetail>(jobDetailProps);
+  const [allResume, setAllResume] = useState<Resume[]>([]);
+
+  useEffect(() => {
+    const fetchResumes = async () => {
+      if (jobDetail && jobDetail.jobTitle && jobDetail.jobDescription) {
+        try {
+          const resumes = await getAllResumeOfUser(); // Fetch resumes
+          setAllResume(resumes); // Set the fetched resumes in state
+        } catch (error) {
+          console.error("Error fetching resumes:", error);
+        }
+      }
+    };
+
+    fetchResumes(); // Call the async function
+  }, [jobDetail]); // Dependency array, this will trigger when jobDetail changes
 
   const { data: savedResume, mutate: postSave } = useMutation({
     mutationFn: (rData: Resume): Promise<Resume> => {
@@ -52,19 +74,6 @@ const UpdatedResume: FC = () => {
       toast.error(error.message);
     },
   });
-
-  const {
-    isLoading,
-    error,
-    data: allResume,
-  } = useQuery({
-    queryKey: ["getSavedResume"],
-    queryFn: () => getAllResumeOfUser(),
-    refetchOnWindowFocus: false,
-  });
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
 
   const handleAccordionChange = (accordionIndex: number) => {
     setOpenAccordion(openAccordion === accordionIndex ? -1 : accordionIndex);
@@ -247,12 +256,7 @@ const UpdatedResume: FC = () => {
         </AccordionSummary>
         <AccordionDetails>
           <form onSubmit={handleSubmit}>
-            {updatedResume && (
-              <EditablePreview
-                resumeData={updatedResume}
-                setResumeData={setUpdatedResume}
-              />
-            )}
+            {updatedResume && <EditablePreview resumeData={updatedResume} />}
             <Button type="submit" variant="contained" color="primary">
               Save
             </Button>

@@ -61,6 +61,7 @@ const EditablePreview: React.FC<PropTypes> = ({
   };
 
   const handleApplySuggestion = () => {
+    console.log("click on handel apply suggestion");
     if (!(hoveredSuggestion && resumeData.workExperience)) {
       return;
     }
@@ -670,6 +671,7 @@ const EditablePreview: React.FC<PropTypes> = ({
                           </Typography>
                         )
                       }
+                      onClick={() => handleApplySuggestion()}
                     >
                       <StyledTextareaAutosize
                         value={resp}
