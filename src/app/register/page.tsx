@@ -48,7 +48,23 @@ export default function RegisterPage(props: {
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="fullname">Full name</FormLabel>
+              <FormLabel htmlFor="firstname">First name</FormLabel>
+              <TextField
+                // error={emailError}
+                // helperText={emailErrorMessage}
+                id="fullname"
+                name="fullname"
+                placeholder="John"
+                autoFocus
+                required
+                fullWidth
+                variant="outlined"
+                value={"John"}
+                // color={emailError ? "error" : "primary"}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="lastname">Last name</FormLabel>
               <TextField
                 // error={emailError}
                 // helperText={emailErrorMessage}
@@ -59,7 +75,7 @@ export default function RegisterPage(props: {
                 required
                 fullWidth
                 variant="outlined"
-                value={"John Doe"}
+                value={"Doe"}
                 // color={emailError ? "error" : "primary"}
               />
             </FormControl>
@@ -99,10 +115,6 @@ export default function RegisterPage(props: {
                 // color={passwordError ? "error" : "primary"}
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
             <Button
               type="submit"

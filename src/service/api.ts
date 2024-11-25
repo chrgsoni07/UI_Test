@@ -4,11 +4,23 @@ import { type JobDetail } from "@/app/apply/JobDetail";
 import extractDataMock from "@/mock/extractDataMock.json";
 import resumeByIdMock from "@/mock/resumeByIdMock.json";
 import jobDetailsMock from "@/mock/jobDetailsMock.json";
+import { UserSignUp } from "@/app/auth/model/UserSignUp";
 
 const BASE_URL_API_GATEWAY = "http://localhost:8443";
 const BASE_URL_RESUME = `${BASE_URL_API_GATEWAY}/api/0.1/resume/`;
 const BASE_URL_JOB_DETAIL = `${BASE_URL_API_GATEWAY}/api/0.1/job/`;
 const BASE_URL_FILE = `${BASE_URL_API_GATEWAY}/api/0.1/files/`;
+
+export const signUp = async (signUpFormValues: UserSignUp) => {
+  if (process.env.RETURN_MOCK === "true") {
+    return { response: "ok" };
+  }
+  const response = await (
+    await axiosWithAuth()
+  ).post(`${BASE_URL_RESUME}`, signUpFormValues);
+
+  return response.data;
+};
 
 export const getResumeById = async (id: string) => {
   if (process.env.RETURN_MOCK === "true") {
