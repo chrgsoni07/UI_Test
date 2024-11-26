@@ -666,12 +666,12 @@ const EditablePreview: React.FC<PropTypes> = ({
                             variant="caption"
                             display="block"
                             gutterBottom
+                            onClick={() => handleApplySuggestion()}
                           >
                             {hoveredSuggestion?.suggestedText}
                           </Typography>
                         )
                       }
-                      onClick={() => handleApplySuggestion()}
                     >
                       <StyledTextareaAutosize
                         value={resp}
