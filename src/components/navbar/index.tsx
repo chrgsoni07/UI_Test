@@ -17,7 +17,7 @@ import SignInButton from "./SignInButton";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const pages = ["Resume", "Apply"];
+const pages = ["Resume", "Apply", "Saved Resume"];
 
 function ResponsiveAppBar() {
   const router = useRouter();
@@ -45,6 +45,10 @@ function ResponsiveAppBar() {
 
     if (param === "Apply") {
       router.push("/apply");
+    }
+
+    if (param === "Saved Resume") {
+      router.push("/savedResume");
     }
   };
 

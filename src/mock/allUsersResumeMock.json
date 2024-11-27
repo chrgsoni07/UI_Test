@@ -96,7 +96,209 @@
       "createdAt": {
         "$date": "2024-11-14T11:14:44.803Z"
       },
+      "templateId": 1
+    },
+    "_class": "com.milpitas.communication.resume.model.Resume"
+  },
+  {
+    "id": "6735dba4547af30lakdjs811",
+    "userId": "6735daec6962c10c15702870",
+    "name": "Mock user",
+    "email": "mock@email.com",
+    "phone": "9926678620",
+    "location": "New York, NY",
+    "careerObjective": "",
+    "education": [
+      {
+        "degree": "Bachelor of Science Business Administration",
+        "university": "Columbia University",
+        "duration": "2011 - 2015",
+        "location": "New York, NY"
+      }
+    ],
+    "linkedIn": "https://linkedin.com/",
+    "github": "",
+    "skills": [
+      "Salesforce",
+      "HubSpot",
+      "Google Analytics",
+      "WordPress",
+      "Mailchimp",
+      "Asana",
+      "Hootsuite",
+      "SurveyMonkey",
+      "SEMrush",
+      "Mixpanel"
+    ],
+    "jobTitle": "Java full stack developer",
+    "projects": [],
+    "certifications": [],
+    "workExperience": [
+      {
+        "company": "Spotify",
+        "jobPosition": "Senior Product Marketing Manager",
+        "duration": "2021 - current",
+        "location": "New York, NY",
+        "responsibilities": [
+          "Led a cross-functional marketing campaign, increasing new user sign-ups by 22% in the first quarter using targeted email marketing and social media ads with HubSpot",
+          "Expanded Spotify's brand presence by launching a multi-channel advertising strategy, increasing app installs by 47% over a year",
+          "Organized a comprehensive SEO strategy using SEMrush, boosting organic search traffic by 18% and improving keyword rankings for the top nine industry terms",
+          "Monitored user behavior and retention metrics using Mixpanel, identified key drop-off points, and enacted changes that boosted retention by 26%"
+        ],
+        "achievements": []
+      },
+      {
+        "company": "Hulu",
+        "jobPosition": "Associate Product Marketing Manager",
+        "duration": "2018 - 2021",
+        "location": "New York, NY",
+        "responsibilities": [
+          "Implemented technical solutions in WordPress to enhance site speed, reducing load times by 53% and improving user experience",
+          "Enhanced product launch efficiency at Hulu by introducing Asana workflows, reducing time-to-market by 11 days",
+          "Collected and analyzed customer feedback via SurveyMonkey, leading to the development of four new features that increased customer satisfaction scores by 2.6 points",
+          "Processed and analyzed email campaign performance using Mailchimp, boosting click-through rates by 12% and open rates by 9%"
+        ],
+        "achievements": []
+      },
+      {
+        "company": "L'Oréal",
+        "jobPosition": "Marketing Coordinator",
+        "duration": "2015 - 2018",
+        "location": "New York, NY",
+        "responsibilities": [
+          "Conducted A/B testing on email and web content, executing marketing that facilitated an 18% rise in campaign effectiveness",
+          "Managed social media content scheduling through Hootsuite, increasing post visibility by 33% and social engagement metrics by 27%",
+          "Analyzed campaign performance using Google Analytics, facilitating strategic adjustments that expanded website traffic by 18% and drove an extra $44,862 in online sales",
+          "Expanded the use of Salesforce CRM for tracking and managing customer interactions, improving lead-tracking efficiency by 24% and saving 18 hours per month"
+        ],
+        "achievements": []
+      }
+    ],
+    "suggestions": [
+      {
+        "suggestedText": "Spearheaded a cross-functional campaign that amplified new user sign-ups by 22% within the first quarter through targeted email marketing and social media ads using HubSpot",
+        "originalText": "Led a cross-functional marketing campaign, increasing new user sign-ups by 22% in the first quarter using targeted email marketing and social media ads with HubSpot"
+      },
+      {
+        "suggestedText": "Tracked user behavior and retention metrics with Mixpanel, identifying key drop-off points and implementing changes that increased retention by 26%",
+        "originalText": "Monitored user behavior and retention metrics using Mixpanel, identified key drop-off points, and enacted changes that boosted retention by 26%"
+      },
+      {
+        "suggestedText": "Streamlined Hulu’s product launch by implementing new Asana workflows that cut time-to-market by 11 days",
+        "originalText": "Enhanced product launch efficiency at Hulu by introducing Asana workflows, reducing time-to-market by 11 days"
+      },
+      {
+        "suggestedText": "Cataloged customer feedback through SurveyMonkey, enabling the development of four new features, that raised customer satisfaction scores by 2.6 points out of 10",
+        "originalText": "Collected and analyzed customer feedback via SurveyMonkey, leading to the development of four new features that increased customer satisfaction scores by 2.6 points"
+      }
+    ],
+    "metadata": {
+      "isActive": true,
+      "createdAt": {
+        "$date": "2024-11-15T11:14:44.803Z"
+      },
       "templateId": 2
+    },
+    "_class": "com.milpitas.communication.resume.model.Resume"
+  },
+  {
+    "id": "6735dba4547af307b91f8002",
+    "userId": "6735daec6962c10c15702870",
+    "name": "Mock user",
+    "email": "mock@email.com",
+    "phone": "9926678620",
+    "location": "New York, NY",
+    "careerObjective": "",
+    "education": [
+      {
+        "degree": "Bachelor of Science Business Administration",
+        "university": "Columbia University",
+        "duration": "2011 - 2015",
+        "location": "New York, NY"
+      }
+    ],
+    "linkedIn": "https://linkedin.com/",
+    "github": "",
+    "skills": [
+      "Salesforce",
+      "HubSpot",
+      "Google Analytics",
+      "WordPress",
+      "Mailchimp",
+      "Asana",
+      "Hootsuite",
+      "SurveyMonkey",
+      "SEMrush",
+      "Mixpanel"
+    ],
+    "jobTitle": "UI developer",
+    "projects": [],
+    "certifications": [],
+    "workExperience": [
+      {
+        "company": "Spotify",
+        "jobPosition": "Senior Product Marketing Manager",
+        "duration": "2021 - current",
+        "location": "New York, NY",
+        "responsibilities": [
+          "Led a cross-functional marketing campaign, increasing new user sign-ups by 22% in the first quarter using targeted email marketing and social media ads with HubSpot",
+          "Expanded Spotify's brand presence by launching a multi-channel advertising strategy, increasing app installs by 47% over a year",
+          "Organized a comprehensive SEO strategy using SEMrush, boosting organic search traffic by 18% and improving keyword rankings for the top nine industry terms",
+          "Monitored user behavior and retention metrics using Mixpanel, identified key drop-off points, and enacted changes that boosted retention by 26%"
+        ],
+        "achievements": []
+      },
+      {
+        "company": "Hulu",
+        "jobPosition": "Associate Product Marketing Manager",
+        "duration": "2018 - 2021",
+        "location": "New York, NY",
+        "responsibilities": [
+          "Implemented technical solutions in WordPress to enhance site speed, reducing load times by 53% and improving user experience",
+          "Enhanced product launch efficiency at Hulu by introducing Asana workflows, reducing time-to-market by 11 days",
+          "Collected and analyzed customer feedback via SurveyMonkey, leading to the development of four new features that increased customer satisfaction scores by 2.6 points",
+          "Processed and analyzed email campaign performance using Mailchimp, boosting click-through rates by 12% and open rates by 9%"
+        ],
+        "achievements": []
+      },
+      {
+        "company": "L'Oréal",
+        "jobPosition": "Marketing Coordinator",
+        "duration": "2015 - 2018",
+        "location": "New York, NY",
+        "responsibilities": [
+          "Conducted A/B testing on email and web content, executing marketing that facilitated an 18% rise in campaign effectiveness",
+          "Managed social media content scheduling through Hootsuite, increasing post visibility by 33% and social engagement metrics by 27%",
+          "Analyzed campaign performance using Google Analytics, facilitating strategic adjustments that expanded website traffic by 18% and drove an extra $44,862 in online sales",
+          "Expanded the use of Salesforce CRM for tracking and managing customer interactions, improving lead-tracking efficiency by 24% and saving 18 hours per month"
+        ],
+        "achievements": []
+      }
+    ],
+    "suggestions": [
+      {
+        "suggestedText": "Spearheaded a cross-functional campaign that amplified new user sign-ups by 22% within the first quarter through targeted email marketing and social media ads using HubSpot",
+        "originalText": "Led a cross-functional marketing campaign, increasing new user sign-ups by 22% in the first quarter using targeted email marketing and social media ads with HubSpot"
+      },
+      {
+        "suggestedText": "Tracked user behavior and retention metrics with Mixpanel, identifying key drop-off points and implementing changes that increased retention by 26%",
+        "originalText": "Monitored user behavior and retention metrics using Mixpanel, identified key drop-off points, and enacted changes that boosted retention by 26%"
+      },
+      {
+        "suggestedText": "Streamlined Hulu’s product launch by implementing new Asana workflows that cut time-to-market by 11 days",
+        "originalText": "Enhanced product launch efficiency at Hulu by introducing Asana workflows, reducing time-to-market by 11 days"
+      },
+      {
+        "suggestedText": "Cataloged customer feedback through SurveyMonkey, enabling the development of four new features, that raised customer satisfaction scores by 2.6 points out of 10",
+        "originalText": "Collected and analyzed customer feedback via SurveyMonkey, leading to the development of four new features that increased customer satisfaction scores by 2.6 points"
+      }
+    ],
+    "metadata": {
+      "isActive": true,
+      "createdAt": {
+        "$date": "2024-11-16T11:14:44.803Z"
+      },
+      "templateId": 3
     },
     "_class": "com.milpitas.communication.resume.model.Resume"
   }

@@ -11,14 +11,14 @@ import ResumeTemplate3 from "./ResumeTemplate3";
 const App = ({ resumeData }: { resumeData: Resume }) => {
   return (
     <Document
-      author="Chirag Soni"
+      author="Milpitas communications"
       keywords="resume, milpitas communications"
-      subject="The resume of Chirag Soni"
+      subject="ATS resume"
       title="Resume"
     >
       {/*  <ResumePDF size="A4" />
-      <ResumePDF orientation="landscape" size="A4" />
-      <ResumePDF size={[380, 1250]} />*/}
+    <ResumePDF orientation="landscape" size="A4" />
+    <ResumePDF size={[380, 1250]} />*/}
       <ResumeTemplate1 size="A4" resume={resumeData} />
       <ResumeTemplate2 resume={resumeData} />
       <ResumeTemplate3 resume={resumeData} />
