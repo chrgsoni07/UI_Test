@@ -20,6 +20,7 @@ import { getAllResumeOfUser, getResumeById } from "@/service/api";
 import { useQuery } from "@tanstack/react-query";
 import PreviewIcon from "@mui/icons-material/Preview";
 import DownloadIcon from "@mui/icons-material/Download";
+import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import { TemplateRenderer } from "../template/[resumeId]/TemplateSelectionPage";
 import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
@@ -28,10 +29,10 @@ import moment from "moment";
 const Page: FC = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => onCloseEvent();
-  const [selectedResume, setSelectedResume] = useState<Resume>(); // Track the selected resume data
+  const [selectedResume, setSelectedResume] = useState<Resume>();
 
-  const onCloseEvent = () => {
+  const handleClose = () => {
+    console.log("close evenet called");
     setOpen(false);
     setSelectedResume(undefined);
   };
@@ -81,7 +82,6 @@ const Page: FC = () => {
     try {
       const resumeDB = await getResumeById(resume.id);
       setSelectedResume(resumeDB);
-      //  setSelectedResume(resume);
       handleOpen();
     } catch (error) {
       console.error("Error fetching resume:", error);
@@ -110,7 +110,7 @@ const Page: FC = () => {
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
         link.download = "resume.pdf";
-        link.click(); // Programmatically click the link to trigger the download
+        link.click();
       })
       .catch((error) => {
         console.error("Error generating the PDF:", error);
@@ -171,7 +171,9 @@ const Page: FC = () => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <button onClick={handleClose}>Close</button>
+            <IconButton aria-label="download">
+              <CloseIcon onClick={handleClose}></CloseIcon>
+            </IconButton>
             {selectedResume ? (
               <TemplateRenderer
                 resumeData={selectedResume}
