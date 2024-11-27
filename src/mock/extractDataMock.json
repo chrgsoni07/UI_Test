@@ -1,7 +1,5 @@
 {
-  "_id": {
-    "$oid": "6735dba4547af307b91f8192"
-  },
+  "id": "6735dba4547af307b91f8192",
   "userId": "6735daec6962c10c15702870",
   "name": "Mock user",
   "email": "mock@email.com",

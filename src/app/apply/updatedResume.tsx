@@ -91,14 +91,9 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
       jobDescription: "complete job description comming through form",
     };
 
-    //Get the jobDetails by form
-    //    const jobDetail = location.state.jobDetail;
-
     toast.success("Resume got selected please wait");
 
     const responseDTO = await assessResumeFit({ jobDetail, resumeId: row.id });
-
-    console.log("Response DTO", responseDTO);
 
     setUpdatedResume(responseDTO.resume);
 
@@ -257,9 +252,9 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
         <AccordionDetails>
           <form onSubmit={handleSubmit}>
             {updatedResume && <EditablePreview resumeData={updatedResume} />}
-            <Button type="submit" variant="contained" color="primary">
+            {/* <Button type="submit" variant="contained" color="primary">
               Save
-            </Button>
+            </Button> */}
           </form>
         </AccordionDetails>
       </Accordion>

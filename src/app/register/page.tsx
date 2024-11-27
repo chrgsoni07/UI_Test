@@ -8,10 +8,7 @@ import {
   FormControl,
   FormLabel,
   TextField,
-  FormControlLabel,
-  Divider,
   Button,
-  Checkbox,
 } from "@mui/material";
 import { AuthError } from "next-auth";
 
@@ -35,7 +32,7 @@ export default function RegisterPage(props: {
             variant="h4"
             sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
           >
-            Sign in
+            Sign up
           </Typography>
           <Box
             component="form"
@@ -125,7 +122,6 @@ export default function RegisterPage(props: {
               Register
             </Button>
           </Box>
-          <Divider>or</Divider>
           {Object.values(providerMap).map((provider) => (
             <form
               key={"signin form"}

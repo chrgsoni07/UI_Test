@@ -55,4 +55,5 @@ export type Metadata = {
   updatedAt: Date;
   baseResumeId: string;
   isActive: boolean;
+  templateId: number;
 };

@@ -1,7 +1,4 @@
 {
-  "_id": {
-    "$oid": "6735dba4547af307b91f8192"
-  },
   "id": "6735dba4547af307b91f8192",
   "userId": "6735daec6962c10c15702870",
   "name": "Mockesh Kumar",
@@ -97,7 +94,8 @@
     "isActive": true,
     "createdAt": {
       "$date": "2024-11-14T11:14:44.803Z"
-    }
+    },
+    "templateId": 2
   },
   "_class": "com.milpitas.communication.resume.model.Resume"
 }

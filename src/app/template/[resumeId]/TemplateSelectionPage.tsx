@@ -124,7 +124,7 @@ interface TemplateRendererProps {
   templateType: number;
 }
 
-const TemplateRenderer: React.FC<TemplateRendererProps> = ({
+export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
   resumeData,
   templateType,
 }) => {
