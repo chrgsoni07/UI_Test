@@ -23,6 +23,8 @@ import DownloadIcon from "@mui/icons-material/Download";
 import React from "react";
 import { TemplateRenderer } from "../template/[resumeId]/TemplateSelectionPage";
 import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
+import moment from "moment";
+
 const Page: FC = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -65,6 +67,14 @@ const Page: FC = () => {
   }
 
   const handlePreview = async (resume: Resume) => {
+    console.log(
+      `Previewing Resume ID: ${resume.id} & template id ${resume.metadata.templateId}`
+    );
+    setSelectedResume(resume);
+    handleOpen();
+  };
+
+  const handlePreview1 = async (resume: Resume) => {
     console.log(
       `Previewing Resume ID: ${resume.id} & template id ${resume.metadata.templateId}`
     );
@@ -115,6 +125,7 @@ const Page: FC = () => {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Job Title</TableCell>
+              <TableCell>Date</TableCell>
               <TableCell>Preview</TableCell>
               <TableCell>Download</TableCell>
             </TableRow>
@@ -124,6 +135,11 @@ const Page: FC = () => {
               <TableRow key={resume.id}>
                 <TableCell>{resume.id}</TableCell>
                 <TableCell>{resume.jobTitle}</TableCell>
+                <TableCell>
+                  {moment(resume.metadata.createdAt).format(
+                    "DD-MMM-YYYY HH:mm:ss"
+                  )}
+                </TableCell>
                 <TableCell>
                   <IconButton aria-label="preview">
                     <PreviewIcon onClick={() => handlePreview(resume)} />
