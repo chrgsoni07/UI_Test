@@ -20,19 +20,10 @@ import Certifications from "./Certifications";
 interface ResumeProps extends Omit<PageProps, "size"> {
   size?: PageProps["size"];
   orientation?: "portrait" | "landscape";
-  resume?: Resume;
+  resume: Resume;
 }
 
 // Register fonts
-Font.register({
-  family: "Open Sans",
-  src: `https://fonts.gstatic.com/s/opensans/v17/mem8YaGs126MiZpBA-UFVZ0e.ttf`,
-});
-
-Font.register({
-  family: "Lato",
-  src: `https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wWw.ttf`,
-});
 
 Font.register({
   family: "Lato Italic",
@@ -93,12 +84,12 @@ const ResumeTemplate1: React.FC<ResumeProps> = (props) => (
     <Document keywords="resume, ATS, multinational company" title="Resume">
       <Page {...props} style={styles.page}>
         <Header
-          uname={props.resume?.name!}
-          jobTitle={props.resume?.jobTitle!}
-          email={props.resume?.email!}
-          phoneNo={props.resume?.phone!}
-          linkedIn={props.resume?.linkedIn!}
-          github={props.resume?.github!}
+          uname={props.resume.name}
+          jobTitle={props.resume.jobTitle}
+          email={props.resume.email}
+          phoneNo={props.resume.phone}
+          linkedIn={props.resume.linkedIn}
+          github={props.resume.github}
         />
         <CareerObjective careerObjective={props.resume?.careerObjective} />
         <View style={styles.container}>

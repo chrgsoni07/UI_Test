@@ -1,8 +1,8 @@
 import React from "react";
 import {
   Document,
-  Font,
-  Image,
+  // Font,
+  Image as PDFImage,
   Page,
   PDFViewer,
   StyleSheet,
@@ -14,10 +14,10 @@ import { type Resume } from "../../app/resume/Resume";
 import List, { Item } from "./List";
 
 // Ensure Lato font is loaded for consistency
-Font.register({
-  family: "Lato",
-  src: `https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wWw.ttf`,
-});
+// Font.register({
+//   family: "Lato",
+//   src: `https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wWw.ttf`,
+// });
 
 const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
   <PDFViewer width="100%" height="600">
@@ -94,7 +94,7 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
               <Text style={styles.sectionTitle}>Contact</Text>
               <View>
                 <Text style={styles.contact}>
-                  <Image
+                  <PDFImage
                     src={{
                       uri: "/img/Icons/envelope.png",
                       method: "GET",
@@ -106,7 +106,7 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                 </Text>
 
                 <Text style={styles.contact}>
-                  <Image
+                  <PDFImage
                     src={{
                       uri: "/img/Icons/phone.png",
                       method: "GET",
@@ -118,7 +118,7 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                 </Text>
 
                 <Text style={styles.contact}>
-                  <Image
+                  <PDFImage
                     src={{
                       uri: "/img/Icons/map-pin.png",
                       method: "GET",
@@ -130,7 +130,7 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                 </Text>
 
                 <Text style={styles.contact}>
-                  <Image
+                  <PDFImage
                     src={{
                       uri: "/img/Icons/linkedin-logo.png",
                       method: "GET",
@@ -142,7 +142,7 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                 </Text>
 
                 <Text style={styles.contact}>
-                  <Image
+                  <PDFImage
                     src={{
                       uri: "/img/Icons/github-logo.png",
                       method: "GET",
@@ -162,7 +162,7 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                   <Text style={styles.education}>{edu.degree}</Text>
                   <Text style={styles.education}>{edu.university}</Text>
                   <Text style={styles.education}>
-                    <Image
+                    <PDFImage
                       src={{
                         uri: "/img/Icons/map-pin.png",
                         method: "GET",
@@ -173,7 +173,7 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                     {edu.location}
                   </Text>
                   <Text style={styles.education}>
-                    <Image
+                    <PDFImage
                       src={{
                         uri: "/img/Icons/calendar-dots.png",
                         method: "GET",

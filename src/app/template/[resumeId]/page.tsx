@@ -1,11 +1,19 @@
-import TemplateSelectionPage from "./TemplateSelectionPage";
+import { getResumeById } from "@/service/api";
+// import TemplateSelectionPage from "./TemplateSelectionPage";
+import dynamic from "next/dynamic";
 
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: { resumeId: string };
-}): React.JSX.Element {
+}) {
   const { resumeId } = params;
 
-  return <TemplateSelectionPage resumeId={resumeId} />;
+  const data = await getResumeById(resumeId);
+  const TemplateSelectionPage = dynamic(
+    () => import("./TemplateSelectionPage"),
+    { ssr: false }
+  );
+
+  return <TemplateSelectionPage resume={data} />;
 }

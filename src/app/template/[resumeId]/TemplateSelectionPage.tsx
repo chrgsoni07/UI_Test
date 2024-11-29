@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -10,13 +10,11 @@ import {
   Grid,
 } from "@mui/material";
 import { Font } from "@react-pdf/renderer";
-import { useQuery } from "@tanstack/react-query";
 
 import ResumeTemplate1 from "../../../components/renderer/ResumeTempate1";
 import ResumeTemplate2 from "../../../components/renderer/ResumeTemplate2";
 import ResumeTemplate3 from "../../../components/renderer/ResumeTemplate3";
 import { type Resume } from "../../resume/Resume";
-import { getResumeById } from "@/service/api";
 
 const templates = [
   { id: 1, image: "../img/template1.jpg" },
@@ -31,40 +29,18 @@ Font.register({
 });
 
 interface TemplateSelectionPageProps {
-  resumeId: string;
+  resume: Resume;
 }
 
 const TemplateSelectionPage: React.FC<TemplateSelectionPageProps> = ({
-  resumeId,
+  resume,
 }) => {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [templateType, setTemplateType] = useState(0);
 
-  if (!resumeId) {
-    return <p>Loading...</p>;
-  }
-
-  const {
-    isLoading,
-    error,
-    data,
-    refetch: getById,
-  } = useQuery({
-    queryKey: ["oneResume", resumeId],
-    queryFn: () => getResumeById(resumeId),
-    enabled: false,
-  });
-
   const handleSelect = async (templateId: number) => {
     setTemplateType(templateId);
-    if (!data) {
-      try {
-        await getById();
-      } catch (error) {
-        console.log(error);
-      }
-    }
   };
 
   const handleClickOpen = (image: string) => {
@@ -112,9 +88,8 @@ const TemplateSelectionPage: React.FC<TemplateSelectionPageProps> = ({
           </Grid>
         ))}
       </Grid>
-      {data && (
-        <TemplateRenderer resumeData={data} templateType={templateType} />
-      )}
+
+      <TemplateRenderer resumeData={resume} templateType={templateType} />
     </Container>
   );
 };

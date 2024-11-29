@@ -1,8 +1,8 @@
 import React from "react";
 import {
   Document,
-  Font,
-  Image,
+  // Font,
+  Image as PDFImage,
   Link,
   Page,
   PDFViewer,
@@ -15,10 +15,10 @@ import { type Resume } from "../../app/resume/Resume";
 import List, { Item } from "./List";
 
 // Ensure Lato font is loaded for consistency
-Font.register({
-  family: "Lato",
-  src: `https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wWw.ttf`,
-});
+// Font.register({
+//   family: "Lato",
+//   src: `https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wWw.ttf`,
+// });
 
 const ResumeTemplate2 = ({ resume }: { resume: Resume }) => (
   <PDFViewer width="100%" height="600">
@@ -32,7 +32,7 @@ const ResumeTemplate2 = ({ resume }: { resume: Resume }) => (
             <Text style={styles.contact}>{resume.email}</Text>
 
             <Text style={styles.contact}>
-              <Image
+              <PDFImage
                 src={{
                   uri: "/img/Icons/phone.png",
                   method: "GET",
@@ -44,7 +44,7 @@ const ResumeTemplate2 = ({ resume }: { resume: Resume }) => (
             </Text>
 
             <Text style={styles.contact}>
-              <Image
+              <PDFImage
                 src={{
                   uri: "/img/Icons/map-pin.png",
                   method: "GET",
