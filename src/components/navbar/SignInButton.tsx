@@ -3,11 +3,13 @@
 // import { auth } from "@/auth";
 import { Button } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const SignInButton = () => {
   const session = useSession();
+
+  const router = useRouter();
 
   if (session.status === "authenticated") {
     return null;
@@ -15,7 +17,7 @@ const SignInButton = () => {
   return (
     <Button
       key="signin"
-      onClick={() => redirect("/signin")}
+      onClick={() => router.push("/signin")}
       sx={{ my: 2, color: "white" }}
     >
       Sign In
