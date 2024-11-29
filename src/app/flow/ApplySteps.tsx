@@ -9,6 +9,8 @@ import Step2 from "./Step2";
 import { type Resume } from "../resume/Resume";
 import Step3 from "./Step3";
 import EditablePreview from "../resume/EditablePreview";
+import Step5 from "./Step5";
+import { Container } from "@mui/material";
 
 const steps = [
   "Job details",
@@ -73,7 +75,9 @@ const ApplyFlow = () => {
           return <div>Updated resume is not available please try later ..</div>;
         return <EditablePreview resumeData={updatedResume} />;
       case 4:
-        return <div>Save your application details.</div>;
+        if (!selectedResume) return <div>Please selected any resume</div>;
+
+        return <Step5 selectedResume={selectedResume} />;
       default:
         return <div>Unknown Step</div>;
     }

@@ -48,6 +48,21 @@ export const updateResumeByResumeId = async (id: string) => {
   return response.data;
 };
 
+export const updateTemplateIdOfResume = async (
+  id: string,
+  templateId: number
+) => {
+  if (process.env.RETURN_MOCK === "true") {
+    return resumeByIdMock;
+  }
+
+  const url = `${BASE_URL_RESUME}updateTemplate/${id}/template/${templateId}`;
+
+  const response = await (await axiosWithAuth()).put(url);
+
+  return response.data;
+};
+
 export const deleteResumeByResumeId = async (id: string) => {
   const response = await (await axiosWithAuth()).delete(BASE_URL_RESUME);
 
