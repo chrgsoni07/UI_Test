@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -7,7 +7,6 @@ import {
   Divider,
   Grid,
   IconButton,
-  Popover,
   TextareaAutosize,
   TextField,
   Typography,
@@ -31,7 +30,6 @@ const EditablePreview: React.FC<PropTypes> = ({
 }) => {
   const [resumeData, setResumeData] = useState<Resume>(resumeDataProp);
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Suggestion>();
-  const [anchorEl, setAnchorEl] = useState<HTMLElement>();
   const suggestionArray = resumeData.suggestions;
 
   const { data: savedResume, mutate: postSave } = useMutation({
@@ -53,15 +51,12 @@ const EditablePreview: React.FC<PropTypes> = ({
   }, [savedResume]);
 
   const handleSubmit = async () => {
-    // event.preventDefault();
-
     if (!resumeData) return;
 
     postSave(resumeData);
   };
 
   const handleApplySuggestion = () => {
-    console.log("click on handel apply suggestion");
     if (!(hoveredSuggestion && resumeData.workExperience)) {
       return;
     }
@@ -74,19 +69,14 @@ const EditablePreview: React.FC<PropTypes> = ({
     }));
     setResumeData({ ...resumeData, workExperience: updatedExperience });
     setHoveredSuggestion(undefined);
-    setAnchorEl(undefined);
   };
 
-  const handleResponsibilityHover = (
-    originalText: string,
-    event: React.MouseEvent<HTMLTextAreaElement>
-  ) => {
+  const handleResponsibilityHover = (originalText: string) => {
     const suggestion = suggestionArray.find(
       (suggestion) => suggestion.originalText === originalText
     );
 
     setHoveredSuggestion(suggestion);
-    setAnchorEl(event.currentTarget);
   };
 
   const handelWorkExperienceChange = (
@@ -652,13 +642,7 @@ const EditablePreview: React.FC<PropTypes> = ({
 
               {exp.responsibilities.map((resp, respIndex) => (
                 <Grid container alignItems="center" key={respIndex}>
-                  <Grid
-                    item
-                    xs
-                    onMouseLeave={() => {
-                      setAnchorEl(undefined);
-                    }}
-                  >
+                  <Grid item xs>
                     <NoMaxWidthTooltip
                       title={
                         hoveredSuggestion && (
@@ -682,8 +666,8 @@ const EditablePreview: React.FC<PropTypes> = ({
                             respIndex
                           )
                         }
-                        onMouseEnter={(e) => {
-                          handleResponsibilityHover(resp, e);
+                        onMouseEnter={() => {
+                          handleResponsibilityHover(resp);
                         }}
                         customColor={isMatchingSuggestion(resp) ? "orange" : ""}
                       />
