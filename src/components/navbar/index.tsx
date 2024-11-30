@@ -12,11 +12,10 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import SignInButton from "./SignInButton";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 const routes = [
   { name: "Resume", href: "/resume" },
@@ -25,8 +24,6 @@ const routes = [
 ];
 
 function ResponsiveAppBar() {
-  const router = useRouter();
-
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -41,20 +38,8 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (param: string) => {
-    // setAnchorElNav(null);
-    console.log("Handle close menu", param);
-    if (param === "Resume") {
-      router.push("/resume");
-    }
-
-    if (param === "Apply") {
-      router.push("/apply");
-    }
-
-    if (param === "Saved Resume") {
-      router.push("/savedResume");
-    }
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -94,10 +79,11 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img
-            src="../logo.png"
+          <Image
+            src="/logo.png"
             alt="Milpitas Communications"
-            style={{ height: 80 }}
+            width={100}
+            height={80}
           />
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -138,25 +124,7 @@ function ResponsiveAppBar() {
                 ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {session.status === "authenticated" &&
               routes.map(({ name, href }) => (

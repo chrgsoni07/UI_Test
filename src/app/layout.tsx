@@ -7,6 +7,7 @@ import Providers from "./providers";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { Container } from "@mui/material";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,7 +39,7 @@ export default async function RootLayout({
           <Providers>
             <Navbar />
             <Toaster />
-            {children}
+            <Container maxWidth="xl">{children}</Container>
           </Providers>
         </SessionProvider>
       </body>
