@@ -5,6 +5,7 @@ import { signIn } from "@/auth";
 import { signUp } from "@/service/api";
 
 import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
 
 export const register = async (formData: FormData) => {
   const formValues = {
@@ -25,10 +26,11 @@ export const register = async (formData: FormData) => {
   try {
     // Add validations
     await signUp(formValues as UserSignUp);
-    await signIn("credentials", {
-      ...loginFormData,
-      redirectTo: "/",
-    });
+    //   await signIn("credentials", {
+    //     ...loginFormData,
+    //     redirectTo: "/",
+    //   });
+    redirect("/signin");
   } catch (error) {
     if (error instanceof AuthError) {
       console.log("Auth error");

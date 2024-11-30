@@ -56,7 +56,7 @@ export default function RegisterPage(props: {
                 required
                 fullWidth
                 variant="outlined"
-                value={"John"}
+                //value={"John"}
                 // color={emailError ? "error" : "primary"}
               />
             </FormControl>
@@ -72,7 +72,7 @@ export default function RegisterPage(props: {
                 required
                 fullWidth
                 variant="outlined"
-                value={"Doe"}
+                // value={"Doe"}
                 // color={emailError ? "error" : "primary"}
               />
             </FormControl>
@@ -89,7 +89,7 @@ export default function RegisterPage(props: {
                 required
                 fullWidth
                 variant="outlined"
-                value={"john.dow@example.com"}
+                //value={"john.dow@example.com"}
 
                 // color={emailError ? "error" : "primary"}
               />
@@ -108,7 +108,7 @@ export default function RegisterPage(props: {
                 required
                 fullWidth
                 variant="outlined"
-                value={"SecurePassword12345"}
+                //value={"SecurePassword12345"}
                 // color={passwordError ? "error" : "primary"}
               />
             </FormControl>

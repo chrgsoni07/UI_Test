@@ -11,7 +11,14 @@ const roboto = Roboto({
 const theme = createTheme({
   cssVariables: true,
   palette: {
-    mode: "light",
+    primary: {
+      //main: "#4A4A4A", // gray
+      //  main: "#2F2F2F", //    chacole gray
+      main: "#2A3439",
+    },
+    secondary: {
+      main: "#f50057", // Example of secondary color
+    },
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
