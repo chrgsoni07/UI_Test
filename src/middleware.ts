@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 
 const apiAuthPrefix = "/api/auth";
-const publicRoutes = ["/"];
+const publicRoutes = ["/", "/logo.png"];
 const authRoutes = ["/signin", "/register"];
 const defaultRedirectUrl = "/";
 
