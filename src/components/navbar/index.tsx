@@ -16,8 +16,13 @@ import AdbIcon from "@mui/icons-material/Adb";
 import SignInButton from "./SignInButton";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-const pages = ["Resume", "Apply", "Saved Resume"];
+const routes = [
+  { name: "Resume", href: "/resume" },
+  { name: "Apply", href: "/apply" },
+  { name: "Saved Resume", href: "/savedResume" },
+];
 
 function ResponsiveAppBar() {
   const router = useRouter();
@@ -122,10 +127,14 @@ function ResponsiveAppBar() {
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {session.status === "authenticated" &&
-                pages.map((page) => (
-                  <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
-                    <Typography sx={{ textAlign: "center" }}>{page}</Typography>
-                  </MenuItem>
+                routes.map(({ name, href }) => (
+                  <Link key={name} href={href}>
+                    <MenuItem>
+                      <Typography sx={{ textAlign: "center" }}>
+                        {name}
+                      </Typography>
+                    </MenuItem>
+                  </Link>
                 ))}
             </Menu>
           </Box>
@@ -150,14 +159,12 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {session.status === "authenticated" &&
-              pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={() => handleCloseNavMenu(page)}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page}
-                </Button>
+              routes.map(({ name, href }) => (
+                <Link key={name} href={href}>
+                  <Button sx={{ my: 2, color: "white", display: "block" }}>
+                    {name}
+                  </Button>
+                </Link>
               ))}
           </Box>
 
