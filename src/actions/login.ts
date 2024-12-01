@@ -3,6 +3,7 @@
 import { signIn } from "@/auth";
 
 import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
 
 export const login = async (formData: FormData) => {
   const formValues = {
@@ -18,12 +19,10 @@ export const login = async (formData: FormData) => {
       ...formValues,
       redirectTo: "/",
     });
-    // console.log("idhar aa gaya");
-    // redirect("/apply");
   } catch (error) {
     if (error instanceof AuthError) {
       console.log("Auth error");
-      //   return redirect(`${SIGNIN_ERROR_URL}?error=${error.type}`)
+      return redirect(`/signin?error=${error.type}`);
     }
     throw error;
   }
