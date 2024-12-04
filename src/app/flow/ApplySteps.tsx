@@ -67,12 +67,14 @@ const ApplyFlow = () => {
             jobDetail={jobDetail}
             selectedResume={selectedResume}
             setUpdatedResume={setUpdatedResume}
+            onNext={handleNext}
           />
         );
 
       case 3:
         if (!updatedResume)
           return <div>Updated resume is not available please try later ..</div>;
+
         return <EditablePreview resumeData={updatedResume} />;
       case 4:
         if (!selectedResume) return <div>Please selected any resume</div>;
@@ -105,9 +107,9 @@ const ApplyFlow = () => {
         >
           Back
         </Button>
-        <Button onClick={handleNext} disabled={activeStep === steps.length - 1}>
+        {/* <Button onClick={handleNext} disabled={activeStep === steps.length - 1}>
           {activeStep === steps.length - 1 ? "Finish" : "Next"}
-        </Button>
+        </Button> */}
       </Box>
     </Box>
   );

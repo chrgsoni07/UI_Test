@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, Container, TextField } from "@mui/material";
+import { Button, Container, IconButton, TextField } from "@mui/material";
 import { JobDetail } from "./JobDetail";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 interface Step1Props {
   jobDetail: JobDetail;
@@ -71,9 +72,19 @@ const Step1: React.FC<Step1Props> = ({ jobDetail, setJobDetail, onNext }) => {
           helperText={errors.jobDescription}
         />
 
-        <Button variant="contained" color="primary" type="submit">
-          Submit
-        </Button>
+        {/* <IconButton aria-label="nextNavigation">
+          <NavigateNextIcon
+            onClick={() => handleSubmit}
+            color="info"
+          ></NavigateNextIcon>
+        </IconButton> */}
+
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          startIcon={<NavigateNextIcon />}
+        ></Button>
       </form>
     </Container>
   );

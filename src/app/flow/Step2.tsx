@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import { Resume } from "../resume/Resume";
 import { getAllResumeOfUser } from "@/service/api";
 import moment from "moment";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 interface Step2Props {
   setSelectedResume: React.Dispatch<React.SetStateAction<any>>;
@@ -58,7 +59,13 @@ const Step2: React.FC<Step2Props> = ({ setSelectedResume, onNext }) => {
           Below is the list of resumes with job titles and creation dates. You
           can select a resume and click the Submit button.
         </Typography>
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            maxHeight: allResume.length > 10 ? 400 : "auto", // Make table scrollable if more than 10 rows
+            overflowY: allResume.length > 10 ? "auto" : "unset", // Enable vertical scrolling if more than 10 rows
+          }}
+        >
           <Table>
             <TableHead>
               <TableRow>
@@ -71,12 +78,12 @@ const Step2: React.FC<Step2Props> = ({ setSelectedResume, onNext }) => {
               {allResume.map((resume: Resume) => (
                 <TableRow
                   key={resume.id}
-                  onClick={() => handleSelect(resume)} // Make row clickable
+                  onClick={() => handleSelect(resume)} // Select row on click
                   selected={selectedRow?.id === resume.id} // Highlight the selected row
                   sx={{
                     backgroundColor:
-                      selectedRow?.id === resume.id ? "#d3d3d3" : "transparent", // Conditional row styling
-                    cursor: "pointer", // Make the cursor pointer to indicate clickability
+                      selectedRow?.id === resume.id ? "#d3d3d3" : "transparent", // Conditional styling for selected row
+                    cursor: "pointer", // Make the row clickable
                   }}
                 >
                   <TableCell>{resume.id}</TableCell>
@@ -97,9 +104,8 @@ const Step2: React.FC<Step2Props> = ({ setSelectedResume, onNext }) => {
             color="primary"
             onClick={handleSelectOld}
             disabled={!selectedRow} // Disable button if no row is selected
-          >
-            Submit
-          </Button>
+            startIcon={<NavigateNextIcon />}
+          ></Button>
         </Box>
       </Box>
     </Container>

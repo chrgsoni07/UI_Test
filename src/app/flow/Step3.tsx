@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { JobDetail } from "./JobDetail";
 import { Resume } from "../resume/Resume";
-import { Container, Grid, TextField, Typography } from "@mui/material";
+import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import {
   ResumeEvalResult,
   SuggestedImprovement,
 } from "../resume/ResumeEvalResult";
 import { assessResumeFit } from "@/service/api";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 interface Step3Props {
   jobDetail: JobDetail;
   selectedResume: Resume;
   setUpdatedResume: React.Dispatch<React.SetStateAction<any>>;
+  onNext: () => void;
 }
 
 const Step3: React.FC<Step3Props> = ({
   jobDetail,
   selectedResume,
   setUpdatedResume,
+  onNext,
 }) => {
   const [resumeEvalResult, setResumeEvalResult] = useState<ResumeEvalResult>();
 
@@ -42,6 +45,10 @@ const Step3: React.FC<Step3Props> = ({
       return "";
 
     return suggestedImpv.map((e) => `• ${e.suggestedText}`).join("\n");
+  };
+
+  const handelNextStep = () => {
+    onNext();
   };
 
   return (
@@ -90,13 +97,21 @@ const Step3: React.FC<Step3Props> = ({
                 InputLabelProps={{ shrink: true }}
                 fullWidth
                 multiline
-                rows={3}
+                rows={10}
                 value={showAdditionalSuggestions(
                   resumeEvalResult?.suggestedImprovements
                 )}
               />
             </Grid>
           )}
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<NavigateNextIcon />}
+            onClick={handelNextStep}
+          ></Button>
+        </Grid>
       </Grid>
     </Container>
   );
