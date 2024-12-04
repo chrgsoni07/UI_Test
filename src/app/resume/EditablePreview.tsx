@@ -20,13 +20,18 @@ import { Projects, type Resume, type Suggestion } from "./Resume";
 import { useMutation } from "@tanstack/react-query";
 import { saveResume } from "@/service/api";
 import { redirect } from "next/navigation";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 type PropTypes = {
   resumeData: Resume;
+  buttonType: String;
+  onNext?: () => void;
 };
 
 const EditablePreview: React.FC<PropTypes> = ({
   resumeData: resumeDataProp,
+  buttonType,
+  onNext,
 }) => {
   const [resumeData, setResumeData] = useState<Resume>(resumeDataProp);
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Suggestion>();
@@ -38,6 +43,7 @@ const EditablePreview: React.FC<PropTypes> = ({
     },
     onSuccess(data) {
       toast.success("Resume saved successfully !");
+      onNext?.();
     },
     onError(error) {
       toast.error(error.message);
@@ -230,6 +236,10 @@ const EditablePreview: React.FC<PropTypes> = ({
       (suggestion) => suggestion.originalText === responsibility
     );
   };
+
+  // function handelNextStep(event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
+  //   throw new Error("Function not implemented.");
+  // }
 
   return (
     <div style={{ marginLeft: 20 }}>
@@ -898,15 +908,28 @@ const EditablePreview: React.FC<PropTypes> = ({
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={!resumeData}
-          onClick={handleSubmit}
-        >
-          Save
-        </Button>
+        {buttonType === "save" ? (
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={!resumeData}
+            onClick={handleSubmit}
+          >
+            Save
+          </Button>
+        ) : buttonType === "update" ? (
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={!resumeData}
+            startIcon={<NavigateNextIcon />}
+            onClick={handleSubmit}
+          >
+            Next
+          </Button>
+        ) : null}
       </Grid>
     </div>
   );

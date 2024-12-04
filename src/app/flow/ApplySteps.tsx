@@ -14,10 +14,10 @@ import { Container } from "@mui/material";
 
 const steps = [
   "Job details",
-  "Saved Resume",
+  "Select Resume",
   "Evaluation Result",
   "Updated Resume",
-  "Save",
+  "Save Template",
 ];
 
 const ApplyFlow = () => {
@@ -75,7 +75,15 @@ const ApplyFlow = () => {
         if (!updatedResume)
           return <div>Updated resume is not available please try later ..</div>;
 
-        return <EditablePreview resumeData={updatedResume} />;
+        return (
+          <Container>
+            <EditablePreview
+              resumeData={updatedResume}
+              buttonType="update"
+              onNext={handleNext}
+            />
+          </Container>
+        );
       case 4:
         if (!selectedResume) return <div>Please selected any resume</div>;
 
@@ -101,7 +109,8 @@ const ApplyFlow = () => {
       {/* Navigation buttons */}
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
         <Button
-          color="inherit"
+          variant="contained"
+          color="primary"
           onClick={handleBack}
           disabled={activeStep === 0}
         >

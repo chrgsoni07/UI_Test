@@ -73,7 +73,9 @@ const Page: FC = () => {
           </Button>
         </Grid>
 
-        {resumeData && <EditablePreview resumeData={resumeData} />}
+        {resumeData && (
+          <EditablePreview resumeData={resumeData} buttonType="save" />
+        )}
       </Grid>
     </Box>
   );

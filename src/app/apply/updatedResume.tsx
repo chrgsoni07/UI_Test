@@ -251,7 +251,9 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
         </AccordionSummary>
         <AccordionDetails>
           <form onSubmit={handleSubmit}>
-            {updatedResume && <EditablePreview resumeData={updatedResume} />}
+            {updatedResume && (
+              <EditablePreview resumeData={updatedResume} buttonType="save" />
+            )}
             {/* <Button type="submit" variant="contained" color="primary">
               Save
             </Button> */}
