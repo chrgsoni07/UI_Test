@@ -8,13 +8,11 @@ interface Step1Props {
   onNext: () => void;
 }
 
-const Step1: React.FC<Step1Props> = ({ jobDetail, setJobDetail }) => {
+const Step1: React.FC<Step1Props> = ({ jobDetail, setJobDetail, onNext }) => {
   const [errors, setErrors] = useState({
     jobTitle: "",
     jobDescription: "",
   });
-
-  // const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,7 +37,8 @@ const Step1: React.FC<Step1Props> = ({ jobDetail, setJobDetail }) => {
     if (hasErrors) return;
 
     setJobDetail(jobDetail);
-    //  setFormSubmitted(true);
+
+    onNext();
   };
 
   return (
@@ -71,6 +70,10 @@ const Step1: React.FC<Step1Props> = ({ jobDetail, setJobDetail }) => {
           error={!!errors.jobDescription}
           helperText={errors.jobDescription}
         />
+
+        <Button variant="contained" color="primary" type="submit">
+          Submit
+        </Button>
       </form>
     </Container>
   );

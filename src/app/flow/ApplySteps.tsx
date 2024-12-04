@@ -22,13 +22,13 @@ const steps = [
 
 const ApplyFlow = () => {
   const [activeStep, setActiveStep] = useState(0);
-  //iniitial value Ask ankit
+
   const [jobDetail, setJobDetail] = useState({
     jobTitle: "",
     jobDescription: "",
     jobUrl: "",
   });
-  const [selectedResume, setSelectedResume] = useState<Resume>();
+  const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
   const [updatedResume, setUpdatedResume] = useState<Resume>();
 
   const handleNext = () => {
@@ -57,7 +57,7 @@ const ApplyFlow = () => {
       case 1:
         if (!jobDetail) return <div>Please provide job detail</div>;
         return (
-          <Step2 jobDetail={jobDetail} setSelectedResume={setSelectedResume} />
+          <Step2 setSelectedResume={setSelectedResume} onNext={handleNext} />
         );
 
       case 2:
