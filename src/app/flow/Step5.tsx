@@ -14,6 +14,7 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import { TemplateRenderer } from "../template/[resumeId]/TemplateSelectionPage";
 import { Resume } from "../resume/Resume";
 import { updateTemplateIdOfResume } from "@/service/api";
+import toast from "react-hot-toast";
 
 const templates = [
   { id: 1, image: "../img/template1.jpg" },
@@ -46,7 +47,7 @@ const Step5: React.FC<step5props> = ({ selectedResume }) => {
   const saveTemplateIdOnResume = (id: number) => {
     updateTemplateIdOfResume(selectedResume.id, id);
 
-    alert("Template Saved successfully");
+    toast.success("Resume template saved successfully ");
   };
 
   return (

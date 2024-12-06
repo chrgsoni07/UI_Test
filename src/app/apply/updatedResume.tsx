@@ -58,22 +58,21 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
     fetchResumes(); // Call the async function
   }, [jobDetail]); // Dependency array, this will trigger when jobDetail changes
 
-  const { data: savedResume, mutate: postSave } = useMutation({
-    mutationFn: (rData: Resume): Promise<Resume> => {
-      return saveJobSpecificResume(rData);
-    },
-    onSuccess(data) {
-      toast.success("updated resume saved successfully !");
-      if (data.id) {
-        //navigate to the template page
-      } else {
-        console.error("Saved resume ID is undefined");
-      }
-    },
-    onError(error) {
-      toast.error(error.message);
-    },
-  });
+  // const { data: savedResume, mutate: postSave } = useMutation({
+  //   mutationFn: (rData: Resume): Promise<Resume> => {
+  //     return saveJobSpecificResume(rData);
+  //   },
+  //   onSuccess(data) {
+  //     toast.success("updated resume saved successfully !");
+  //     if (data.id) {
+  //     } else {
+  //       console.error("Saved resume ID is undefined");
+  //     }
+  //   },
+  //   onError(error) {
+  //     toast.error(error.message);
+  //   },
+  // });
 
   const handleAccordionChange = (accordionIndex: number) => {
     setOpenAccordion(openAccordion === accordionIndex ? -1 : accordionIndex);
@@ -102,13 +101,13 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
     openSecondAccordion();
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
 
-    if (!updatedResume) return;
+  //   if (!updatedResume) return;
 
-    postSave(updatedResume);
-  };
+  //   postSave(updatedResume);
+  // };
 
   const showAdditionalSuggestions = (
     suggestedImpv?: SuggestedImprovement[]
@@ -250,14 +249,12 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
           <Typography>Details</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <form onSubmit={handleSubmit}>
-            {updatedResume && (
-              <EditablePreview resumeData={updatedResume} buttonType="save" />
-            )}
-            {/* <Button type="submit" variant="contained" color="primary">
-              Save
+          {updatedResume && (
+            <EditablePreview resumeData={updatedResume} buttonType="update" />
+          )}
+          {/* <Button type="submit" variant="contained" color="primary">
+              update
             </Button> */}
-          </form>
         </AccordionDetails>
       </Accordion>
     </>

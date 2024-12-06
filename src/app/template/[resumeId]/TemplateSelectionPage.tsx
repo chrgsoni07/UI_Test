@@ -15,6 +15,8 @@ import ResumeTemplate1 from "../../../components/renderer/ResumeTempate1";
 import ResumeTemplate2 from "../../../components/renderer/ResumeTemplate2";
 import ResumeTemplate3 from "../../../components/renderer/ResumeTemplate3";
 import { type Resume } from "../../resume/Resume";
+import { updateTemplateIdOfResume } from "@/service/api";
+import toast from "react-hot-toast";
 
 const templates = [
   { id: 1, image: "../img/template1.jpg" },
@@ -51,6 +53,12 @@ const TemplateSelectionPage: React.FC<TemplateSelectionPageProps> = ({
   const handleClose = () => {
     setOpen(false);
     setSelectedImage("");
+  };
+
+  const saveTemplateIdOnResume = (id: number) => {
+    updateTemplateIdOfResume(resume.id, id);
+
+    toast.success("Resume template saved successfully ");
   };
 
   return (
@@ -90,6 +98,13 @@ const TemplateSelectionPage: React.FC<TemplateSelectionPageProps> = ({
       </Grid>
 
       <TemplateRenderer resumeData={resume} templateType={templateType} />
+      <Button
+        className="button"
+        variant="contained"
+        onClick={() => saveTemplateIdOnResume(templateType)}
+      >
+        Save
+      </Button>
     </Container>
   );
 };

@@ -103,7 +103,8 @@ export const extractDataFromFile = async (formData: FormData) => {
 };
 
 export const saveJobSpecificResume = async (data: Resume) => {
-  const saveDataURL = `${BASE_URL_RESUME}job-specific}`;
+  const saveDataURL = `${BASE_URL_RESUME}job-specific`;
+
   if (process.env.RETURN_MOCK === "true") {
     return extractDataMock;
   }

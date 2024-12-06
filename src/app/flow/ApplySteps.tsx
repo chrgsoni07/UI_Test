@@ -79,15 +79,16 @@ const ApplyFlow = () => {
           <Container>
             <EditablePreview
               resumeData={updatedResume}
-              buttonType="update"
+              buttonType="next"
               onNext={handleNext}
+              setUpdatedResume={setUpdatedResume}
             />
           </Container>
         );
       case 4:
-        if (!selectedResume) return <div>Please selected any resume</div>;
+        if (!updatedResume) return <div>Please selected any resume</div>;
 
-        return <Step5 selectedResume={selectedResume} />;
+        return <Step5 selectedResume={updatedResume} />;
       default:
         return <div>Unknown Step</div>;
     }

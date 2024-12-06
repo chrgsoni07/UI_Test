@@ -18,7 +18,7 @@ import {
 import toast from "react-hot-toast";
 import { Projects, type Resume, type Suggestion } from "./Resume";
 import { useMutation } from "@tanstack/react-query";
-import { saveResume } from "@/service/api";
+import { saveJobSpecificResume, saveResume } from "@/service/api";
 import { redirect } from "next/navigation";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
@@ -26,12 +26,14 @@ type PropTypes = {
   resumeData: Resume;
   buttonType: String;
   onNext?: () => void;
+  setUpdatedResume?: React.Dispatch<React.SetStateAction<any>>;
 };
 
 const EditablePreview: React.FC<PropTypes> = ({
   resumeData: resumeDataProp,
   buttonType,
   onNext,
+  setUpdatedResume,
 }) => {
   const [resumeData, setResumeData] = useState<Resume>(resumeDataProp);
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Suggestion>();
@@ -39,10 +41,24 @@ const EditablePreview: React.FC<PropTypes> = ({
 
   const { data: savedResume, mutate: postSave } = useMutation({
     mutationFn: (rData: Resume): Promise<Resume> => {
-      return saveResume(rData);
+      if (buttonType === "save") {
+        return saveResume(rData);
+      }
+      if (buttonType === "update") {
+        return saveJobSpecificResume(rData);
+      } else {
+        return saveJobSpecificResume(rData);
+      }
     },
     onSuccess(data) {
       toast.success("Resume saved successfully !");
+
+      if (setUpdatedResume) {
+        setUpdatedResume(data);
+      } else {
+        console.log("setUpdatedResume in flow is not defined.");
+      }
+
       onNext?.();
     },
     onError(error) {
@@ -919,6 +935,17 @@ const EditablePreview: React.FC<PropTypes> = ({
             Save
           </Button>
         ) : buttonType === "update" ? (
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={!resumeData}
+            startIcon={<NavigateNextIcon />}
+            onClick={handleSubmit}
+          >
+            Save Changes
+          </Button>
+        ) : buttonType === "next" ? (
           <Button
             type="submit"
             variant="contained"
