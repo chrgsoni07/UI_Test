@@ -94,7 +94,12 @@ export const getJobDetailsFromUrl = async (url: string) => {
 
 export const extractDataFromFile = async (formData: FormData) => {
   if (process.env.RETURN_MOCK === "true") {
-    return extractDataMock;
+    const fakeApi = new Promise((res) => {
+      setTimeout(() => res(extractDataMock), 1000);
+    });
+
+    return await fakeApi;
+    // return extractDataMock;
   }
   const extractDataURL = `${BASE_URL_FILE}extract`;
   const response = await (await axiosWithAuth()).post(extractDataURL, formData);

@@ -7,6 +7,7 @@ import { extractDataFromFile } from "@/service/api";
 import EditablePreview from "@/app/resume/EditablePreview";
 import { type Resume } from "./Resume";
 import toast from "react-hot-toast";
+import ResumeSkeleton from "./ResumeSkeleton";
 
 const Page: FC = () => {
   const {
@@ -40,17 +41,8 @@ const Page: FC = () => {
   };
 
   return (
-    <Box display="flex">
-      {isPending && (
-        <Box
-          position="absolute"
-          top="50%"
-          left="50%"
-          style={{ transform: "translate(-50%, -50%)" }}
-        >
-          <CircularProgress />
-        </Box>
-      )}
+    <Box>
+      {isPending && <ResumeSkeleton />}
 
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} container alignItems="center">
