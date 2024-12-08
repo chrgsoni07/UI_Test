@@ -1,19 +1,23 @@
 import { getResumeById } from "@/service/api";
-// import TemplateSelectionPage from "./TemplateSelectionPage";
-import dynamic from "next/dynamic";
+import TemplateSelectionPage from "./TemplateSelectionPage";
 
-export default async function Page({
-  params,
-}: {
-  params: { resumeId: string };
-}) {
-  const { resumeId } = params;
+import React, { Suspense } from "react";
+import TemplateSelectionSkeleton from "./TemplateSelectionSkeleton";
 
+const TemplatePageContents: React.FC<{ resumeId: string }> = async ({
+  resumeId,
+}) => {
   const data = await getResumeById(resumeId);
-  const TemplateSelectionPage = dynamic(
-    () => import("./TemplateSelectionPage"),
-    { ssr: false }
-  );
 
   return <TemplateSelectionPage resume={data} />;
+};
+
+export default function Page({ params }: { params: { resumeId: string } }) {
+  const { resumeId } = params;
+
+  return (
+    <Suspense fallback={<TemplateSelectionSkeleton />}>
+      <TemplatePageContents resumeId={resumeId} />
+    </Suspense>
+  );
 }
