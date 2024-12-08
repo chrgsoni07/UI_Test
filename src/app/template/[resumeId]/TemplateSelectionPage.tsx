@@ -9,7 +9,7 @@ import {
   DialogContent,
   Grid,
 } from "@mui/material";
-import { Font } from "@react-pdf/renderer";
+import { Document, Font, Page, Text, PDFViewer } from "@react-pdf/renderer";
 
 import ResumeTemplate1 from "../../../components/renderer/ResumeTempate1";
 import ResumeTemplate2 from "../../../components/renderer/ResumeTemplate2";
@@ -102,6 +102,7 @@ const TemplateSelectionPage: React.FC<TemplateSelectionPageProps> = ({
         className="button"
         variant="contained"
         onClick={() => saveTemplateIdOnResume(templateType)}
+        disabled={templateType === 0}
       >
         Save
       </Button>
@@ -127,7 +128,15 @@ export const TemplateRenderer: React.FC<TemplateRendererProps> = ({
   if (templateType === 3) {
     return <ResumeTemplate3 resume={resumeData} />;
   }
-  return <div>Please select template to preview resume...</div>;
+  return (
+    <PDFViewer width="100%" height="600">
+      <Document keywords="resume, ATS, multinational company" title="Resume">
+        <Page>
+          <Text>select the template to generate your resume PDF.</Text>
+        </Page>
+      </Document>
+    </PDFViewer>
+  );
 };
 
 export default TemplateSelectionPage;
