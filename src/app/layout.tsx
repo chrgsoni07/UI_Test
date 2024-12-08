@@ -37,7 +37,7 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <SessionProvider session={session}>
           <Providers>
-            <Navbar />
+            <Navbar isLoggedIn={!!session?.user} />
             <Toaster />
             <Container maxWidth="xl">{children}</Container>
           </Providers>

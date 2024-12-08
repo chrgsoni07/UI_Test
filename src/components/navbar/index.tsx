@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import SignInButton from "./SignInButton";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -23,7 +23,7 @@ const routes = [
   { name: "Saved Resume", href: "/savedResume" },
 ];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -46,7 +46,6 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const session = useSession();
   const settings = {
     Profile: (
       <MenuItem onClick={handleCloseUserMenu}>
@@ -63,7 +62,7 @@ function ResponsiveAppBar() {
         <Typography sx={{ textAlign: "center" }}>Dashboard</Typography>
       </MenuItem>
     ),
-    Logout: session.status === "authenticated" && (
+    Logout: isLoggedIn && (
       <MenuItem
         onClick={() => {
           signOut();
@@ -112,7 +111,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {session.status === "authenticated" &&
+              {isLoggedIn &&
                 routes.map(({ name, href }) => (
                   <Link key={name} href={href}>
                     <MenuItem>
@@ -126,7 +125,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {session.status === "authenticated" &&
+            {isLoggedIn &&
               routes.map(({ name, href }) => (
                 <Link key={name} href={href}>
                   <Button sx={{ my: 2, color: "white", display: "block" }}>
@@ -139,7 +138,7 @@ function ResponsiveAppBar() {
           <Box
             sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 2 }}
           >
-            <SignInButton />
+            {!isLoggedIn && <SignInButton />}
 
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
