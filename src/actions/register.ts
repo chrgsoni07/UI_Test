@@ -3,9 +3,11 @@
 import { UserSignUp } from "@/app/auth/model/UserSignUp";
 import { signIn } from "@/auth";
 import { signUp } from "@/service/api";
+import axios, { AxiosError } from "axios";
 
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 export const register = async (formData: FormData) => {
   const formValues = {
@@ -32,9 +34,11 @@ export const register = async (formData: FormData) => {
     //   });
     redirect("/signin");
   } catch (error) {
-    if (error instanceof AuthError) {
-      console.log("Auth error");
-      //   return redirect(`${SIGNIN_ERROR_URL}?error=${error.type}`)
+    if (axios.isAxiosError(error)) {
+      console.log("error on other => ", error.response?.data?.errorMessage);
+      //toast.error(error.response?.data?.errorMessage);
+    } else {
+      // toast.error(error.message);
     }
     throw error;
   }

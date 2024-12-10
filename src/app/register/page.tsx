@@ -49,8 +49,8 @@ export default function RegisterPage(props: {
               <TextField
                 // error={emailError}
                 // helperText={emailErrorMessage}
-                id="fullname"
-                name="fullname"
+                id="firstname"
+                name="firstname"
                 placeholder="John"
                 autoFocus
                 required
@@ -65,9 +65,9 @@ export default function RegisterPage(props: {
               <TextField
                 // error={emailError}
                 // helperText={emailErrorMessage}
-                id="fullname"
-                name="fullname"
-                placeholder="John Doe"
+                id="lastname"
+                name="lastname"
+                placeholder="Doe"
                 autoFocus
                 required
                 fullWidth

@@ -19,7 +19,7 @@ export const signUp = async (signUpFormValues: UserSignUp) => {
   }
   const response = await (
     await axiosWithAuth()
-  ).post(`${BASE_URL_RESUME}`, signUpFormValues);
+  ).post(`${BASE_URL_API_GATEWAY}/signup`, signUpFormValues);
 
   return response.data;
 };
