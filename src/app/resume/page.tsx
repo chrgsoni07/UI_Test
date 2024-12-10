@@ -8,7 +8,7 @@ import EditablePreview from "@/app/resume/EditablePreview";
 import { type Resume } from "./Resume";
 import toast from "react-hot-toast";
 import ResumeSkeleton from "./ResumeSkeleton";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 const Page: FC = () => {
   const {
@@ -24,8 +24,12 @@ const Page: FC = () => {
       toast.success("Resume uploaded successfully");
     },
     onError(error) {
-      console.log("error on other => ", error?.response?.data?.errorMessage);
-      toast.error(error?.response?.data?.errorMessage);
+      if (axios.isAxiosError(error)) {
+        console.log("error on other => ", error.response?.data?.errorMessage);
+        toast.error(error.response?.data?.errorMessage);
+      } else {
+        toast.error(error.message);
+      }
     },
   });
 

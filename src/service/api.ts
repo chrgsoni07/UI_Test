@@ -97,17 +97,21 @@ export const getJobDetailsFromUrl = async (url: string) => {
   return response.data;
 };
 
-export const extractDataFromFile = async (formData: FormData) => {
+export const extractDataFromFile = async (
+  formData: FormData
+): Promise<Resume> => {
   if (process.env.RETURN_MOCK === "true") {
     const fakeApi = new Promise((res) => {
       setTimeout(() => res(extractDataMock), 1000);
-    });
+    }) as Promise<Resume>;
 
     return await fakeApi;
     // return extractDataMock;
   }
   const extractDataURL = `${BASE_URL_FILE}extract`;
-  const response = await (await axiosWithAuth()).post(extractDataURL, formData);
+  const response = await (
+    await axiosWithAuth()
+  ).post<Resume>(extractDataURL, formData);
 
   return response.data;
 };
