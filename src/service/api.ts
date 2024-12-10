@@ -26,7 +26,12 @@ export const signUp = async (signUpFormValues: UserSignUp) => {
 
 export const getResumeById = async (id: string) => {
   if (process.env.RETURN_MOCK === "true") {
-    return resumeByIdMock;
+    const fakeApi = new Promise((res) => {
+      setTimeout(() => res(resumeByIdMock), 1000);
+    });
+
+    return await fakeApi;
+    // return resumeByIdMock;
   }
   const response = await (await axiosWithAuth()).get(`${BASE_URL_RESUME}${id}`);
 
