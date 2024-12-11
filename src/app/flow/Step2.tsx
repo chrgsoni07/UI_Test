@@ -14,9 +14,10 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Resume } from "../resume/Resume";
-import { getAllResumeOfUser } from "@/service/api";
+import { getAllResumeOfUser, isUserUploadLimitReached } from "@/service/api";
 import moment from "moment";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import toast from "react-hot-toast";
 
 interface Step2Props {
   setSelectedResume: React.Dispatch<React.SetStateAction<any>>;
@@ -49,7 +50,14 @@ const Step2: React.FC<Step2Props> = ({ setSelectedResume, onNext }) => {
     }
   };
 
-  const handleSelectOld = () => {
+  const handleSelectOld = async () => {
+    const isLimitReached = await isUserUploadLimitReached();
+
+    if (isLimitReached) {
+      toast.error("max limit reached");
+      return;
+    }
+
     setSelectedResume(selectedRow);
     onNext();
   };
@@ -74,9 +82,9 @@ const Step2: React.FC<Step2Props> = ({ setSelectedResume, onNext }) => {
         </>
       ) : (
         <Box sx={{ width: "100%" }}>
-          <Typography variant="body2" paragraph>
-            Below is the list of resumes with job titles and creation dates. You
-            can select a resume and click the Submit button.
+          <Typography variant="body2">
+            Below is the list of resumes. You can select a resume and click the
+            Submit button.
           </Typography>
           <TableContainer
             component={Paper}

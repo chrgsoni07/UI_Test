@@ -97,6 +97,17 @@ export const getJobDetailsFromUrl = async (url: string) => {
   return response.data;
 };
 
+export const isUserUploadLimitReached = async () => {
+  if (process.env.RETURN_MOCK === "true") {
+    return false;
+  }
+  const response = await (
+    await axiosWithAuth()
+  ).get(`${BASE_URL_RESUME}uploads/limit-reached`);
+
+  return response.data;
+};
+
 export const extractDataFromFile = async (
   formData: FormData
 ): Promise<Resume> => {

@@ -16,11 +16,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
   assessResumeFit,
   getAllResumeOfUser,
+  isUserUploadLimitReached,
   saveJobSpecificResume,
   saveResume,
 } from "@/service/api";
@@ -89,6 +89,13 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
       jobTitle: "JAva developer",
       jobDescription: "complete job description comming through form",
     };
+
+    const isLimitReached = await isUserUploadLimitReached();
+
+    if (isLimitReached) {
+      toast.error("max limit reached");
+      return;
+    }
 
     toast.success("Resume got selected please wait");
 

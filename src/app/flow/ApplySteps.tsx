@@ -29,7 +29,7 @@ const ApplyFlow = () => {
     jobUrl: "",
   });
   const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
-  const [updatedResume, setUpdatedResume] = useState<Resume>();
+  const [updatedResume, setUpdatedResume] = useState<Resume | null>(null);
 
   const handleNext = () => {
     if (activeStep < steps.length - 1) {
@@ -41,6 +41,12 @@ const ApplyFlow = () => {
     if (activeStep > 0) {
       setActiveStep(activeStep - 1);
     }
+  };
+
+  const handleStartOver = () => {
+    setActiveStep(0);
+    setSelectedResume(null);
+    setUpdatedResume(null);
   };
 
   // Function to render content for each step
@@ -108,7 +114,7 @@ const ApplyFlow = () => {
       <Box sx={{ marginTop: "20px" }}>{renderStepContent(activeStep)}</Box>
 
       {/* Navigation buttons */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+      {/* <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
         <Button
           variant="contained"
           color="primary"
@@ -116,11 +122,20 @@ const ApplyFlow = () => {
           disabled={activeStep === 0}
         >
           Back
-        </Button>
-        {/* <Button onClick={handleNext} disabled={activeStep === steps.length - 1}>
+        </Button> */}
+      {/* <Button onClick={handleNext} disabled={activeStep === steps.length - 1}>
           {activeStep === steps.length - 1 ? "Finish" : "Next"}
         </Button> */}
-      </Box>
+
+      {activeStep > 0 && activeStep != 4 && (
+        <Button
+          variant="outlined"
+          onClick={handleStartOver}
+          style={{ marginTop: "20px" }}
+        >
+          Start Over
+        </Button>
+      )}
     </Box>
   );
 };
