@@ -40,26 +40,26 @@ const EducationDisplay = ({ education }: { education?: Education[] }) => {
           </Text>
 
           <Text key={`duration${eduIdx}`} style={styles.candidate}>
-            <Image
+            {/* <Image
               src={{
                 uri: "/img/Icons/calendar-dots.png",
                 method: "GET",
                 headers: { "Cache-Control": "no-cache" },
                 body: "",
               }}
-            />
+            /> */}
             {edu.duration}
           </Text>
 
           <Text key={`degreeImg${eduIdx}`} style={styles.degree}>
-            <Image
+            {/* <Image
               src={{
                 uri: "/img/Icons/map-pin.png",
                 method: "GET",
                 headers: { "Cache-Control": "no-cache" },
                 body: "",
               }}
-            />
+            /> */}
             {edu.location}
           </Text>
         </React.Fragment>

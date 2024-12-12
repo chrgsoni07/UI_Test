@@ -22,9 +22,9 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import DownloadIcon from "@mui/icons-material/Download";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
-import { TemplateRenderer } from "../template/[resumeId]/TemplateSelectionPage";
 import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
 import moment from "moment";
+import TemplateOptions from "../template/[resumeId]/TemplateOptions";
 
 const Page: FC = () => {
   const [open, setOpen] = React.useState(false);
@@ -98,7 +98,7 @@ const Page: FC = () => {
     }
 
     const pdfDocument = (
-      <TemplateRenderer
+      <TemplateOptions
         resumeData={selectedResume}
         templateType={selectedResume.metadata.templateId}
       />
@@ -175,7 +175,7 @@ const Page: FC = () => {
               <CloseIcon onClick={handleClose}></CloseIcon>
             </IconButton>
             {selectedResume ? (
-              <TemplateRenderer
+              <TemplateOptions
                 resumeData={selectedResume}
                 templateType={selectedResume?.metadata?.templateId}
               />

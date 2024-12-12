@@ -69,50 +69,50 @@ const Header = ({
       </View>
       <View style={styles.linkColumn}>
         <Text style={styles.mobile}>
-          <PDFImage
+          {/* <PDFImage
             src={{
               uri: "/img/Icons/envelope.png",
               method: "GET",
               headers: { "Cache-Control": "no-cache" },
               body: "",
             }}
-          />
+          /> */}
           {email}
         </Text>
 
         <Text style={styles.mobile}>
-          <PDFImage
+          {/* <PDFImage
             src={{
               uri: "/img/Icons/phone.png",
               method: "GET",
               headers: { "Cache-Control": "no-cache" },
               body: "",
             }}
-          />
+          /> */}
           {phoneNo}
         </Text>
 
         <Text style={styles.mobile}>
-          <PDFImage
+          {/* <PDFImage
             src={{
               uri: "/img/Icons/linkedin-logo.png",
               method: "GET",
               headers: { "Cache-Control": "no-cache" },
               body: "",
             }}
-          />
+          /> */}
           {linkedIn}
         </Text>
         {github ? (
           <Text style={styles.mobile}>
-            <PDFImage
+            {/* <PDFImage
               src={{
                 uri: "/img/Icons/github-logo.png",
                 method: "GET",
                 headers: { "Cache-Control": "no-cache" },
                 body: "",
               }}
-            />
+            /> */}
             {github}
           </Text>
         ) : null}
