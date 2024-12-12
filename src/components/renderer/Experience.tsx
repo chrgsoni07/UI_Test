@@ -91,27 +91,27 @@ const ExperienceEntry: React.FC<ExperienceEntryProps> = ({
         <View style={styles.leftColumn}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.title}>
-            <Image
+            {/* <Image
               src={{
                 uri: "/img/Icons/map-pin.png",
                 method: "GET",
                 headers: { "Cache-Control": "no-cache" },
                 body: "",
               }}
-            />
+            /> */}
             {location}
           </Text>
         </View>
         <View style={styles.rightColumn}>
           <Text style={styles.date}>
-            <Image
+            {/* <Image
               src={{
                 uri: "/img/Icons/calendar-dots.png",
                 method: "GET",
                 headers: { "Cache-Control": "no-cache" },
                 body: "",
               }}
-            />
+            /> */}
             {date}
           </Text>
         </View>

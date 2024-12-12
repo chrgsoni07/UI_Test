@@ -30,7 +30,7 @@ const EducationDisplay = ({ education }: { education?: Education[] }) => {
     <View style={styles.container}>
       <Title>Education</Title>
       {education.map((edu, eduIdx) => (
-        <>
+        <React.Fragment key={edu.degree}>
           <Text key={`degree${eduIdx}`} style={styles.degree}>
             {edu.degree}
           </Text>
@@ -40,29 +40,29 @@ const EducationDisplay = ({ education }: { education?: Education[] }) => {
           </Text>
 
           <Text key={`duration${eduIdx}`} style={styles.candidate}>
-            <Image
+            {/* <Image
               src={{
                 uri: "/img/Icons/calendar-dots.png",
                 method: "GET",
                 headers: { "Cache-Control": "no-cache" },
                 body: "",
               }}
-            />
+            /> */}
             {edu.duration}
           </Text>
 
-          <Text key={`degree${eduIdx}`} style={styles.degree}>
-            <Image
+          <Text key={`degreeImg${eduIdx}`} style={styles.degree}>
+            {/* <Image
               src={{
                 uri: "/img/Icons/map-pin.png",
                 method: "GET",
                 headers: { "Cache-Control": "no-cache" },
                 body: "",
               }}
-            />
+            /> */}
             {edu.location}
           </Text>
-        </>
+        </React.Fragment>
       ))}
     </View>
   );
