@@ -12,11 +12,13 @@ import {
 } from "@mui/material";
 import { AuthError } from "next-auth";
 
-export default function RegisterPage(props: {
-  searchParams: { callbackUrl: string | undefined };
-}) {
+export default async function RegisterPage(
+  props: {
+    searchParams: Promise<{ callbackUrl: string | undefined }>;
+  }
+) {
   return (
-    <div className="flex flex-col gap-2">
+    (<div className="flex flex-col gap-2">
       <Stack alignItems={"center"}>
         <Card
           variant="outlined"
@@ -129,7 +131,7 @@ export default function RegisterPage(props: {
                 "use server";
                 try {
                   await signIn(provider.id, {
-                    redirectTo: props.searchParams?.callbackUrl ?? "",
+                    redirectTo: (await props.searchParams)?.callbackUrl ?? "",
                   });
                 } catch (error) {
                   // Signin can fail for a number of reasons, such as the user
@@ -156,6 +158,6 @@ export default function RegisterPage(props: {
           ))}
         </Card>
       </Stack>
-    </div>
+    </div>)
   );
 }
