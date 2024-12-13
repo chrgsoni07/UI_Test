@@ -1,5 +1,5 @@
 import { Skeleton, Stack } from "@mui/material";
-import React from "react";
+import React, { type JSX } from "react";
 
 const ResumeSkeleton = (): JSX.Element => {
   return (

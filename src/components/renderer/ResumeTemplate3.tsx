@@ -94,62 +94,62 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
               <Text style={styles.sectionTitle}>Contact</Text>
               <View>
                 <Text style={styles.contact}>
-                  <PDFImage
+                  {/* <PDFImage
                     src={{
                       uri: "/img/Icons/envelope.png",
                       method: "GET",
                       headers: { "Cache-Control": "no-cache" },
                       body: "",
                     }}
-                  />
+                  /> */}
                   <Text style={styles.contactText}>{resume.email}</Text>
                 </Text>
 
                 <Text style={styles.contact}>
-                  <PDFImage
+                  {/* <PDFImage
                     src={{
                       uri: "/img/Icons/phone.png",
                       method: "GET",
                       headers: { "Cache-Control": "no-cache" },
                       body: "",
                     }}
-                  />
+                  /> */}
                   <Text style={styles.contactText}>{resume.phone}</Text>
                 </Text>
 
                 <Text style={styles.contact}>
-                  <PDFImage
+                  {/* <PDFImage
                     src={{
                       uri: "/img/Icons/map-pin.png",
                       method: "GET",
                       headers: { "Cache-Control": "no-cache" },
                       body: "",
                     }}
-                  />
+                  /> */}
                   <Text style={styles.contactText}>{resume.location}</Text>
                 </Text>
 
                 <Text style={styles.contact}>
-                  <PDFImage
+                  {/* <PDFImage
                     src={{
                       uri: "/img/Icons/linkedin-logo.png",
                       method: "GET",
                       headers: { "Cache-Control": "no-cache" },
                       body: "",
                     }}
-                  />
+                  /> */}
                   <Text style={styles.contactText}>{resume.linkedIn}</Text>
                 </Text>
 
                 <Text style={styles.contact}>
-                  <PDFImage
+                  {/* <PDFImage
                     src={{
                       uri: "/img/Icons/github-logo.png",
                       method: "GET",
                       headers: { "Cache-Control": "no-cache" },
                       body: "",
                     }}
-                  />
+                  /> */}
                   <Text style={styles.contactText}>{resume.github}</Text>
                 </Text>
               </View>
@@ -162,25 +162,25 @@ const ResumeTemplate3 = ({ resume }: { resume: Resume }) => (
                   <Text style={styles.education}>{edu.degree}</Text>
                   <Text style={styles.education}>{edu.university}</Text>
                   <Text style={styles.education}>
-                    <PDFImage
+                    {/* <PDFImage
                       src={{
                         uri: "/img/Icons/map-pin.png",
                         method: "GET",
                         headers: { "Cache-Control": "no-cache" },
                         body: "",
                       }}
-                    />
+                    /> */}
                     {edu.location}
                   </Text>
                   <Text style={styles.education}>
-                    <PDFImage
+                    {/* <PDFImage
                       src={{
                         uri: "/img/Icons/calendar-dots.png",
                         method: "GET",
                         headers: { "Cache-Control": "no-cache" },
                         body: "",
                       }}
-                    />
+                    /> */}
                     {edu.duration}
                   </Text>
                 </View>
