@@ -4,9 +4,11 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Button,
   Grid,
   Paper,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -42,12 +44,14 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
   const [openAccordion, setOpenAccordion] = useState(0);
   const [jobDetail, setJobDetail] = useState<JobDetail>(jobDetailProps);
   const [allResume, setAllResume] = useState<Resume[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchResumes = async () => {
       if (jobDetail && jobDetail.jobTitle && jobDetail.jobDescription) {
         try {
           const resumes = await getAllResumeOfUser(); // Fetch resumes
+          setLoading(false);
           setAllResume(resumes); // Set the fetched resumes in state
         } catch (error) {
           console.error("Error fetching resumes:", error);
@@ -146,34 +150,52 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
           <Typography>Select a Resume</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Job Title</TableCell>
-                  <TableCell>Actions</TableCell>
+          {loading ? (
+            <>
+              {[...Array(5)].map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    <Skeleton variant="text" width={200} height={20} />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton variant="text" width={200} height={20} />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton variant="text" width={200} height={20} />
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {allResume.map((resume: Resume) => (
-                  <TableRow key={resume.id}>
-                    <TableCell>{resume.id}</TableCell>
-                    <TableCell>{resume.jobTitle}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => handleSelect(resume)}
-                      >
-                        Select
-                      </Button>
-                    </TableCell>
+              ))}
+            </>
+          ) : (
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Job Title</TableCell>
+                    <TableCell>Actions</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {allResume.map((resume: Resume) => (
+                    <TableRow key={resume.id}>
+                      <TableCell>{resume.id}</TableCell>
+                      <TableCell>{resume.jobTitle}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => handleSelect(resume)}
+                        >
+                          Select
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </AccordionDetails>
       </Accordion>
 
@@ -190,56 +212,87 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
           <Typography>Resume evaluation result</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                label="ATS Score"
-                variant="outlined"
-                InputLabelProps={{ shrink: true }}
-                fullWidth
-                value={resumeEvalResult?.ats_score}
-              />
-            </Grid>
+          {!resumeEvalResult ? (
+            <>
+              <Box sx={{ display: "flex", gap: 2, marginTop: 10 }}>
+                <Skeleton
+                  variant="rectangular"
+                  width="100%"
+                  height={50}
+                ></Skeleton>
+                <Skeleton
+                  variant="rectangular"
+                  width="100%"
+                  height={50}
+                ></Skeleton>
+              </Box>
 
-            <Grid item xs={6}>
-              <TextField
-                label="Domain Relevance"
-                variant="outlined"
-                InputLabelProps={{ shrink: true }}
-                fullWidth
-                value={resumeEvalResult?.domainRelevance}
-              />
-            </Grid>
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={100}
+                sx={{ marginTop: 5 }}
+              ></Skeleton>
 
-            <Grid item xs={12}>
-              <TextField
-                label="Feedback"
-                variant="outlined"
-                InputLabelProps={{ shrink: true }}
-                fullWidth
-                multiline
-                rows={3}
-                value={resumeEvalResult?.feedback}
-              />
-            </Grid>
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={200}
+                sx={{ marginTop: 5 }}
+              ></Skeleton>
+            </>
+          ) : (
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  label="ATS Score"
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  fullWidth
+                  value={resumeEvalResult?.ats_score}
+                />
+              </Grid>
 
-            {resumeEvalResult?.suggestedImprovements &&
-              resumeEvalResult.suggestedImprovements.length > 0 && (
-                <Grid item xs={12}>
-                  <TextField
-                    label="Suggestions"
-                    variant="outlined"
-                    InputLabelProps={{ shrink: true }}
-                    fullWidth
-                    multiline
-                    rows={3}
-                    value={showAdditionalSuggestions(
-                      resumeEvalResult?.suggestedImprovements
-                    )}
-                  />
-                </Grid>
-              )}
-          </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Domain Relevance"
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  fullWidth
+                  value={resumeEvalResult?.domainRelevance}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  label="Feedback"
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  fullWidth
+                  multiline
+                  rows={3}
+                  value={resumeEvalResult?.feedback}
+                />
+              </Grid>
+
+              {resumeEvalResult?.suggestedImprovements &&
+                resumeEvalResult.suggestedImprovements.length > 0 && (
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Suggestions"
+                      variant="outlined"
+                      InputLabelProps={{ shrink: true }}
+                      fullWidth
+                      multiline
+                      rows={3}
+                      value={showAdditionalSuggestions(
+                        resumeEvalResult?.suggestedImprovements
+                      )}
+                    />
+                  </Grid>
+                )}
+            </Grid>
+          )}
         </AccordionDetails>
       </Accordion>
 
