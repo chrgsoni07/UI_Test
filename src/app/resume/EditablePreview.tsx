@@ -24,7 +24,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 type PropTypes = {
   resumeData: Resume;
-  buttonType: String;
+  buttonType?: String;
   onNext?: () => void;
   setUpdatedResume?: React.Dispatch<React.SetStateAction<any>>;
 };

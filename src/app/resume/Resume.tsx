@@ -1,5 +1,6 @@
 export type Resume = {
   id: string;
+  userId: string;
   name: string;
   email: string;
   phone: string;
@@ -52,7 +53,6 @@ export type Suggestion = {
 
 export type Metadata = {
   createdAt: Date;
-  updatedAt: Date;
   baseResumeId: string;
   isActive: boolean;
   templateId: number;
