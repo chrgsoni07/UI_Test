@@ -1,10 +1,8 @@
 import NextAuth, { DefaultSession } from "next-auth";
-// import GitHub from "next-auth/providers/github"
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
 import axios from "axios";
-
-// Temp module declaration to fix typescript error
+import { BASE_URL_API_GATEWAY } from "./service/api";
 declare module "next-auth" {
   /**
    * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
@@ -14,17 +12,11 @@ declare module "next-auth" {
     user: {
       /** The user's postal address. */
       address: string;
-      /**
-       * By default, TypeScript merges new interface properties and overwrites existing ones.
-       * In this case, the default session user properties will be overwritten,
-       * with the new ones defined above. To keep the default session user properties,
-       * you need to add them back into the newly declared interface.
-       */
     } & DefaultSession["user"];
   }
 }
 
-const BASE_URL_API_GATEWAY = "http://localhost:8443";
+//const BASE_URL_API_GATEWAY = "http://localhost:8443";
 const serverLoginUrl = `${BASE_URL_API_GATEWAY}/login`;
 const providers: Provider[] = [
   Credentials({
@@ -61,7 +53,6 @@ const providers: Provider[] = [
       };
     },
   }),
-  // GitHub, Add other OAuth providers
 ];
 
 export const providerMap = providers

@@ -9,7 +9,7 @@ import assessFitResponse from "@/mock/assessFitResponse.json";
 import { UserSignUp } from "@/app/auth/model/UserSignUp";
 import { extractedResumeMock } from "@/mock/mockResume";
 
-const BASE_URL_API_GATEWAY = "http://localhost:8443";
+export const BASE_URL_API_GATEWAY = process.env.REACT_APP_API_GATEWAY;
 const BASE_URL_RESUME = `${BASE_URL_API_GATEWAY}/api/0.1/resume/`;
 const BASE_URL_JOB_DETAIL = `${BASE_URL_API_GATEWAY}/api/0.1/job/`;
 const BASE_URL_FILE = `${BASE_URL_API_GATEWAY}/api/0.1/files/`;
