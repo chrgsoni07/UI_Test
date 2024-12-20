@@ -2,7 +2,7 @@ import NextAuth, { DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
 import axios from "axios";
-import { BASE_URL_API_GATEWAY } from "./service/api";
+import { BASE_URL_API_GATEWAY } from "./service/constants";
 declare module "next-auth" {
   /**
    * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
@@ -16,7 +16,6 @@ declare module "next-auth" {
   }
 }
 
-//const BASE_URL_API_GATEWAY = "http://localhost:8443";
 const serverLoginUrl = `${BASE_URL_API_GATEWAY}/login`;
 const providers: Provider[] = [
   Credentials({

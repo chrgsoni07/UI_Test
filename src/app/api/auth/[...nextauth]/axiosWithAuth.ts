@@ -1,11 +1,12 @@
 import axios from "axios";
 import { getSession } from "next-auth/react";
 import { auth } from "@/auth";
+import { BASE_URL_API_GATEWAY } from "@/service/constants";
 
 export const axiosWithAuth = async () => {
   const instance = axios.create({
     // baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-    baseURL: "http://localhost:8443",
+    baseURL: BASE_URL_API_GATEWAY,
   });
 
   const isServer = typeof window === "undefined";
