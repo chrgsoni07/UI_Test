@@ -15,10 +15,20 @@ import {
   Link,
 } from "@mui/material";
 import { AuthError } from "next-auth";
+import { useActionState } from "react";
 
 export default function SignInPage(props: {
   searchParams: { callbackUrl: string | undefined };
 }) {
+  const [error, submitAction, isPending] = useActionState(
+    async (previousState, formData) => {
+      await login(formData);
+    },
+    null
+  );
+
+  console.log("error in page", error);
+
   return (
     <div className="flex flex-col gap-2">
       <Stack alignItems={"center"}>
@@ -40,7 +50,7 @@ export default function SignInPage(props: {
           </Typography>
           <Box
             component="form"
-            action={login}
+            action={submitAction}
             sx={{
               display: "flex",
               flexDirection: "column",
