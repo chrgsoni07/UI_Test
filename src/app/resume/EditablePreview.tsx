@@ -21,6 +21,7 @@ import { useMutation } from "@tanstack/react-query";
 import { saveJobSpecificResume, saveResume } from "@/service/api";
 import { redirect } from "next/navigation";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import StyledTextareaAutosize from "./StyledTextareaAutosize";
 
 type PropTypes = {
   resumeData: Resume;
@@ -710,35 +711,6 @@ const EditablePreview: React.FC<PropTypes> = ({
                 </Grid>
               ))}
 
-              {/* <Popover
-                open={Boolean(anchorEl)}
-                anchorEl={anchorEl}
-                onClose={() => setAnchorEl(undefined)}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                // pass these props to the popover component
-                // disableAutoFocus={true}
-                // disableEnforceFocus={true}
-                // disablePortal
-                disableAutoFocus
-                disableEnforceFocus
-                disablePortal
-                disableRestoreFocus
-                hideBackdrop
-              >
-                <PopoverContent onClick={handleApplySuggestion}>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    {hoveredSuggestion?.suggestedText}
-                  </Typography>
-                </PopoverContent>
-              </Popover> */}
-
               <Grid container alignItems="center" spacing={1}>
                 <Grid item>
                   <Typography
@@ -961,22 +933,6 @@ const EditablePreview: React.FC<PropTypes> = ({
     </div>
   );
 };
-
-const StyledTextareaAutosize = styled(TextareaAutosize)<{
-  customColor?: string;
-}>`
-  color: ${(props) => props.customColor};
-  width: 97%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 2px;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4375em;
-`;
 
 const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />

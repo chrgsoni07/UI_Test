@@ -141,30 +141,28 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
         onChange={() => handleAccordionChange(0)}
         sx={accordionStyle}
       >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
+        <AccordionSummary id="panel1-header">
           <Typography>Select a Resume</Typography>
         </AccordionSummary>
         <AccordionDetails>
           {loading ? (
-            <>
-              {[...Array(5)].map((_, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    <Skeleton variant="text" width={200} height={20} />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton variant="text" width={200} height={20} />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton variant="text" width={200} height={20} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </>
+            <Table>
+              <TableBody>
+                {[...Array(5)].map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Skeleton variant="text" width={200} height={20} />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton variant="text" width={200} height={20} />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton variant="text" width={200} height={20} />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           ) : (
             <TableContainer component={Paper}>
               <Table>

@@ -56,11 +56,13 @@ const Page: FC = () => {
       {isPending && <ResumeSkeleton />}
 
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12}>
-          <Typography variant="h6" gutterBottom>
-            Please upload your resume in PDF format.
-          </Typography>
-        </Grid>
+        {isPending && (
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>
+              Please upload your resume in PDF format.
+            </Typography>
+          </Grid>
+        )}
         <Grid item xs={12} container alignItems="center">
           <Button
             component="label"
