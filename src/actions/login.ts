@@ -23,7 +23,7 @@ export const login = async (formData: FormData) => {
     if (error instanceof AuthError) {
       console.log(" ------------------------ ");
       console.log("ERROR in ACTION ");
-      console.log("Only error", error.cause);
+      // console.log("Only error", error.cause);
       // console.error(error.cause?.err?.name);
 
       // console.error(error.cause?.err?.message); //Request failed with status code 401
@@ -33,6 +33,7 @@ export const login = async (formData: FormData) => {
       // console.error(error.message);
 
       console.log(" ------------------------ ");
+      return error.cause;
 
       //    return redirect(`/signin?error=${error.type}`);
     }

@@ -15,6 +15,7 @@ import {
   Button,
   Checkbox,
   Link,
+  Alert,
 } from "@mui/material";
 import { AuthError } from "next-auth";
 import { useActionState } from "react";
@@ -24,11 +25,7 @@ export default function SignInPage(props: {
 }) {
   const [error, submitAction, isPending] = useActionState(
     async (previousState, formData) => {
-      try {
-        await login(formData);
-      } catch (error) {
-        console.log("error in page action", error);
-      }
+      return await login(formData);
     },
     null
   );
@@ -101,6 +98,10 @@ export default function SignInPage(props: {
               />
             </FormControl>
             {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
+            {error && (
+              <Alert severity="error">{error?.errorMessage as string}</Alert>
+            )}
+
             <Button
               type="submit"
               fullWidth

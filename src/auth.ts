@@ -27,6 +27,13 @@ const providers: Provider[] = [
     authorize: async (c) => {
       // validate fields here
 
+      // throw new Error("Error in auth", {
+      //   cause: {
+      //     errorCode: "USER_VALIDATION",
+      //     errorMessage: "Incorrect password. Please check and try again.",
+      //   },
+      // });
+
       if (process.env.RETURN_MOCK === "true") {
         return {
           accessToken: "mock-auth-token",
@@ -52,7 +59,13 @@ const providers: Provider[] = [
         };
       } catch (error) {
         //       console.error("Error in credentials provider", error?.response.data);
-        throw new Error(error.response.data);
+        throw new Error("Error in auth", { cause: error?.response.data });
+        // throw new Error("Error in auth", {
+        //   cause: {
+        //     errorCode: "USER_VALIDATION",
+        //     errorMessage: "Incorrect password. Please check and try again.",
+        //   },
+        // });
       }
     },
   }),
