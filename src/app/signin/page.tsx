@@ -24,7 +24,11 @@ export default function SignInPage(props: {
 }) {
   const [error, submitAction, isPending] = useActionState(
     async (previousState, formData) => {
-      await login(formData);
+      try {
+        await login(formData);
+      } catch (error) {
+        console.log("error in page action", error);
+      }
     },
     null
   );

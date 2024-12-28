@@ -38,18 +38,22 @@ const providers: Provider[] = [
         };
       }
 
-      const response = await axios.post(
-        serverLoginUrl,
-        { email: c.email, password: c.password },
-        {
-          withCredentials: true,
-        }
-      );
-
-      return {
-        ...response.data,
-        accessToken: response.headers["authorization"],
-      };
+      try {
+        const response = await axios.post(
+          serverLoginUrl,
+          { email: c.email, password: c.password },
+          {
+            withCredentials: true,
+          }
+        );
+        return {
+          ...response.data,
+          accessToken: response.headers["authorization"],
+        };
+      } catch (error) {
+        //       console.error("Error in credentials provider", error?.response.data);
+        throw new Error(error.response.data);
+      }
     },
   }),
 ];
