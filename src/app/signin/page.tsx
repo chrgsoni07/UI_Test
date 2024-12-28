@@ -16,13 +16,11 @@ import {
 } from "@mui/material";
 import { AuthError } from "next-auth";
 
-export default async function SignInPage(
-  props: {
-    searchParams: Promise<{ callbackUrl: string | undefined }>;
-  }
-) {
+export default function SignInPage(props: {
+  searchParams: { callbackUrl: string | undefined };
+}) {
   return (
-    (<div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <Stack alignItems={"center"}>
         <Card
           variant="outlined"
@@ -86,10 +84,6 @@ export default async function SignInPage(
                 // color={passwordError ? "error" : "primary"}
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
             <Button
               type="submit"
@@ -117,7 +111,7 @@ export default async function SignInPage(
                 "use server";
                 try {
                   await signIn(provider.id, {
-                    redirectTo: (await props.searchParams)?.callbackUrl ?? "",
+                    redirectTo: props.searchParams?.callbackUrl ?? "",
                   });
                 } catch (error) {
                   // Signin can fail for a number of reasons, such as the user
@@ -144,6 +138,6 @@ export default async function SignInPage(
           ))}
         </Card>
       </Stack>
-    </div>)
+    </div>
   );
 }

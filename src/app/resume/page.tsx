@@ -1,7 +1,7 @@
 "use client";
 
-import { type ChangeEvent, type FC } from "react";
-import { Box, Button, CircularProgress, Grid } from "@mui/material";
+import { useState, type ChangeEvent, type FC } from "react";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { extractDataFromFile } from "@/service/api";
 import EditablePreview from "@/app/resume/EditablePreview";
@@ -11,6 +11,8 @@ import ResumeSkeleton from "./ResumeSkeleton";
 import axios, { AxiosError } from "axios";
 
 const Page: FC = () => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const {
     data: resumeData,
     mutate: postCall,
@@ -54,6 +56,11 @@ const Page: FC = () => {
       {isPending && <ResumeSkeleton />}
 
       <Grid container spacing={2} alignItems="center">
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom>
+            Please upload your resume in PDF format.
+          </Typography>
+        </Grid>
         <Grid item xs={12} container alignItems="center">
           <Button
             component="label"
@@ -68,12 +75,19 @@ const Page: FC = () => {
             <input
               id="file-upload"
               type="file"
+              accept="application/pdf"
               onChange={handleUpload}
               hidden
             />
           </Button>
         </Grid>
-
+        {selectedFile && (
+          <Grid item xs={12}>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              Selected file: {selectedFile.name}
+            </Typography>
+          </Grid>
+        )}
         {resumeData && (
           <EditablePreview resumeData={resumeData} buttonType="save" />
         )}

@@ -65,21 +65,23 @@ const Step2: React.FC<Step2Props> = ({ setSelectedResume, onNext }) => {
   return (
     <Container>
       {loading ? (
-        <>
-          {[...Array(5)].map((_, index) => (
-            <TableRow key={index}>
-              <TableCell>
-                <Skeleton variant="text" width={200} height={20} />
-              </TableCell>
-              <TableCell>
-                <Skeleton variant="text" width={200} height={20} />
-              </TableCell>
-              <TableCell>
-                <Skeleton variant="text" width={200} height={20} />
-              </TableCell>
-            </TableRow>
-          ))}
-        </>
+        <Table>
+          <TableBody>
+            {[...Array(5)].map((_, index) => (
+              <TableRow key={index}>
+                <TableCell>
+                  <Skeleton variant="text" width={200} height={20} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton variant="text" width={200} height={20} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton variant="text" width={200} height={20} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       ) : (
         <Box sx={{ width: "100%" }}>
           <Typography variant="body2">

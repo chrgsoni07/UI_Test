@@ -13,6 +13,7 @@ import {
   Box,
   Fade,
   Modal,
+  Typography,
 } from "@mui/material";
 import { useState, type FC } from "react";
 import { Resume } from "../resume/Resume";
@@ -22,8 +23,9 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import DownloadIcon from "@mui/icons-material/Download";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
-import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
 import moment from "moment";
+import SavedResumeSkeleton from "./SavedResumeSkeleton";
+import ReactPDF from "@react-pdf/renderer";
 import TemplateOptions from "../template/[resumeId]/TemplateOptions";
 
 const Page: FC = () => {
@@ -37,18 +39,6 @@ const Page: FC = () => {
     setSelectedResume(undefined);
   };
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 1200,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
-
   const {
     isLoading,
     error,
@@ -60,79 +50,56 @@ const Page: FC = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <SavedResumeSkeleton />;
   }
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-  const handlePreview = async (resume: Resume) => {
+  const handleDownload = async (resume: Resume) => {
     console.log(
-      `Previewing Resume ID: ${resume.id} & template id ${resume.metadata.templateId}`
+      `Downloading Resume ID: ${resume.id} & template id ${resume.metadata.templateId}`
     );
-    setSelectedResume(resume);
-    handleOpen();
-  };
 
-  const handlePreview1 = async (resume: Resume) => {
-    console.log(
-      `Previewing Resume ID: ${resume.id} & template id ${resume.metadata.templateId}`
-    );
-    try {
-      const resumeDB = await getResumeById(resume.id);
-      setSelectedResume(resumeDB);
-      handleOpen();
-    } catch (error) {
-      console.error("Error fetching resume:", error);
-    }
-  };
-
-  const handelDownload = (resume: Resume) => {
-    setSelectedResume(resume);
-    console.log(`download Resume ID : ${resume.id} `);
-
-    if (!selectedResume) {
+    if (!resume) {
       console.error("No resume data available");
       return;
     }
-
-    const pdfDocument = (
-      <TemplateOptions
-        resumeData={selectedResume}
-        templateType={selectedResume.metadata.templateId}
-      />
-    );
-
-    pdf(pdfDocument)
-      .toBlob()
-      .then((blob) => {
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "resume.pdf";
-        link.click();
-      })
-      .catch((error) => {
-        console.error("Error generating the PDF:", error);
-      });
   };
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table sx={{ maxWidth: 1000 }} size="small" aria-label="a dense table">
+      <Typography variant="h4" gutterBottom align="center">
+        Your Saved Resumes
+      </Typography>
+      <Typography
+        variant="body1"
+        color="textSecondary"
+        paragraph
+        align="center"
+      >
+        Here you can view and download your previously saved resumes. Click on
+        the preview icon to see the resume or the download icon to save it
+        directly to your device.
+      </Typography>
+
+      <TableContainer component={Paper} sx={{ mt: 4 }}>
+        <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Job Title</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Preview</TableCell>
-              <TableCell>Download</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Id</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Title</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Date Saved</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {allResume.map((resume: Resume) => (
-              <TableRow key={resume.id}>
+              <TableRow
+                key={resume.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
                 <TableCell>{resume.id}</TableCell>
                 <TableCell>{resume.jobTitle}</TableCell>
                 <TableCell>
@@ -142,13 +109,16 @@ const Page: FC = () => {
                 </TableCell>
                 <TableCell>
                   <IconButton aria-label="preview">
-                    <PreviewIcon onClick={() => handlePreview(resume)} />
+                    <PreviewIcon
+                      onClick={() => {
+                        setSelectedResume(resume);
+                        handleOpen();
+                      }}
+                    />
                   </IconButton>
-                </TableCell>
-                <TableCell>
-                  <IconButton aria-label="download">
-                    <DownloadIcon onClick={() => handelDownload(resume)} />
-                  </IconButton>
+                  {/* <IconButton aria-label="download">
+                    <DownloadIcon onClick={() => handleDownload(resume)} />
+                  </IconButton> */}
                 </TableCell>
               </TableRow>
             ))}
@@ -157,22 +127,28 @@ const Page: FC = () => {
       </TableContainer>
 
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
         }}
       >
         <Fade in={open}>
-          <Box sx={style}>
-            <IconButton aria-label="download">
-              <CloseIcon onClick={handleClose}></CloseIcon>
+          <Box
+            sx={{
+              bgcolor: "background.paper",
+              p: 4,
+              outline: "none",
+              position: "relative",
+            }}
+          >
+            <IconButton
+              onClick={handleClose}
+              sx={{ position: "absolute", top: 8, right: 8 }}
+            >
+              <CloseIcon />
             </IconButton>
             {selectedResume ? (
               <TemplateOptions
@@ -180,7 +156,10 @@ const Page: FC = () => {
                 templateType={selectedResume?.metadata?.templateId}
               />
             ) : (
-              <div>Loading...</div>
+              <Typography variant="h6" color="error">
+                Error: No template ID found for this resume. Please save a
+                template ID and try again.
+              </Typography>
             )}
           </Box>
         </Fade>

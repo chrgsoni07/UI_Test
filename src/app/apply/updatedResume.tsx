@@ -23,11 +23,10 @@ import {
   assessResumeFit,
   getAllResumeOfUser,
   isUserUploadLimitReached,
-  saveJobSpecificResume,
-  saveResume,
 } from "@/service/api";
 import { type Resume } from "../resume/Resume";
 import EditablePreview from "../resume/EditablePreview";
+import moment from "moment";
 import {
   ResumeEvalResult,
   SuggestedImprovement,
@@ -173,6 +172,7 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
                   <TableRow>
                     <TableCell>ID</TableCell>
                     <TableCell>Job Title</TableCell>
+                    <TableCell>Date</TableCell>
                     <TableCell>Actions</TableCell>
                   </TableRow>
                 </TableHead>
@@ -181,6 +181,11 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
                     <TableRow key={resume.id}>
                       <TableCell>{resume.id}</TableCell>
                       <TableCell>{resume.jobTitle}</TableCell>
+                      <TableCell>
+                        {moment(resume.metadata.createdAt).format(
+                          "DD-MMM-YYYY HH:mm:ss"
+                        )}
+                      </TableCell>
                       <TableCell>
                         <Button
                           variant="contained"

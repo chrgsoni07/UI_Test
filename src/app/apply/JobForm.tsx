@@ -64,12 +64,30 @@ const JobForm = () => {
 
   return (
     <Container>
-      <Typography variant="h4">Job Form</Typography>
-
+      {!formSubmitted ? (
+        <>
+          <Typography variant="h4" gutterBottom>
+            Job Application Details
+          </Typography>
+          <Typography variant="body1" color="textSecondary" paragraph>
+            Please copy and paste the job title and job description here. This
+            will help us tailor your resume to match the job requirements.
+          </Typography>
+        </>
+      ) : (
+        <>
+          <Typography variant="h5" gutterBottom>
+            Thank you for submitting the job details!
+          </Typography>
+          <Typography variant="body1" color="textSecondary" paragraph>
+            Please select your existing resume to proceed with the update.
+          </Typography>
+        </>
+      )}
       {/* Render the form if it's not submitted */}
       {!formSubmitted ? (
         <form onSubmit={handleSubmit}>
-          <TextField
+          {/* <TextField
             label="Job Link"
             variant="outlined"
             fullWidth
@@ -92,7 +110,7 @@ const JobForm = () => {
 
           <Divider>
             <Chip label="or" size="medium" />
-          </Divider>
+          </Divider> */}
 
           <TextField
             label="Job Title"

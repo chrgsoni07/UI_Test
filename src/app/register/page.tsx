@@ -12,13 +12,11 @@ import {
 } from "@mui/material";
 import { AuthError } from "next-auth";
 
-export default async function RegisterPage(
-  props: {
-    searchParams: Promise<{ callbackUrl: string | undefined }>;
-  }
-) {
+export default function RegisterPage(props: {
+  searchParams: { callbackUrl: string | undefined };
+}) {
   return (
-    (<div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <Stack alignItems={"center"}>
         <Card
           variant="outlined"
@@ -49,8 +47,6 @@ export default async function RegisterPage(
             <FormControl>
               <FormLabel htmlFor="firstname">First name</FormLabel>
               <TextField
-                // error={emailError}
-                // helperText={emailErrorMessage}
                 id="firstname"
                 name="firstname"
                 placeholder="John"
@@ -58,15 +54,11 @@ export default async function RegisterPage(
                 required
                 fullWidth
                 variant="outlined"
-                //value={"John"}
-                // color={emailError ? "error" : "primary"}
               />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="lastname">Last name</FormLabel>
               <TextField
-                // error={emailError}
-                // helperText={emailErrorMessage}
                 id="lastname"
                 name="lastname"
                 placeholder="Doe"
@@ -74,15 +66,11 @@ export default async function RegisterPage(
                 required
                 fullWidth
                 variant="outlined"
-                // value={"Doe"}
-                // color={emailError ? "error" : "primary"}
               />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="email">Email</FormLabel>
               <TextField
-                // error={emailError}
-                // helperText={emailErrorMessage}
                 id="email"
                 type="email"
                 name="email"
@@ -92,15 +80,11 @@ export default async function RegisterPage(
                 fullWidth
                 variant="outlined"
                 //value={"john.dow@example.com"}
-
-                // color={emailError ? "error" : "primary"}
               />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
-                // error={passwordError}
-                // helperText={passwordErrorMessage}
                 name="password"
                 placeholder="••••••"
                 type="password"
@@ -110,8 +94,6 @@ export default async function RegisterPage(
                 required
                 fullWidth
                 variant="outlined"
-                //value={"SecurePassword12345"}
-                // color={passwordError ? "error" : "primary"}
               />
             </FormControl>
             {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
@@ -131,7 +113,7 @@ export default async function RegisterPage(
                 "use server";
                 try {
                   await signIn(provider.id, {
-                    redirectTo: (await props.searchParams)?.callbackUrl ?? "",
+                    redirectTo: props.searchParams?.callbackUrl ?? "",
                   });
                 } catch (error) {
                   // Signin can fail for a number of reasons, such as the user
@@ -158,6 +140,6 @@ export default async function RegisterPage(
           ))}
         </Card>
       </Stack>
-    </div>)
+    </div>
   );
 }
