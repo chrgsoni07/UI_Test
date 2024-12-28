@@ -1,3 +1,5 @@
+"use client";
+
 import { login } from "@/actions/login";
 import { signIn, providerMap } from "@/auth";
 import {
@@ -118,7 +120,8 @@ export default function SignInPage(props: {
             <form
               key={"signin form"}
               action={async () => {
-                "use server";
+                // Uncomment the below code when integrating with other auth providers
+                //"use server";
                 try {
                   await signIn(provider.id, {
                     redirectTo: props.searchParams?.callbackUrl ?? "",
