@@ -10,10 +10,8 @@ import {
   FormControl,
   FormLabel,
   TextField,
-  FormControlLabel,
   Divider,
   Button,
-  Checkbox,
   Link,
   Alert,
 } from "@mui/material";

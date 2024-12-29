@@ -27,7 +27,10 @@ const Page: FC = () => {
     },
     onError(error) {
       if (axios.isAxiosError(error)) {
-        console.log("error on other => ", error.response?.data?.errorMessage);
+        console.log(
+          "error on resume.tsx => ",
+          error.response?.data?.errorMessage
+        );
         toast.error(error.response?.data?.errorMessage);
       } else {
         toast.error(error.message);

@@ -1,3 +1,5 @@
+"use client";
+
 import { register } from "@/actions/register";
 import { signIn, providerMap } from "@/auth";
 import {
@@ -9,12 +11,23 @@ import {
   FormLabel,
   TextField,
   Button,
+  Alert,
 } from "@mui/material";
 import { AuthError } from "next-auth";
+import { useActionState } from "react";
 
 export default function RegisterPage(props: {
   searchParams: { callbackUrl: string | undefined };
 }) {
+  const [error, submitAction, isPending] = useActionState(
+    async (previousState, formData) => {
+      return await register(formData);
+    },
+    null
+  );
+
+  console.log("error in page", error);
+
   return (
     <div className="flex flex-col gap-2">
       <Stack alignItems={"center"}>
@@ -36,7 +49,7 @@ export default function RegisterPage(props: {
           </Typography>
           <Box
             component="form"
-            action={register}
+            action={submitAction}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -97,6 +110,9 @@ export default function RegisterPage(props: {
               />
             </FormControl>
             {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
+            {error && (
+              <Alert severity="error">{error?.errorMessage as string}</Alert>
+            )}
             <Button
               type="submit"
               fullWidth
@@ -110,7 +126,7 @@ export default function RegisterPage(props: {
             <form
               key={"signin form"}
               action={async () => {
-                "use server";
+                //  "use server";
                 try {
                   await signIn(provider.id, {
                     redirectTo: props.searchParams?.callbackUrl ?? "",
