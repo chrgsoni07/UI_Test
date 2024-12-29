@@ -14,6 +14,7 @@ import {
   Button,
   Link,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { AuthError } from "next-auth";
 import { useActionState } from "react";
@@ -99,14 +100,17 @@ export default function SignInPage(props: {
             {error && (
               <Alert severity="error">{error?.errorMessage as string}</Alert>
             )}
-
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              // onClick={validateInputs}
+              disabled={isPending}
             >
-              Sign in
+              {isPending ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                `Sign In`
+              )}
             </Button>
             <Link
               component="button"

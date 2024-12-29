@@ -12,6 +12,7 @@ import {
   TextField,
   Button,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { AuthError } from "next-auth";
 import { useActionState } from "react";
@@ -117,9 +118,13 @@ export default function RegisterPage(props: {
               type="submit"
               fullWidth
               variant="contained"
-              // onClick={validateInputs}
+              disabled={isPending}
             >
-              Register
+              {isPending ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                `Register`
+              )}
             </Button>
           </Box>
           {Object.values(providerMap).map((provider) => (
