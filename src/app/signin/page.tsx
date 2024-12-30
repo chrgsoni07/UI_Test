@@ -22,14 +22,19 @@ import { useActionState } from "react";
 export default function SignInPage(props: {
   searchParams: { callbackUrl: string | undefined };
 }) {
-  const [error, submitAction, isPending] = useActionState(
+  const [{ data, error }, submitAction, isPending] = useActionState(
     async (previousState, formData) => {
-      return await login(formData);
+      return login(formData);
     },
-    null
+    {
+      data: {
+        email: "",
+        password: "",
+      },
+      error: {},
+    }
   );
-
-  console.log("error in page", error);
+  console.log({ data, error });
 
   return (
     <div className="flex flex-col gap-2">
@@ -74,6 +79,7 @@ export default function SignInPage(props: {
                 required
                 fullWidth
                 variant="outlined"
+                defaultValue={data.email}
                 //  value={"john.dow@example.com"}
                 // color={emailError ? "error" : "primary"}
               />
@@ -92,13 +98,14 @@ export default function SignInPage(props: {
                 required
                 fullWidth
                 variant="outlined"
+                defaultValue={data.password}
                 //value={"SecurePassword12345"}
                 // color={passwordError ? "error" : "primary"}
               />
             </FormControl>
             {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
-            {error && (
-              <Alert severity="error">{error?.errorMessage as string}</Alert>
+            {error?.errorMessage && (
+              <Alert severity="error">{error.errorMessage as string}</Alert>
             )}
             <Button
               type="submit"

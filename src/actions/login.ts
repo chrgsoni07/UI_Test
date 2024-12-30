@@ -3,7 +3,6 @@
 import { signIn } from "@/auth";
 
 import { AuthError } from "next-auth";
-import { redirect } from "next/navigation";
 
 export const login = async (formData: FormData) => {
   const formValues = {
@@ -33,7 +32,10 @@ export const login = async (formData: FormData) => {
       // console.error(error.message);
 
       console.log(" ------------------------ ");
-      return error.cause;
+      return {
+        error: { ...error.cause },
+        data: { ...formValues },
+      };
 
       //    return redirect(`/signin?error=${error.type}`);
     }
