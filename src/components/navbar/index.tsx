@@ -16,6 +16,8 @@ import SignInButton from "./SignInButton";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import RegisterButton from "./RegisterButton";
 
 const routes = [
   { name: "Resume", href: "/resume" },
@@ -24,6 +26,9 @@ const routes = [
 ];
 
 function ResponsiveAppBar({ isLoggedIn }: { isLoggedIn: boolean }) {
+  const pathname = usePathname();
+
+  console.log({ pathname });
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -138,7 +143,12 @@ function ResponsiveAppBar({ isLoggedIn }: { isLoggedIn: boolean }) {
           <Box
             sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 2 }}
           >
-            {!isLoggedIn && <SignInButton />}
+            {!isLoggedIn && (
+              <>
+                {pathname !== "/signin" && <SignInButton />}
+                {pathname !== "/register" && <RegisterButton />}
+              </>
+            )}
 
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
