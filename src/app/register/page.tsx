@@ -20,14 +20,22 @@ import { useActionState } from "react";
 export default function RegisterPage(props: {
   searchParams: { callbackUrl: string | undefined };
 }) {
-  const [error, submitAction, isPending] = useActionState(
+  const [{ data, error }, submitAction, isPending] = useActionState(
     async (previousState, formData) => {
       return await register(formData);
     },
-    null
+    {
+      data: {
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        repeatPassword: "",
+      },
+      error: {},
+    }
   );
-
-  console.log("error in page", error);
+  console.log({ data, error });
 
   return (
     <div className="flex flex-col gap-2">
@@ -68,6 +76,7 @@ export default function RegisterPage(props: {
                 required
                 fullWidth
                 variant="outlined"
+                defaultValue={data.firstName}
               />
             </FormControl>
             <FormControl>
@@ -80,6 +89,7 @@ export default function RegisterPage(props: {
                 required
                 fullWidth
                 variant="outlined"
+                defaultValue={data.lastName}
               />
             </FormControl>
             <FormControl>
@@ -90,9 +100,11 @@ export default function RegisterPage(props: {
                 name="email"
                 placeholder="your@email.com"
                 autoComplete="email"
+                autoFocus
                 required
                 fullWidth
                 variant="outlined"
+                defaultValue={data.email}
                 //value={"john.dow@example.com"}
               />
             </FormControl>
@@ -108,11 +120,11 @@ export default function RegisterPage(props: {
                 required
                 fullWidth
                 variant="outlined"
+                defaultValue={data.password}
               />
             </FormControl>
-            {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
-            {error && (
-              <Alert severity="error">{error?.errorMessage as string}</Alert>
+            {error?.errorMessage && (
+              <Alert severity="error">{error.errorMessage as string}</Alert>
             )}
             <Button
               type="submit"

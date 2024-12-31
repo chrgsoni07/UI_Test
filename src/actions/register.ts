@@ -23,7 +23,10 @@ export const register = async (formData: FormData) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error on other => ", error.response?.data?.errorMessage);
-      return error.response?.data;
+      return {
+        error: { ...error.response?.data },
+        data: { ...formValues },
+      };
     }
     throw error;
   }

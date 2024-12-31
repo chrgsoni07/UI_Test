@@ -80,15 +80,11 @@ export default function SignInPage(props: {
                 fullWidth
                 variant="outlined"
                 defaultValue={data.email}
-                //  value={"john.dow@example.com"}
-                // color={emailError ? "error" : "primary"}
               />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
-                // error={passwordError}
-                // helperText={passwordErrorMessage}
                 name="password"
                 placeholder="••••••"
                 type="password"
@@ -103,7 +99,6 @@ export default function SignInPage(props: {
                 // color={passwordError ? "error" : "primary"}
               />
             </FormControl>
-            {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
             {error?.errorMessage && (
               <Alert severity="error">{error.errorMessage as string}</Alert>
             )}

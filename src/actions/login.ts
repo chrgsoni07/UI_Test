@@ -20,23 +20,10 @@ export const login = async (formData: FormData) => {
     });
   } catch (error) {
     if (error instanceof AuthError) {
-      console.log(" ------------------------ ");
-      console.log("ERROR in ACTION ");
-      // console.log("Only error", error.cause);
-      // console.error(error.cause?.err?.name);
-
-      // console.error(error.cause?.err?.message); //Request failed with status code 401
-
-      // console.error(error.name);
-
-      // console.error(error.message);
-
-      console.log(" ------------------------ ");
       return {
         error: { ...error.cause },
         data: { ...formValues },
       };
-
       //    return redirect(`/signin?error=${error.type}`);
     }
     throw error;
