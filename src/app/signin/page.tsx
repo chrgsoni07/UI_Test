@@ -19,11 +19,24 @@ import {
 import { AuthError } from "next-auth";
 import { useActionState } from "react";
 
+type FormState =
+  | {
+      error: {
+        [x: string]: unknown;
+        err?: Error;
+      };
+      data: {
+        email: FormDataEntryValue | null;
+        password: FormDataEntryValue | null;
+      };
+    }
+  | undefined;
+
 export default function SignInPage(props: {
   searchParams: { callbackUrl: string | undefined };
 }) {
-  const [{ data, error }, submitAction, isPending] = useActionState(
-    async (previousState, formData) => {
+  const [{ data, error } = {}, submitAction, isPending] = useActionState(
+    async (previousState: FormState, formData: FormData) => {
       return login(formData);
     },
     {
@@ -79,7 +92,9 @@ export default function SignInPage(props: {
                 required
                 fullWidth
                 variant="outlined"
-                defaultValue={data.email}
+                defaultValue={data?.email}
+                //  value={"john.dow@example.com"}
+                // color={emailError ? "error" : "primary"}
               />
             </FormControl>
             <FormControl>
@@ -94,13 +109,14 @@ export default function SignInPage(props: {
                 required
                 fullWidth
                 variant="outlined"
-                defaultValue={data.password}
+                defaultValue={data?.password}
                 //value={"SecurePassword12345"}
                 // color={passwordError ? "error" : "primary"}
               />
             </FormControl>
-            {error?.errorMessage && (
-              <Alert severity="error">{error.errorMessage as string}</Alert>
+
+            {(error?.errorMessage as string) && (
+              <Alert severity="error">{error?.errorMessage as string}</Alert>
             )}
             <Button
               type="submit"
