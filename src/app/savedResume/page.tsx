@@ -20,13 +20,16 @@ import { Resume } from "../resume/Resume";
 import { getAllResumeOfUser, getResumeById } from "@/service/api";
 import { useQuery } from "@tanstack/react-query";
 import PreviewIcon from "@mui/icons-material/Preview";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 import DownloadIcon from "@mui/icons-material/Download";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
+import { TemplateRenderer } from "../template/[resumeId]/TemplateSelectionPage";
+import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
 import moment from "moment";
 import SavedResumeSkeleton from "./SavedResumeSkeleton";
 import ReactPDF from "@react-pdf/renderer";
-import TemplateOptions from "../template/[resumeId]/TemplateOptions";
+import { redirect } from "next/navigation";
 
 const Page: FC = () => {
   const [open, setOpen] = React.useState(false);
@@ -66,6 +69,10 @@ const Page: FC = () => {
       console.error("No resume data available");
       return;
     }
+  };
+
+  const handleEdit = (resumeId: string) => {
+    redirect(`/updateResume/${resumeId}`);
   };
 
   return (
@@ -116,6 +123,11 @@ const Page: FC = () => {
                       }}
                     />
                   </IconButton>
+                  <IconButton>
+                    <EditNoteIcon
+                      onClick={() => handleEdit(resume.id)}
+                    ></EditNoteIcon>
+                  </IconButton>
                   {/* <IconButton aria-label="download">
                     <DownloadIcon onClick={() => handleDownload(resume)} />
                   </IconButton> */}
@@ -151,15 +163,19 @@ const Page: FC = () => {
               <CloseIcon />
             </IconButton>
             {selectedResume ? (
-              <TemplateOptions
-                resumeData={selectedResume}
-                templateType={selectedResume?.metadata?.templateId}
-              />
+              selectedResume.metadata?.templateId ? (
+                <TemplateRenderer
+                  resumeData={selectedResume}
+                  templateType={selectedResume.metadata.templateId}
+                />
+              ) : (
+                <Typography variant="h6" color="error">
+                  Error: No template ID found for this resume. Please save a
+                  template ID and try again.
+                </Typography>
+              )
             ) : (
-              <Typography variant="h6" color="error">
-                Error: No template ID found for this resume. Please save a
-                template ID and try again.
-              </Typography>
+              <div>Loading...</div>
             )}
           </Box>
         </Fade>

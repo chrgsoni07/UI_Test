@@ -10,7 +10,7 @@ import {
   TableBody,
 } from "@mui/material";
 
-const SavedResumeSkeleton = (): JSX.Element => {
+const UpdateResumeSkeleton = (): JSX.Element => {
   return (
     <TableContainer component={Paper} sx={{ mt: 4 }}>
       <Table sx={{ minWidth: 650 }}>
@@ -53,4 +53,4 @@ const SavedResumeSkeleton = (): JSX.Element => {
   );
 };
 
-export default SavedResumeSkeleton;
+export default UpdateResumeSkeleton;

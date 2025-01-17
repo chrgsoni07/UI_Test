@@ -11,10 +11,10 @@ import {
   Container,
 } from "@mui/material";
 import PreviewIcon from "@mui/icons-material/Preview";
+import { TemplateRenderer } from "../template/[resumeId]/TemplateSelectionPage";
 import { Resume } from "../resume/Resume";
 import { updateTemplateIdOfResume } from "@/service/api";
 import toast from "react-hot-toast";
-import TemplateOptions from "../template/[resumeId]/TemplateOptions";
 
 const templates = [
   { id: 1, image: "../img/template1.jpg" },
@@ -73,7 +73,6 @@ const Step5: React.FC<step5props> = ({ selectedResume }) => {
                 overflow: "hidden",
                 padding: 2,
               }}
-              key={template.id}
             >
               <CardMedia
                 component="img"
@@ -110,7 +109,7 @@ const Step5: React.FC<step5props> = ({ selectedResume }) => {
             padding: 3,
           }}
         >
-          <TemplateOptions
+          <TemplateRenderer
             resumeData={selectedResume}
             templateType={templateType}
           />

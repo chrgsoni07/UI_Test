@@ -87,12 +87,6 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
   };
 
   const handleSelect = async (row: Resume) => {
-    const jobDetail = {
-      jobUrl: "",
-      jobTitle: "JAva developer",
-      jobDescription: "complete job description comming through form",
-    };
-
     const isLimitReached = await isUserUploadLimitReached();
 
     if (isLimitReached) {
@@ -110,14 +104,6 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
 
     openSecondAccordion();
   };
-
-  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-
-  //   if (!updatedResume) return;
-
-  //   postSave(updatedResume);
-  // };
 
   const showAdditionalSuggestions = (
     suggestedImpv?: SuggestedImprovement[]
@@ -313,7 +299,11 @@ const UpdatedResume: FC<PropTypes> = ({ passedData: jobDetailProps }) => {
         </AccordionSummary>
         <AccordionDetails>
           {updatedResume && (
-            <EditablePreview resumeData={updatedResume} buttonType="update" />
+            <EditablePreview
+              resumeData={updatedResume}
+              buttonType="next"
+              jobDetail={jobDetail}
+            />
           )}
           {/* <Button type="submit" variant="contained" color="primary">
               update

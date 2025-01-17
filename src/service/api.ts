@@ -9,6 +9,7 @@ import assessFitResponse from "@/mock/assessFitResponse.json";
 import { UserSignUp } from "@/app/auth/model/UserSignUp";
 import { extractedResumeMock } from "@/mock/mockResume";
 import { BASE_URL_API_GATEWAY } from "./constants";
+import { ApplyResumeDTO } from "@/app/resume/ApplyResumeDTO";
 
 const BASE_URL_RESUME = `${BASE_URL_API_GATEWAY}/api/0.1/resume/`;
 const BASE_URL_JOB_DETAIL = `${BASE_URL_API_GATEWAY}/api/0.1/job/`;
@@ -48,12 +49,6 @@ export const getAllResumeOfUser = async () => {
   return response.data;
 };
 
-export const updateResumeByResumeId = async (id: string) => {
-  const response = await (await axiosWithAuth()).put(BASE_URL_RESUME, id);
-
-  return response.data;
-};
-
 export const updateTemplateIdOfResume = async (
   id: string,
   templateId: number
@@ -83,6 +78,17 @@ export const saveResume = async (data: Resume) => {
   const saveDataURL = `${BASE_URL_RESUME}`;
 
   const response = await (await axiosWithAuth()).post(saveDataURL, data);
+
+  return response.data;
+};
+
+export const updateResumeByResumeId = async (data: Resume) => {
+  if (process.env.RETURN_MOCK === "true") {
+    return resumeByIdMock;
+  }
+
+  const updateResumeURL = `${BASE_URL_RESUME}${data.id}`;
+  const response = await (await axiosWithAuth()).put(updateResumeURL, data);
 
   return response.data;
 };
@@ -130,6 +136,17 @@ export const extractDataFromFile = async (
 
 export const saveJobSpecificResume = async (data: Resume) => {
   const saveDataURL = `${BASE_URL_RESUME}job-specific`;
+
+  if (process.env.RETURN_MOCK === "true") {
+    return extractDataMock;
+  }
+  const response = await (await axiosWithAuth()).post(saveDataURL, data);
+
+  return response.data;
+};
+
+export const saveAppliedResume = async (data: ApplyResumeDTO) => {
+  const saveDataURL = `${BASE_URL_RESUME}apply`;
 
   if (process.env.RETURN_MOCK === "true") {
     return extractDataMock;

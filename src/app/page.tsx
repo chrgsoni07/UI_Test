@@ -19,7 +19,7 @@ export default async function Home() {
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <Typography variant="h2" align="center" gutterBottom>
-              Welcome to Smart Resume GEN
+              Welcome to Smart Resume Generator
             </Typography>
             <Typography
               variant="h5"

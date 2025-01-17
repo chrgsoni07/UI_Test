@@ -7,7 +7,6 @@ import {
   Divider,
   Grid,
   IconButton,
-  TextareaAutosize,
   TextField,
   Typography,
   Autocomplete,
@@ -18,16 +17,24 @@ import {
 import toast from "react-hot-toast";
 import { Projects, type Resume, type Suggestion } from "./Resume";
 import { useMutation } from "@tanstack/react-query";
-import { saveJobSpecificResume, saveResume } from "@/service/api";
+import {
+  saveAppliedResume,
+  saveJobSpecificResume,
+  saveResume,
+  updateResumeByResumeId,
+} from "@/service/api";
 import { redirect } from "next/navigation";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import StyledTextareaAutosize from "./StyledTextareaAutosize";
+import { JobDetail } from "../apply/JobDetail";
+import { ApplyResumeDTO } from "./ApplyResumeDTO";
 
 type PropTypes = {
   resumeData: Resume;
   buttonType?: String;
   onNext?: () => void;
   setUpdatedResume?: React.Dispatch<React.SetStateAction<any>>;
+  jobDetail?: JobDetail;
 };
 
 const EditablePreview: React.FC<PropTypes> = ({
@@ -35,6 +42,7 @@ const EditablePreview: React.FC<PropTypes> = ({
   buttonType,
   onNext,
   setUpdatedResume,
+  jobDetail,
 }) => {
   const [resumeData, setResumeData] = useState<Resume>(resumeDataProp);
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Suggestion>();
@@ -45,11 +53,24 @@ const EditablePreview: React.FC<PropTypes> = ({
       if (buttonType === "save") {
         return saveResume(rData);
       }
+
       if (buttonType === "update") {
-        return saveJobSpecificResume(rData);
-      } else {
-        return saveJobSpecificResume(rData);
+        return updateResumeByResumeId(rData);
       }
+
+      if (buttonType === "next") {
+        //        return saveJobSpecificResume(rData);
+        if (!jobDetail) {
+          return Promise.reject(new Error("Job detail is required"));
+        }
+        let applyResumeDTO: ApplyResumeDTO = {
+          jobDetail: jobDetail,
+          resume: rData,
+        };
+        return saveAppliedResume(applyResumeDTO);
+      }
+
+      return Promise.reject(new Error("Invalid button type"));
     },
     onSuccess(data) {
       toast.success("Resume saved successfully !");
@@ -57,9 +78,10 @@ const EditablePreview: React.FC<PropTypes> = ({
       if (setUpdatedResume) {
         setUpdatedResume(data);
       } else {
-        console.log("setUpdatedResume in flow is not defined.");
+        console.log(
+          "setUpdatedResume in flow is not defined TODO -> Stop flow to redirect on template page"
+        );
       }
-
       onNext?.();
     },
     onError(error) {
@@ -69,9 +91,13 @@ const EditablePreview: React.FC<PropTypes> = ({
 
   useEffect(() => {
     if (savedResume?.id) {
-      redirect(`/template/${savedResume.id}`);
+      if (buttonType === "update") {
+        redirect("/savedResume");
+      } else if (buttonType === "next" || buttonType === "save") {
+        redirect(`/template/${savedResume.id}`);
+      }
     }
-  }, [savedResume]);
+  }, [savedResume, buttonType]);
 
   const handleSubmit = async () => {
     if (!resumeData) return;

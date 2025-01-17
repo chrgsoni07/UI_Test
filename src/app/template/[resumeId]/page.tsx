@@ -12,8 +12,7 @@ const TemplatePageContents: React.FC<{ resumeId: string }> = async ({
   return <TemplateSelectionPage resume={data} />;
 };
 
-export default async function Page(props: { params: Promise<{ resumeId: string }> }) {
-  const params = await props.params;
+export default function Page({ params }: { params: { resumeId: string } }) {
   const { resumeId } = params;
 
   return (

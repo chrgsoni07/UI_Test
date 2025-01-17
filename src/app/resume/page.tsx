@@ -27,10 +27,7 @@ const Page: FC = () => {
     },
     onError(error) {
       if (axios.isAxiosError(error)) {
-        console.log(
-          "error on resume.tsx => ",
-          error.response?.data?.errorMessage
-        );
+        console.log("error on other => ", error.response?.data?.errorMessage);
         toast.error(error.response?.data?.errorMessage);
       } else {
         toast.error(error.message);
@@ -59,13 +56,11 @@ const Page: FC = () => {
       {isPending && <ResumeSkeleton />}
 
       <Grid container spacing={2} alignItems="center">
-        {isPending && (
-          <Grid item xs={12}>
-            <Typography variant="h6" gutterBottom>
-              Please upload your resume in PDF format.
-            </Typography>
-          </Grid>
-        )}
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom>
+            Please upload your resume in PDF format.
+          </Typography>
+        </Grid>
         <Grid item xs={12} container alignItems="center">
           <Button
             component="label"

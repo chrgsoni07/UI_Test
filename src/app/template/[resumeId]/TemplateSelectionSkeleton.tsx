@@ -1,5 +1,5 @@
 import { Box, Skeleton } from "@mui/material";
-import React, { type JSX } from "react";
+import React from "react";
 
 const TemplateSelectionSkeleton = (): JSX.Element => {
   return (
