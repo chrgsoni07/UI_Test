@@ -27,6 +27,10 @@ const ApplyFlow = () => {
     jobTitle: "",
     jobDescription: "",
     jobUrl: "",
+    id: "",
+    resumeId: "",
+    companyName: "",
+    location: "",
   });
   const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
   const [updatedResume, setUpdatedResume] = useState<Resume | null>(null);
@@ -37,11 +41,11 @@ const ApplyFlow = () => {
     }
   };
 
-  const handleBack = () => {
-    if (activeStep > 0) {
-      setActiveStep(activeStep - 1);
-    }
-  };
+  // const handleBack = () => {
+  //   if (activeStep > 0) {
+  //     setActiveStep(activeStep - 1);
+  //   }
+  // };
 
   const handleStartOver = () => {
     setActiveStep(0);
@@ -103,7 +107,7 @@ const ApplyFlow = () => {
   return (
     <Box sx={{ width: "100%" }}>
       <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label, index) => (
+        {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>

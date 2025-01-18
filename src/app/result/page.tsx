@@ -98,6 +98,10 @@ const Page: FC = () => {
       jobUrl: "",
       jobTitle: "JAva developer",
       jobDescription: "complete job description comming through form",
+      id: "",
+      resumeId: "",
+      companyName: "",
+      location: "",
     };
 
     toast.success("Resume got selected please wait");

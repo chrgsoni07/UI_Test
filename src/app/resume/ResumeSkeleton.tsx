@@ -1,7 +1,7 @@
 import { Skeleton, Stack } from "@mui/material";
 import React from "react";
 
-const ResumeSkeleton = (): JSX.Element => {
+const ResumeSkeleton: React.FC = () => {
   return (
     <Stack spacing={1}>
       <Skeleton variant="rectangular" height={40} />

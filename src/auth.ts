@@ -1,7 +1,7 @@
 import NextAuth, { DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { BASE_URL_API_GATEWAY } from "./service/constants";
 declare module "next-auth" {
   /**
@@ -59,7 +59,9 @@ const providers: Provider[] = [
         };
       } catch (error) {
         //       console.error("Error in credentials provider", error?.response.data);
-        throw new Error("Error in auth", { cause: error?.response.data });
+        throw new Error("Error in auth", {
+          cause: (error as AxiosError)?.response?.data,
+        });
         // throw new Error("Error in auth", {
         //   cause: {
         //     errorCode: "USER_VALIDATION",

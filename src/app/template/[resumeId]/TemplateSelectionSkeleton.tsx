@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import React from "react";
 
-const TemplateSelectionSkeleton = (): JSX.Element => {
+const TemplateSelectionSkeleton: React.FC = () => {
   return (
     <>
       <Box sx={{ display: "flex", gap: 2, marginTop: 10 }}>

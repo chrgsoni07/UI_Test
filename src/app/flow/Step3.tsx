@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { JobDetail } from "./JobDetail";
+import { type JobDetail } from "@/app/apply/JobDetail";
 import { Resume } from "../resume/Resume";
 import {
   Box,
@@ -8,7 +8,6 @@ import {
   Grid,
   Skeleton,
   TextField,
-  Typography,
 } from "@mui/material";
 import {
   ResumeEvalResult,
@@ -20,7 +19,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 interface Step3Props {
   jobDetail: JobDetail;
   selectedResume: Resume;
-  setUpdatedResume: React.Dispatch<React.SetStateAction<any>>;
+  setUpdatedResume: React.Dispatch<React.SetStateAction<Resume | null>>;
   onNext: () => void;
 }
 

@@ -17,11 +17,29 @@ import {
 import { AuthError } from "next-auth";
 import { useActionState } from "react";
 
-export default function RegisterPage(props: {
-  searchParams: { callbackUrl: string | undefined };
-}) {
+type FormState =
+  | {
+      error: {
+        [x: string]: unknown;
+        err?: Error;
+      };
+      data: {
+        email: FormDataEntryValue | null;
+        password: FormDataEntryValue | null;
+        repeatPassword: FormDataEntryValue | null;
+        firstName: FormDataEntryValue | null;
+        lastName: FormDataEntryValue | null;
+      };
+    }
+  | undefined;
+
+export default function RegisterPage() {
+// TODO uncomment when using other auth providers
+//   props: {
+//   searchParams: { callbackUrl: string | undefined };
+// }
   const [{ data, error }, submitAction, isPending] = useActionState(
-    async (previousState, formData) => {
+    async (previousState: FormState, formData: FormData) => {
       return await register(formData);
     },
     {
@@ -146,7 +164,8 @@ export default function RegisterPage(props: {
                 //  "use server";
                 try {
                   await signIn(provider.id, {
-                    redirectTo: props.searchParams?.callbackUrl ?? "",
+                    // TODO add searchParam back when we have setup other providers
+                    // redirectTo: props.searchParams?.callbackUrl ?? "",
                   });
                 } catch (error) {
                   // Signin can fail for a number of reasons, such as the user

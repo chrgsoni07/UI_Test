@@ -12,8 +12,12 @@ const TemplatePageContents: React.FC<{ resumeId: string }> = async ({
   return <TemplateSelectionPage resume={data} />;
 };
 
-export default function Page({ params }: { params: { resumeId: string } }) {
-  const { resumeId } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ resumeId: string }>;
+}) {
+  const { resumeId } = await params;
 
   return (
     <Suspense fallback={<TemplateSelectionSkeleton />}>

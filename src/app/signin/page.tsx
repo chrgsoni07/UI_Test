@@ -32,9 +32,11 @@ type FormState =
     }
   | undefined;
 
-export default function SignInPage(props: {
-  searchParams: { callbackUrl: string | undefined };
-}) {
+export default function SignInPage() {
+// TODO uncomment when using other auth providers
+//   props: {
+//   searchParams: { callbackUrl: string | undefined };
+// }
   const [{ data, error } = {}, submitAction, isPending] = useActionState(
     async (previousState: FormState, formData: FormData) => {
       return login(formData);
@@ -149,7 +151,8 @@ export default function SignInPage(props: {
                 //"use server";
                 try {
                   await signIn(provider.id, {
-                    redirectTo: props.searchParams?.callbackUrl ?? "",
+                    // TODO add searchParam back when we have setup other providers
+                    // redirectTo: props.searchParams?.callbackUrl ?? "",
                   });
                 } catch (error) {
                   // Signin can fail for a number of reasons, such as the user
